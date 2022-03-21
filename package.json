@@ -1,12 +1,24 @@
 {
   "name": "oome-backoffice",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
+    "run" : "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amaurygrillot/OutOfMemoryError-Backoffice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amaurygrillot/OutOfMemoryError-Backoffice/issues"
+  },
+  "homepage": "https://github.com/amaurygrillot/OutOfMemoryError-Backoffice#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
 }
