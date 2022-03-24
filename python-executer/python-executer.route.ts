@@ -6,7 +6,18 @@ export const pythonRouter = express.Router();
 
 pythonRouter.get("/", async function(req, res) {
     const pythonExecuterController = new PythonExecuterController();
-    const filename = req.body.filename
-    const message = await pythonExecuterController.executeNoArgumentScript(filename);
+    const filename = req.body.filename;
+    const args = req.body.args;
+    let message;
+    if(args !== null && args !== undefined)
+    {
+        message = await pythonExecuterController.executeScriptWithArguments(filename, args);
+    }
+    else
+    {
+        message = await pythonExecuterController.executeNoArgumentScript(filename);
+
+    }
     res.status(200).json(message).end();
+
 });
