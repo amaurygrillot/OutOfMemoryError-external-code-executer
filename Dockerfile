@@ -12,7 +12,8 @@ COPY tsconfig.json ./
 # copy source code to /app/src folder
 COPY . .
 
-RUN npm install --save
-RUN apt-get update || : && apt-get install python -y
+RUN apt-get update
+    && npm install --save
+    && apt-get install --yes python3
 CMD [ "npm", "build" ]
 CMD [ "npm", "start" ]
