@@ -13,7 +13,7 @@ COPY tsconfig.json ./
 COPY . .
 
 RUN apt-get update
-    && npm install --save
-    && apt-get install --yes python3
+RUN npm install --save
+RUN apt-get install --yes python3
 CMD [ "npm", "build" ]
 CMD [ "npm", "start" ]
