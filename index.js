@@ -15,7 +15,7 @@ app.use(cors(corsOptions));
 app.use(fileUpload());
 app.use(bodyParser.json());
 (0, api_1.buildRoutes)(app);
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 3000;
 app.listen(port, function () {
     console.log("Listening on ".concat(port, "..."));
     console.log(new Date().toLocaleString().split(',')[0]);

@@ -17,7 +17,7 @@ app.use(fileUpload());
 app.use(bodyParser.json());
 buildRoutes(app);
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log(`Listening on ${port}...`);
     console.log(new Date().toLocaleString().split(',')[0]);
