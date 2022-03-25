@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:12.18.1 as npm
-FROM python:3.7.5-slim as py
+FROM node:12.18.1
 ENV NODE_ENV=production
 
 # create root application folder
@@ -14,6 +13,6 @@ COPY tsconfig.json ./
 COPY . .
 
 RUN npm install --save
-EXPOSE 3001
+RUN apt-get update || : && apt-get install python -y
 CMD [ "npm", "build" ]
 CMD [ "npm", "start" ]
