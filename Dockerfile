@@ -13,3 +13,6 @@ COPY tsconfig.json ./
 # copy source code to /app/src folder
 COPY . .
 
+RUN npm install --save
+
+CMD [ "npm", "start" ]
