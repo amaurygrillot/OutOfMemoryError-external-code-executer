@@ -16,6 +16,6 @@ COPY . .
 # check files list
 RUN ls -a
 
-RUN npm install
+RUN npm install --save
 RUN npm run start
 
