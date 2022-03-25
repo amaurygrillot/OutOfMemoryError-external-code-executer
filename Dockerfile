@@ -17,5 +17,4 @@ COPY . .
 RUN ls -a
 
 RUN npm install --save
-RUN npm run build
 RUN npm start
