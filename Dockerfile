@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:12.18.1
+FROM node:12.18.1 as npm
 FROM python:3.7.5-slim as py
 ENV NODE_ENV=production
 
