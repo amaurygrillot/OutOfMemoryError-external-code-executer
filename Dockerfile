@@ -15,5 +15,5 @@ COPY . .
 RUN apt-get update
 RUN npm install --save
 RUN apt-get install --yes python3
-
+CMD [ "npm", "build" ]
 CMD [ "npm", "start" ]

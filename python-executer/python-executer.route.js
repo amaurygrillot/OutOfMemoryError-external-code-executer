@@ -42,29 +42,40 @@ var express = require('express');
 exports.pythonRouter = express.Router();
 exports.pythonRouter.post("/", function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var pythonExecuterController, filename, args, message;
+        var file, fs, pythonExecuterController, message, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    file = req.files.fileKey;
+                    fs = require('fs');
                     pythonExecuterController = new python_executer_controller_1.PythonExecuterController();
-                    filename = req.body.filename;
-                    args = req.body.args;
-                    if (!(args !== null && args !== undefined)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, pythonExecuterController.executeScriptWithArguments(filename, args)];
+                    _a.label = 1;
                 case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    fs.writeFile("files/python/".concat(file.name), file.data, function (err) {
+                        if (err)
+                            return console.log(err);
+                    });
+                    return [4 /*yield*/, pythonExecuterController.executeNoArgumentScript("files/python/".concat(file.name))];
+                case 2:
                     message = _a.sent();
-                    return [3 /*break*/, 4];
-                case 2: return [4 /*yield*/, pythonExecuterController.executeNoArgumentScript(filename)];
-                case 3:
-                    message = _a.sent();
-                    _a.label = 4;
-                case 4:
                     res.status(200).json(message).end();
-                    return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 3:
+                    err_1 = _a.sent();
+                    console.error(err_1);
+                    res.status(500).json("erreur").end();
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
 });
+exports.pythonRouter.post("/file", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/];
+    });
+}); });
 exports.pythonRouter.get("/", function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {

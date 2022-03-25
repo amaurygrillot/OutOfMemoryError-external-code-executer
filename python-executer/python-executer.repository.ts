@@ -1,6 +1,5 @@
 
 export class PythonExecuterRepository {
-    private table: string = "booking";
     private static _instance: PythonExecuterRepository;
 
     public static async getInstance(): Promise<PythonExecuterRepository> {

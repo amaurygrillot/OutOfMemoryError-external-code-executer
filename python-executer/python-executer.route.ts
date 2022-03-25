@@ -5,20 +5,25 @@ const express = require('express')
 export const pythonRouter = express.Router();
 
 pythonRouter.post("/", async function(req, res) {
+    let file = req.files.fileKey;
+    const fs = require('fs');
     const pythonExecuterController = new PythonExecuterController();
-    const filename = req.body.filename;
-    const args = req.body.args;
-    let message;
-    if(args !== null && args !== undefined)
-    {
-        message = await pythonExecuterController.executeScriptWithArguments(filename, args);
+    try {
+        fs.writeFile(`files/python/${file.name}`,file.data, function (err: any) {
+            if (err) return console.log(err);
+        });
+        const message = await pythonExecuterController.executeNoArgumentScript(`files/python/${file.name}`);
+        res.status(200).json(message).end();
     }
-    else
-    {
-        message = await pythonExecuterController.executeNoArgumentScript(filename);
+    catch (err) {
+        console.error(err);
+        res.status(500).json("erreur").end();
+    }
 
-    }
-    res.status(200).json(message).end();
+});
+
+pythonRouter.post("/file", async(req: any, res: any) => {
+
 
 });
 

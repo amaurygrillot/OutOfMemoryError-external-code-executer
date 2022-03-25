@@ -39,7 +39,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PythonExecuterRepository = void 0;
 var PythonExecuterRepository = /** @class */ (function () {
     function PythonExecuterRepository() {
-        this.table = "booking";
     }
     PythonExecuterRepository.getInstance = function () {
         return __awaiter(this, void 0, void 0, function () {
