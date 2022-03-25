@@ -20,7 +20,7 @@ buildRoutes(app);
 const port = process.env.PORT || 3001;
 app.listen(port, function() {
     console.log(`Listening on ${port}...`);
-    console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
     console.log(new Date().toLocaleString().split(',')[0]);
 });
+
 

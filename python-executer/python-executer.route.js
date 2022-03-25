@@ -40,7 +40,7 @@ exports.pythonRouter = void 0;
 var python_executer_controller_1 = require("./python-executer.controller");
 var express = require('express');
 exports.pythonRouter = express.Router();
-exports.pythonRouter.get("/", function (req, res) {
+exports.pythonRouter.post("/", function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
         var pythonExecuterController, filename, args, message;
         return __generator(this, function (_a) {
@@ -62,6 +62,14 @@ exports.pythonRouter.get("/", function (req, res) {
                     res.status(200).json(message).end();
                     return [2 /*return*/];
             }
+        });
+    });
+});
+exports.pythonRouter.get("/", function (req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            res.status(200).json("working").end();
+            return [2 /*return*/];
         });
     });
 });
