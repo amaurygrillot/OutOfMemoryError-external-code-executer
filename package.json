@@ -27,7 +27,8 @@
     "mysql2": "^2.2.5",
     "stripe": "^8.165.0",
     "ts-node": "^10.7.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "vm2": "^3.9.9"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
