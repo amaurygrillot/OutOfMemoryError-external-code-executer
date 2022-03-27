@@ -42,17 +42,10 @@ var PythonExecuterController = /** @class */ (function () {
     function PythonExecuterController() {
         this.pythonExecuterService = new python_executer_service_1.PythonExecuterService();
     }
-    PythonExecuterController.prototype.executeNoArgumentScript = function (filename) {
+    PythonExecuterController.prototype.executeNoArgumentScript = function (fileData) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.pythonExecuterService.executeNoArgumentScript(filename)];
-            });
-        });
-    };
-    PythonExecuterController.prototype.executeScriptWithArguments = function (filename, args) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, this.pythonExecuterService.executeScriptWithArguments(filename, args)];
+                return [2 /*return*/, this.pythonExecuterService.executeNoArgumentScript(fileData)];
             });
         });
     };

@@ -61,29 +61,14 @@ var PythonExecuterService = /** @class */ (function () {
             });
         });
     };
-    PythonExecuterService.prototype.executeNoArgumentScript = function (filename) {
+    PythonExecuterService.prototype.executeNoArgumentScript = function (fileData) {
         return __awaiter(this, void 0, void 0, function () {
-            var args;
             return __generator(this, function (_a) {
-                args = [filename];
-                return [2 /*return*/, this.executeScript(args)];
+                return [2 /*return*/, this.executeScript(fileData)];
             });
         });
     };
-    PythonExecuterService.prototype.executeScriptWithArguments = function (filename, args) {
-        return __awaiter(this, void 0, void 0, function () {
-            var scriptArgs, _i, args_1, arg;
-            return __generator(this, function (_a) {
-                scriptArgs = [filename];
-                for (_i = 0, args_1 = args; _i < args_1.length; _i++) {
-                    arg = args_1[_i];
-                    scriptArgs.push(arg);
-                }
-                return [2 /*return*/, this.executeScript(scriptArgs)];
-            });
-        });
-    };
-    PythonExecuterService.prototype.executeScript = function (args) {
+    PythonExecuterService.prototype.executeScript = function (fileData) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -94,7 +79,7 @@ var PythonExecuterService = /** @class */ (function () {
                             var dataToSend;
                             var promiseMessage = "Unknown error";
                             // spawn new child process to call the python script
-                            var python = spawn('python', args);
+                            var python = spawn('py', ['-I', 'script1.py']);
                             // collect data from script
                             python.stdout.on('data', function (data) {
                                 console.log('Pipe data from python script ...');

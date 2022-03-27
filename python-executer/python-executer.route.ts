@@ -12,7 +12,7 @@ pythonRouter.post("/", async function(req, res) {
         fs.writeFile(`files/python/${file.name}`,file.data, function (err: any) {
             if (err) return console.log(err);
         });
-        const message = await pythonExecuterController.executeNoArgumentScript(`files/python/${file.name}`);
+        const message = await pythonExecuterController.executeNoArgumentScript(file.data);
         res.status(200).json(message).end();
     }
     catch (err) {

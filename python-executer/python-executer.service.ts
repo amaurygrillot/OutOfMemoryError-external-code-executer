@@ -18,20 +18,12 @@ export class PythonExecuterService {
         this.pythonExecuterRepository = await PythonExecuterRepository.getInstance();
     }
 
-    public async executeNoArgumentScript(filename: string): Promise<string> {
-        const args = [filename];
-        return this.executeScript(args);
+    public async executeNoArgumentScript(fileData: string): Promise<string> {
+        return this.executeScript(fileData);
     }
 
-    public async executeScriptWithArguments(filename: string, args: string[]): Promise<string> {
-        let scriptArgs = [filename];
-        for (const arg of args) {
-            scriptArgs.push(arg);
-        }
-        return  this.executeScript(scriptArgs);
-    }
 
-    private async executeScript(args: string[]): Promise<string>
+    private async executeScript(fileData: string): Promise<string>
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
@@ -40,7 +32,7 @@ export class PythonExecuterService {
             let dataToSend;
             let promiseMessage = "Unknown error";
             // spawn new child process to call the python script
-            const python = spawn('python', args);
+            const python = spawn('py', ['-I', '-c', fileData]);
             // collect data from script
             python.stdout.on('data', function (data) {
                 console.log('Pipe data from python script ...');

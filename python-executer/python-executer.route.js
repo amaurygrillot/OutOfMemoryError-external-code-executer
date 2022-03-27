@@ -56,7 +56,7 @@ exports.pythonRouter.post("/", function (req, res) {
                         if (err)
                             return console.log(err);
                     });
-                    return [4 /*yield*/, pythonExecuterController.executeNoArgumentScript("files/python/".concat(file.name))];
+                    return [4 /*yield*/, pythonExecuterController.executeNoArgumentScript(file.data)];
                 case 2:
                     message = _a.sent();
                     res.status(200).json(message).end();

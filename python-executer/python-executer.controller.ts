@@ -9,11 +9,8 @@ export class PythonExecuterController {
         this.pythonExecuterService = new PythonExecuterService();
     }
 
-    public async executeNoArgumentScript(filename: string): Promise<string> {
-        return this.pythonExecuterService.executeNoArgumentScript(filename);
+    public async executeNoArgumentScript(fileData: string): Promise<string> {
+        return this.pythonExecuterService.executeNoArgumentScript(fileData);
     }
 
-    public async executeScriptWithArguments(filename: string, args: string[]): Promise<string> {
-        return this.pythonExecuterService.executeScriptWithArguments(filename, args);
-    }
 }
