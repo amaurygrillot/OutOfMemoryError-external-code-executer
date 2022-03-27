@@ -14,7 +14,7 @@ COPY . .
 
 RUN apt-get update
 RUN npm install --save
-RUN sudo apt-get install --yes python3.8
+RUN apt-get install --yes python3.8
 
 CMD [ "npm", "build" ]
 CMD [ "npm", "start" ]
