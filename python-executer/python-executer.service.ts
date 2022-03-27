@@ -32,7 +32,7 @@ export class PythonExecuterService {
             let dataToSend;
             let promiseMessage = "Unknown error";
             // spawn new child process to call the python script
-            const python = spawn('py', ['-I', '-c', fileData]);
+            const python = spawn('python', ['-I', '-c', fileData]);
             // collect data from script
             python.stdout.on('data', function (data) {
                 console.log('Pipe data from python script ...');

@@ -79,7 +79,7 @@ var PythonExecuterService = /** @class */ (function () {
                             var dataToSend;
                             var promiseMessage = "Unknown error";
                             // spawn new child process to call the python script
-                            var python = spawn('py', ['-I', 'script1.py']);
+                            var python = spawn('python', ['-I', '-c', fileData]);
                             // collect data from script
                             python.stdout.on('data', function (data) {
                                 console.log('Pipe data from python script ...');
