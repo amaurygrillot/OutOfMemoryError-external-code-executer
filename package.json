@@ -5,6 +5,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node index.js",
+    "startLocally" : "tsc && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
