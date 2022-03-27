@@ -13,7 +13,7 @@ COPY tsconfig.json ./
 COPY . .
 
 RUN apt update
-RUN apt install python3.8
+RUN apt install python3.8.8
 RUN npm install --save
 CMD [ "npm", "build" ]
 CMD [ "npm", "start" ]
