@@ -36,21 +36,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildRoutes = void 0;
-var python_executer_route_1 = require("../python-executer/python-executer.route");
-var node_executer_route_1 = require("../node-executer/node-executer.route");
-var java_executer_route_1 = require("../java-executer/java-executer.route");
-function buildRoutes(app) {
-    app.get("/", function (req, res) {
+exports.JavaExecuterRepository = void 0;
+var JavaExecuterRepository = /** @class */ (function () {
+    function JavaExecuterRepository() {
+    }
+    JavaExecuterRepository.getInstance = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                res.send("OutOfMemoryError API");
-                return [2 /*return*/];
+                if (JavaExecuterRepository._instance === undefined) {
+                    JavaExecuterRepository._instance = new JavaExecuterRepository();
+                }
+                return [2 /*return*/, JavaExecuterRepository._instance];
             });
         });
-    });
-    app.use("/python", python_executer_route_1.pythonRouter);
-    app.use("/node", node_executer_route_1.nodeRouter);
-    app.use("/java", java_executer_route_1.javaRouter);
-}
-exports.buildRoutes = buildRoutes;
+    };
+    return JavaExecuterRepository;
+}());
+exports.JavaExecuterRepository = JavaExecuterRepository;

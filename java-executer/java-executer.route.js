@@ -36,21 +36,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildRoutes = void 0;
-var python_executer_route_1 = require("../python-executer/python-executer.route");
-var node_executer_route_1 = require("../node-executer/node-executer.route");
-var java_executer_route_1 = require("../java-executer/java-executer.route");
-function buildRoutes(app) {
-    app.get("/", function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                res.send("OutOfMemoryError API");
-                return [2 /*return*/];
-            });
+exports.javaRouter = void 0;
+var java_executer_controller_1 = require("./java-executer.controller");
+var express = require('express');
+exports.javaRouter = express.Router();
+exports.javaRouter.post("/", function (req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var file, fs, javaExecuterController, message, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    file = req.files.fileKey;
+                    fs = require('fs');
+                    javaExecuterController = new java_executer_controller_1.JavaExecuterController();
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    fs.writeFile("files/java/".concat(file.name), file.data, function (err) {
+                        if (err)
+                            return console.log(err);
+                    });
+                    return [4 /*yield*/, javaExecuterController.executeNoArgumentScript(file.data)];
+                case 2:
+                    message = _a.sent();
+                    res.status(200).json(message).end();
+                    return [3 /*break*/, 4];
+                case 3:
+                    err_1 = _a.sent();
+                    console.error(err_1);
+                    res.status(500).json("erreur").end();
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
+            }
         });
     });
-    app.use("/python", python_executer_route_1.pythonRouter);
-    app.use("/node", node_executer_route_1.nodeRouter);
-    app.use("/java", java_executer_route_1.javaRouter);
-}
-exports.buildRoutes = buildRoutes;
+});
+exports.javaRouter.post("/file", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/];
+    });
+}); });
+exports.javaRouter.get("/", function (req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            res.status(200).json("working").end();
+            return [2 /*return*/];
+        });
+    });
+});
