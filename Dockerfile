@@ -3,6 +3,13 @@
 FROM node:12.18.1
 ENV NODE_ENV=production
 
+RUN add-apt-repository ppa:openjdk-r/ppa
+RUN apt-get update
+RUN npm install --save
+RUN apt-get install --yes python3
+
+RUN apt install --yes openjdk-11-jdk
+
 # create root application folder
 WORKDIR /app
 
@@ -12,10 +19,7 @@ COPY tsconfig.json ./
 # copy source code to /app/src folder
 COPY . .
 
-RUN apt-get update
-RUN npm install --save
-RUN apt-get install --yes python3
-RUN apt-get install --yes openjdk-11-jdk
+
 
 CMD [ "npm", "build" ]
 CMD [ "npm", "start" ]
