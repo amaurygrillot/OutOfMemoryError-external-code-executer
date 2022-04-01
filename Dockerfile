@@ -15,6 +15,7 @@ COPY . .
 RUN apt-get update
 RUN npm install --save
 RUN apt-get install --yes python3
+RUN apt-get install -y openjdk-11-jre-headless
 
 CMD [ "npm", "build" ]
 CMD [ "npm", "start" ]
