@@ -114,6 +114,13 @@ var JavaExecuterService = /** @class */ (function () {
                                         accept(promiseMessage);
                                     });
                                 }
+                                else {
+                                    promiseMessage = dataToSend;
+                                    // send data to browser
+                                    promiseMessage += "\nProcess ended with error code : " + data;
+                                    console.log("" + promiseMessage);
+                                    accept(promiseMessage);
+                                }
                             });
                         })];
                     case 1: return [2 /*return*/, _a.sent()];

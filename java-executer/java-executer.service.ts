@@ -70,6 +70,15 @@ export class JavaExecuterService {
                     })
 
                 }
+                else
+                {
+                    promiseMessage = dataToSend;
+                    // send data to browser
+                    promiseMessage += "\nProcess ended with error code : " + data;
+                    console.log("" + promiseMessage);
+                    accept(promiseMessage);
+                }
+
 
 
             });
