@@ -15,7 +15,7 @@ COPY . .
 RUN apt-get update
 RUN npm install --save
 RUN apt-get install --yes python3
-RUN apt-get install --yes default-jre
+RUN apt-get install --yes openjdk-8-jdk
 
 CMD [ "npm", "build" ]
 CMD [ "npm", "start" ]
