@@ -40,7 +40,7 @@ exports.buildRoutes = void 0;
 var python_executer_route_1 = require("../python-executer/python-executer.route");
 //import { nodeRouter} from "../node-executer/node-executer.route";
 var java_executer_route_1 = require("../java-executer/java-executer.route");
-var c_executer_route_1 = require("../files/c/c-executer.route");
+var c_executer_route_1 = require("../c-executer/c-executer.route");
 function buildRoutes(app) {
     app.get("/", function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
