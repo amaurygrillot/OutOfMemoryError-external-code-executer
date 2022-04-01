@@ -8,6 +8,7 @@ RUN apt-get update
 RUN apt install --yes openjdk-11-jdk
 RUN npm install --save
 RUN apt-get install --yes python3
+RUN apt-get install --yes gcc
 
 
 
