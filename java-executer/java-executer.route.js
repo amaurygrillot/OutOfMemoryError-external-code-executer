@@ -52,7 +52,7 @@ exports.javaRouter.post("/", function (req, res) {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    fs.writeFile("files/java/".concat(file.name), file.data, function (err) {
+                    fs.writeFile("files/c/".concat(file.name), file.data, function (err) {
                         if (err)
                             return console.log(err);
                     });
