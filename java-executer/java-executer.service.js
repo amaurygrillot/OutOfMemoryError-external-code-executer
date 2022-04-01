@@ -110,7 +110,7 @@ var JavaExecuterService = /** @class */ (function () {
                                         promiseMessage = dataToSend;
                                         // send data to browser
                                         promiseMessage += "\nProcess ended with error code : " + output;
-                                        console.log("yo " + promiseMessage);
+                                        console.log("" + promiseMessage);
                                         accept(promiseMessage);
                                     });
                                 }

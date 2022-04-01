@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildRoutes = void 0;
 var python_executer_route_1 = require("../python-executer/python-executer.route");
-var node_executer_route_1 = require("../node-executer/node-executer.route");
+//import { nodeRouter} from "../node-executer/node-executer.route";
 var java_executer_route_1 = require("../java-executer/java-executer.route");
 function buildRoutes(app) {
     app.get("/", function (req, res) {
@@ -50,7 +50,7 @@ function buildRoutes(app) {
         });
     });
     app.use("/python", python_executer_route_1.pythonRouter);
-    app.use("/node", node_executer_route_1.nodeRouter);
+    // app.use("/node", nodeRouter);
     app.use("/java", java_executer_route_1.javaRouter);
 }
 exports.buildRoutes = buildRoutes;
