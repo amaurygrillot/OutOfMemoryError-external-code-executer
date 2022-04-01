@@ -40,12 +40,12 @@ exports.JavaExecuterController = void 0;
 var java_executer_service_1 = require("./java-executer.service");
 var JavaExecuterController = /** @class */ (function () {
     function JavaExecuterController() {
-        this.pythonExecuterService = new java_executer_service_1.JavaExecuterService();
+        this.javaExecuterService = new java_executer_service_1.JavaExecuterService();
     }
-    JavaExecuterController.prototype.executeNoArgumentScript = function (fileData) {
+    JavaExecuterController.prototype.executeNoArgumentScript = function (fileName) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.pythonExecuterService.executeNoArgumentScript(fileData)];
+                return [2 /*return*/, this.javaExecuterService.executeNoArgumentScript(fileName)];
             });
         });
     };

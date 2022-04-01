@@ -61,14 +61,14 @@ var JavaExecuterService = /** @class */ (function () {
             });
         });
     };
-    JavaExecuterService.prototype.executeNoArgumentScript = function (fileData) {
+    JavaExecuterService.prototype.executeNoArgumentScript = function (fileName) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.executeScript(fileData)];
+                return [2 /*return*/, this.executeScript(fileName)];
             });
         });
     };
-    JavaExecuterService.prototype.executeScript = function (fileData) {
+    JavaExecuterService.prototype.executeScript = function (fileName) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -79,7 +79,7 @@ var JavaExecuterService = /** @class */ (function () {
                             var dataToSend = "";
                             var promiseMessage = "Unknown error";
                             // spawn new child process to call the javac script
-                            var javac = spawn('javac', ['files/java/Main.java']);
+                            var javac = spawn('javac', ["files/java/".concat(fileName)]);
                             // collect data from script
                             javac.stdout.on('data', function (data) {
                                 console.log('Pipe data from javac script ...');
@@ -96,7 +96,7 @@ var JavaExecuterService = /** @class */ (function () {
                             // in close event we are sure that stream from child process is closed
                             javac.on('close', function (data) {
                                 if (data === 0) {
-                                    var java = spawn('java', ['files/java/Main.java']);
+                                    var java = spawn('java', ["files/java/".concat(fileName)]);
                                     java.stdout.on('data', function (output) {
                                         console.log(String(output));
                                         dataToSend += String(output);

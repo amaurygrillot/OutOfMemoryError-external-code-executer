@@ -20,12 +20,12 @@ export class JavaExecuterService {
         this.pythonExecuterRepository = await JavaExecuterRepository.getInstance();
     }
 
-    public async executeNoArgumentScript(fileData: string): Promise<string> {
-        return this.executeScript(fileData);
+    public async executeNoArgumentScript(fileName: string): Promise<string> {
+        return this.executeScript(fileName);
     }
 
 
-    private async executeScript(fileData: string): Promise<string>
+    private async executeScript(fileName: string): Promise<string>
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
@@ -34,7 +34,7 @@ export class JavaExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the javac script
-            const javac = spawn('javac', ['files/java/Main.java']);
+            const javac = spawn('javac', [`files/java/${fileName}`]);
             // collect data from script
             javac.stdout.on('data', function (data) {
                 console.log('Pipe data from javac script ...');
@@ -51,7 +51,7 @@ export class JavaExecuterService {
             // in close event we are sure that stream from child process is closed
             javac.on('close', (data) => {
                 if (data === 0) {
-                    const java = spawn('java', ['files/java/Main.java']);
+                    const java = spawn('java', [`files/java/${fileName}`]);
                     java.stdout.on('data', function (output) {
                         console.log(String(output));
                         dataToSend += String(output);

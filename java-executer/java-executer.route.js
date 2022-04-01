@@ -56,7 +56,7 @@ exports.javaRouter.post("/", function (req, res) {
                         if (err)
                             return console.log(err);
                     });
-                    return [4 /*yield*/, javaExecuterController.executeNoArgumentScript(file.data)];
+                    return [4 /*yield*/, javaExecuterController.executeNoArgumentScript(file.name)];
                 case 2:
                     message = _a.sent();
                     res.status(200).json(message).end();

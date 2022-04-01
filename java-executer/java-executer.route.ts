@@ -12,7 +12,7 @@ javaRouter.post("/", async function(req, res) {
         fs.writeFile(`files/java/${file.name}`,file.data, function (err: any) {
             if (err) return console.log(err);
         });
-        const message = await javaExecuterController.executeNoArgumentScript(file.data);
+        const message = await javaExecuterController.executeNoArgumentScript(file.name);
         res.status(200).json(message).end();
     }
     catch (err) {

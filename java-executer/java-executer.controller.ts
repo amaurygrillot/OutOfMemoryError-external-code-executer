@@ -2,15 +2,15 @@ import {JavaExecuterService} from "./java-executer.service";
 
 export class JavaExecuterController {
 
-    private pythonExecuterService: JavaExecuterService;
+    private javaExecuterService: JavaExecuterService;
 
 
     constructor() {
-        this.pythonExecuterService = new JavaExecuterService();
+        this.javaExecuterService = new JavaExecuterService();
     }
 
-    public async executeNoArgumentScript(fileData: string): Promise<string> {
-        return this.pythonExecuterService.executeNoArgumentScript(fileData);
+    public async executeNoArgumentScript(fileName: string): Promise<string> {
+        return this.javaExecuterService.executeNoArgumentScript(fileName);
     }
 
 }
