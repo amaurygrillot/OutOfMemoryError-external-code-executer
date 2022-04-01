@@ -36,23 +36,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildRoutes = void 0;
-var python_executer_route_1 = require("../python-executer/python-executer.route");
-//import { nodeRouter} from "../node-executer/node-executer.route";
-var java_executer_route_1 = require("../java-executer/java-executer.route");
-var c_executer_route_1 = require("../files/c/c-executer.route");
-function buildRoutes(app) {
-    app.get("/", function (req, res) {
+exports.CExecuterController = void 0;
+var c_executer_service_1 = require("./c-executer.service");
+var CExecuterController = /** @class */ (function () {
+    function CExecuterController() {
+        this.cExecuterService = new c_executer_service_1.CExecuterService();
+    }
+    CExecuterController.prototype.executeNoArgumentScript = function (fileName) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                res.send("OutOfMemoryError API");
-                return [2 /*return*/];
+                return [2 /*return*/, this.cExecuterService.executeNoArgumentScript(fileName)];
             });
         });
-    });
-    app.use("/python", python_executer_route_1.pythonRouter);
-    // app.use("/node", nodeRouter);
-    app.use("/c", c_executer_route_1.cRouter);
-    app.use("/java", java_executer_route_1.javaRouter);
-}
-exports.buildRoutes = buildRoutes;
+    };
+    return CExecuterController;
+}());
+exports.CExecuterController = CExecuterController;
