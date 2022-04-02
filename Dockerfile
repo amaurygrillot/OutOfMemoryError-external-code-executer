@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:1
 
 FROM node:12.18.1
-ENV CI=true
-
 
 # create root application folder
 WORKDIR /app
