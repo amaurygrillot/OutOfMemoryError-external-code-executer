@@ -18,12 +18,12 @@ export class PythonExecuterService {
         this.pythonExecuterRepository = await PythonExecuterRepository.getInstance();
     }
 
-    public async executeNoArgumentScript(fileData: string): Promise<string> {
-        return this.executeScript(fileData);
+    public async executeNoArgumentScript(fileName: string): Promise<string> {
+        return this.executeScript(fileName);
     }
 
 
-    private async executeScript(fileData: string): Promise<string>
+    private async executeScript(fileName: string): Promise<string>
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
@@ -32,7 +32,7 @@ export class PythonExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the python script
-            const python = spawn('python3', ['-I', '-c', fileData]);
+            const python = spawn('python3', ['-I', `files/python/${fileName}`]);
             // collect data from script
             python.stdout.on('data', function (data) {
                 console.log('Pipe data from python script ...');
