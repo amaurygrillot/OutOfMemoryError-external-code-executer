@@ -24,4 +24,5 @@ COPY . .
 
 
 CMD [ "npm", "build" ]
+CMD [ "npm", "test" ]
 CMD [ "npm", "start" ]
