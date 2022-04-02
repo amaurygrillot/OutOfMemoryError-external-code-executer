@@ -33,6 +33,9 @@
     "vm2": "^3.9.9"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
     "@types/bcrypt": "^5.0.0",
     "@types/body-parser": "^1.19.0",
     "@types/dotenv": "^8.2.0",
@@ -40,6 +43,7 @@
     "@types/jest": "^27.4.1",
     "@types/node": "^12.18.1",
     "@types/uuid": "^8.3.0",
+    "babel-jest": "^27.5.1",
     "jest": "^27.5.1",
     "typescript": "^4.6.2"
   }
