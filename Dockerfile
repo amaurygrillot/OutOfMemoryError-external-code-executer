@@ -21,6 +21,6 @@ RUN apt-get install --yes python3
 RUN apt-get install --yes gcc
 
 
-RUN npm test
+
 RUN npm build
 CMD [ "npm", "start" ]
