@@ -10,7 +10,7 @@ describe('ma première suite de tests', () => {
 
     test('string with a single number should result in the number itself', async () => {
         const message = await javaExecuterService.executeNoArgumentScript('Main.java')
-        expect(message).toBe("Hello world!\r\n\nProcess ended with error code : 0");
+        expect(message).toBe("Hello world!\n\nProcess ended with error code : 0");
     });
 
 });
