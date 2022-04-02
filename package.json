@@ -5,8 +5,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node index.js",
-    "startLocally" : "tsc && node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "startLocally": "tsc && node index.js",
+    "startTS": "ts-node index.ts",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -36,8 +37,10 @@
     "@types/body-parser": "^1.19.0",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.12",
+    "@types/jest": "^27.4.1",
     "@types/node": "^12.18.1",
     "@types/uuid": "^8.3.0",
+    "jest": "^27.5.1",
     "typescript": "^4.6.2"
   }
 }
