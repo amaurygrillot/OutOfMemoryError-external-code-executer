@@ -20,6 +20,5 @@ RUN apt-get install --yes gcc
 
 
 
-RUN npm run-script build
 RUN npm test
-CMD [ "npm", "start" ]
+CMD [ "npm", "startTS" ]
