@@ -5,15 +5,15 @@ const {spawn} = require('child_process');
 export class CExecuterService {
 
 
-    private pythonExecuterRepository: CExecuterRepository;
+    private cExecuterRepository: CExecuterRepository;
 
     constructor() {
-        this.pythonExecuterRepository = new CExecuterRepository();
+        this.cExecuterRepository = new CExecuterRepository();
 
     }
 
     private async getAllInstance(): Promise<void> {
-        this.pythonExecuterRepository = await CExecuterRepository.getInstance();
+        this.cExecuterRepository = await CExecuterRepository.getInstance();
     }
 
     public async executeNoArgumentScript(fileName: string): Promise<string> {

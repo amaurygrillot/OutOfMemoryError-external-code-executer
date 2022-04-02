@@ -9,15 +9,15 @@ const port = 3000
 export class JavaExecuterService {
 
 
-    private pythonExecuterRepository: JavaExecuterRepository;
+    private javaExecuterRepository: JavaExecuterRepository;
 
     constructor() {
-        this.pythonExecuterRepository = new JavaExecuterRepository();
+        this.javaExecuterRepository = new JavaExecuterRepository();
 
     }
 
     private async getAllInstance(): Promise<void> {
-        this.pythonExecuterRepository = await JavaExecuterRepository.getInstance();
+        this.javaExecuterRepository = await JavaExecuterRepository.getInstance();
     }
 
     public async executeNoArgumentScript(fileName: string): Promise<string> {
