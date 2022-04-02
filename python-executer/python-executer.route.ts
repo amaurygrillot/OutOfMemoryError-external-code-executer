@@ -6,6 +6,7 @@ export const pythonRouter = express.Router();
 
 pythonRouter.post("/", async function(req, res) {
     let file = req.files.fileKey;
+    console.log("filename : " + file.name);
     const fs = require('fs');
     const pythonExecuterController = new PythonExecuterController();
     try {
