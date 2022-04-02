@@ -14,7 +14,7 @@ COPY . .
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
 RUN apt install --yes openjdk-11-jdk
-RUN npm install
+RUN npm ci
 RUN apt-get install --yes python3
 RUN apt-get install --yes gcc
 
