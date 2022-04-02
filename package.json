@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
-    "start": "node index.js",
-    "startLocally": "tsc && node index.js",
-    "startTS": "ts-node index.ts",
+    "start": "ts-node index.ts",
     "test": "jest"
   },
   "keywords": [],
