@@ -1,15 +1,7 @@
 # syntax=docker/dockerfile:1
 
 FROM node:12.18.1
-ENV NODE_ENV=production
 ENV CI=true
-RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
-RUN apt-get update
-RUN apt install --yes openjdk-11-jdk
-RUN npm install
-RUN apt-get install --yes python3
-RUN apt-get install --yes gcc
-
 
 
 # create root application folder
@@ -21,8 +13,14 @@ COPY tsconfig.json ./
 # copy source code to /app/src folder
 COPY . .
 
+RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
+RUN apt-get update
+RUN apt install --yes openjdk-11-jdk
+RUN npm install
+RUN apt-get install --yes python3
+RUN apt-get install --yes gcc
 
 
-CMD [ "npm", "build" ]
-CMD [ "npm", "test" ]
+RUN npm test
+RUN npm build
 CMD [ "npm", "start" ]
