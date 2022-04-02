@@ -1,5 +1,8 @@
-class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello Java!"); // Display the string.
-    }
+public class Main {
+
+	public static void main(String[] args) {
+
+		System.out.println("Hello world!");
+	}
+
 }
