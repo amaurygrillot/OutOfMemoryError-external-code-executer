@@ -20,6 +20,6 @@ RUN apt-get install --yes gcc
 
 
 RUN chmod -R 700 /app
-RUN chmod -R 755 app/files
+RUN chmod -R 755 files
 RUN npm test
 CMD [ "npm", "start" ]
