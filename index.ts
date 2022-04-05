@@ -12,7 +12,7 @@ function sum(a, b) {
 
 export default sum;
 const corsOptions = {
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200', 'https://oome-front.herokuapp.com/'],
     optionsSuccessStatus: 200, // For legacy browser support
     methods: "GET, PUT, POST, DELETE"
 }
