@@ -6,11 +6,7 @@ const express = require('express')
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const app: Express = express();
-function sum(a, b) {
-    return a + b;
-}
 
-export default sum;
 const corsOptions = {
     origin: ['http://localhost:4200', 'https://oome-front.herokuapp.com'],
     optionsSuccessStatus: 200, // For legacy browser support
