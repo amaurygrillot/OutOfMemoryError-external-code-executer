@@ -18,11 +18,9 @@ RUN npm ci
 RUN apt-get install --yes python3
 RUN apt-get install --yes gcc
 
-
-RUN chmod -R 700 files
-
+RUN chmod -R 700 /app
+RUN chmod -R 755 files
+EXPOSE 2222 80
 RUN npm test
-
-USER node
 
 CMD [ "npm", "start" ]
