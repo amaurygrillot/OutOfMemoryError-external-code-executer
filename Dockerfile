@@ -35,5 +35,5 @@ EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
 RUN chmod 755 -R /mnt
-RUN npm test
+
 CMD [ "npm", "start" ]
