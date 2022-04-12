@@ -34,7 +34,7 @@ export class JavaExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the javac script
-            const javac = spawn('javac', [`files/java/${fileName}`]);
+            const javac = spawn('runuser', ['-l', 'node', '-c', `javac /app/mnt/storedPrograms/java/${fileName}`]);
             // collect data from script
             javac.stdout.on('data', function (data) {
                 console.log('Pipe data from javac script ...');
@@ -51,7 +51,7 @@ export class JavaExecuterService {
             // in close event we are sure that stream from child process is closed
             javac.on('close', (data) => {
                 if (data === 0) {
-                    const java = spawn('java', [`files/java/${fileName}`]);
+                    const java = spawn('runuser', ['-l', 'node', '-c', `java /app/mnt/storedPrograms/java/${fileName}`]);
                     java.stdout.on('data', function (output) {
                         console.log(String(output));
                         dataToSend += String(output);

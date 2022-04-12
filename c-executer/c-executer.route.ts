@@ -9,7 +9,7 @@ cRouter.post("/", async function(req, res) {
     const fs = require('fs');
     const javaExecuterController = new CExecuterController();
     try {
-        fs.writeFile(`files/c/${file.name}`,file.data, function (err: any) {
+        fs.writeFile(`/app/mnt/storedPrograms/c/${file.name}`,file.data, function (err: any) {
             if (err) return console.log(err);
         });
         const message = await javaExecuterController.executeNoArgumentScript(file.name);
