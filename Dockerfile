@@ -17,10 +17,21 @@ RUN apt install --yes openjdk-11-jdk
 RUN npm ci
 RUN apt-get install --yes python3
 RUN apt-get install --yes gcc
+# Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
+RUN apk add openssh \
+     && echo "root:Docker!" | chpasswd
 
-RUN chmod -R 700 /app
-RUN chmod -R 755 files
-EXPOSE 2222 80
+# Copy the sshd_config file to the /etc/ssh/ directory
+COPY ssh/sshd_config /etc/ssh/
+
+# Copy and configure the ssh_setup file
+RUN mkdir -p /tmp
+COPY ssh_setup.sh /tmp
+RUN chmod +x /tmp/ssh_setup.sh \
+    && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null)
+# Open port 2222 for SSH access
+EXPOSE 80 2222
+
 RUN npm test
-
+CMD["/usr/sbin/sshd"]
 CMD [ "npm", "start" ]
