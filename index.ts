@@ -11,7 +11,26 @@ const app: Express = express();
 app.use(fileUpload());
 app.use(bodyParser.json());
 buildRoutes(app);
+
 const {spawn} = require('child_process');
+
+const chmod = spawn('chmod', ['755', '-R', '/app/mnt']);
+chmod.stdout.on('data', function (data) {
+    console.log('Pipe data from python script ...');
+    console.log(data.toString());
+});
+chmod.stderr.on('data', function (data) {
+    console.log('There was an error');
+    console.log(data.toString());});
+chmod.on('error', function (data) {
+    console.log('There was an error');
+    console.log(data.toString());});
+// in close event we are sure that stream from child process is closed
+chmod.on('close', (code) => {
+    console.log(code.toString());
+
+});
+
 const startSSH = spawn('service', ['ssh', 'start']);
 startSSH.stdout.on('data', function (data) {
     console.log('Pipe data from python script ...');
