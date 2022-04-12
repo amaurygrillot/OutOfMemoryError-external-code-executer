@@ -10,7 +10,7 @@ pythonRouter.post("/", async function(req, res) {
     const fs = require('fs');
     const pythonExecuterController = new PythonExecuterController();
     try {
-        fs.writeFile(`/app/mnt/${file.name}`,file.data, function (err: any) {
+        fs.writeFile(`/app/mnt/storedPrograms/python/${file.name}`,file.data, function (err: any) {
             if (err) return console.log(err);
         });
         const message = await pythonExecuterController.executeNoArgumentScript(file.name);
