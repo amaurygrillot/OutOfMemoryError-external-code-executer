@@ -33,7 +33,7 @@ RUN chmod +x /tmp/ssh_setup.sh \
 # Open port 2222 for SSH access
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
-RUN ./connect.sh
+
 RUN chmod 755 -R /mnt
 RUN npm test
 CMD [ "npm", "start" ]
