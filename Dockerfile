@@ -34,6 +34,4 @@ RUN chmod +x /tmp/ssh_setup.sh \
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
-RUN chmod 755 -R /app/mnt
-
 CMD [ "npm", "start" ]
