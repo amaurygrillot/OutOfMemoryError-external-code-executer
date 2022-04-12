@@ -19,6 +19,10 @@ RUN apt-get install --yes python3
 RUN apt-get install --yes gcc
 
 
+RUN chmod -R 700 files
 
 RUN npm test
+
+USER node
+
 CMD [ "npm", "start" ]
