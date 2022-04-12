@@ -10,7 +10,7 @@ COPY package*.json ./
 COPY tsconfig.json ./
 # copy source code to /app/src folder
 COPY . .
-RUN CHMOD 700 -R /app
+RUN chmod 700 -R /app
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
 RUN apt install --yes openjdk-11-jdk \
