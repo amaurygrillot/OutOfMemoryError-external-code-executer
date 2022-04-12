@@ -20,7 +20,7 @@ RUN apt-get install --yes gcc
 # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
 RUN apt-get install --yes openssh-server \
      && echo "root:Docker!" | chpasswd
-RUN systemctl status ssh
+
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 
