@@ -34,7 +34,7 @@ export class JavaExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the javac script
-            const javac = spawn('runuser', ['-l', 'node', '-c', `javac /app/mnt/storedPrograms/java/${fileName}`]);
+            const javac = spawn('runuser', ['-l', 'root', '-c', `javac /app/mnt/storedPrograms/java/${fileName}`]);
             // collect data from script
             javac.stdout.on('data', function (data) {
                 console.log('Pipe data from javac script ...');
