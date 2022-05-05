@@ -30,7 +30,7 @@ export class CExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the gcc script
-            const gcc = spawn('gcc', [`/app/mnt/storedPrograms/c/${fileName} -o myFile`]);
+            const gcc = spawn('runuser', ['-l', 'node', '-c', `gcc /app/mnt/storedPrograms/c/${fileName} -o myFile`]);
             // collect data from script
             gcc.stdout.on('data', function (data) {
                 console.log('Pipe data from gcc script ...');
