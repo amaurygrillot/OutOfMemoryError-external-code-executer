@@ -14,7 +14,7 @@ RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/ap
 RUN apt-get update
 RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && apt-get install --yes sudo \
-    && apt-get install python g++ build-essential \
+    && apt-get install --yes python g++ build-essential \
     && npm ci \
     && apt-get install --yes python3 \
     && apt-get install --yes gcc \
