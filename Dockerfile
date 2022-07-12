@@ -12,7 +12,7 @@ COPY tsconfig.json ./
 COPY . .
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
-RUN apt install --yes openjdk-11-jdk \
+RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && apt-get install --yes sudo \
     && npm ci \
     && apt-get install --yes python3 \
