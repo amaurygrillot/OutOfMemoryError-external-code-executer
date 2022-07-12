@@ -14,10 +14,10 @@ RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/ap
 RUN apt-get update
 RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && apt-get install --yes sudo \
+    && apt-get install python g++ build-essential \
     && npm ci \
     && apt-get install --yes python3 \
     && apt-get install --yes gcc \
-    && apt-get install python g++ build-essential \
     # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
     && apt-get install --yes openssh-server \
     && echo "root:Docker!" | chpasswd
