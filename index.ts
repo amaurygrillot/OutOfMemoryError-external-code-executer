@@ -3,9 +3,12 @@ import {buildRoutes} from "./api";
 import {Express} from "express";
 const express = require('express')
 
+const fileUpload = require('express-fileupload');
 
 const app: Express = express();
 
+
+app.use(fileUpload());
 app.use(bodyParser.json());
 buildRoutes(app);
 
