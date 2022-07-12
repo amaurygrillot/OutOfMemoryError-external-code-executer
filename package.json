@@ -19,9 +19,11 @@
   "homepage": "https://github.com/amaurygrillot/OutOfMemoryError-Backoffice#readme",
   "description": "",
   "dependencies": {
+    "@types/express-fileupload": "^1.2.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-fileupload": "^1.4.0",
     "isolated-vm": "^4.4.1",
     "mysql2": "^2.2.5",
     "node-gyp": "^8.4.1",
