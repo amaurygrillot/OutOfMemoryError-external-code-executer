@@ -10,14 +10,14 @@ javaRouter.post("/", async function(req, res) {
     const javaExecuterController = new JavaExecuterController();
     try {
         fs.writeFile(`/app/mnt/storedPrograms/java/${file.name}`,file.data, function (err: any) {
-            if (err) return console.log(err);
+            if (err) return console.log("Could not write the file\n" + err);
         });
         const message = await javaExecuterController.executeNoArgumentScript(file.name);
         res.status(200).json(message).end();
     }
     catch (err) {
         console.error(err);
-        res.status(500).json("erreur").end();
+        res.status(500).json("erreur : " + err).end();
     }
 
 });
