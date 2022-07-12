@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 #runs on debian 11
-FROM node:14-bullseye
+FROM node:14-bullseye-slim
 
 # create root application folder
 WORKDIR /app

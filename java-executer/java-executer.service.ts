@@ -30,7 +30,7 @@ export class JavaExecuterService {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
                 reject("timed out");
-            }, (15 * 1000));
+            }, (150 * 1000));
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the javac script
