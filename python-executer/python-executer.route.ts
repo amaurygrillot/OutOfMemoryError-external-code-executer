@@ -1,5 +1,4 @@
 import {PythonExecuterController} from "./python-executer.controller";
-import ivm from "isolated-vm";
 
 
 const express = require('express')

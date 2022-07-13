@@ -6,7 +6,7 @@
     "start": "ts-node index.ts",
     "test": "jest",
     "playground": "ts-node playground.ts",
-    "build": "npx tsc"
+    "build": "tsc index.ts"
   },
   "keywords": [],
   "author": "",
