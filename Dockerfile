@@ -7,10 +7,10 @@ ENV NODE_ENV production
 WORKDIR /app
 
 # copy configs to /app folder
-COPY --chown=node:node package*.json ./
-COPY --chown=node:node tsconfig.json ./
+COPY package*.json ./
+COPY tsconfig.json ./
 # copy source code to /app/src folder
-COPY --chown=node:node . .
+COPY . .
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
 RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
@@ -36,6 +36,6 @@ EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
 RUN /app/node_modules/typescript/bin/tsc index.ts
-
+RUN chown -R node:node /app
 USER node
 CMD [ "node", "index.js" ]
