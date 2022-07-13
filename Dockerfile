@@ -35,7 +35,6 @@ RUN chmod +x /tmp/ssh_setup.sh \
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
-RUN sh -c tsc index.ts
 
 
-CMD [ "node", "index.js" ]
+CMD [ "ts-node", "index.ts" ]
