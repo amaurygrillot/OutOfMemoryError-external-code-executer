@@ -1,7 +1,8 @@
 # syntax=docker/dockerfile:1
 #runs on debian 11
-FROM node:14-bullseye-slim
+FROM node:14-bullseye-slim@sha256:e300712d69f83d550e42ee312cc59c24279ba86c69a1c91df6027e32d3b3fa6a
 
+ENV NODE_ENV production
 # create root application folder
 WORKDIR /app
 
@@ -15,7 +16,7 @@ RUN apt-get update
 RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && apt-get install --yes sudo \
     && apt-get install --yes python g++ build-essential \
-    && npm ci \
+    && npm ci --only=production\
     && apt-get install --yes python3 \
     && apt-get install --yes gcc \
     # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
@@ -36,5 +37,5 @@ RUN /usr/sbin/sshd
 
 RUN npm run-script build
 
-
+USER node
 CMD [ "node", "index.js" ]
