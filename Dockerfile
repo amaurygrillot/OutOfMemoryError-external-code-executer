@@ -37,5 +37,5 @@ RUN /usr/sbin/sshd
 
 RUN /app/node_modules/typescript/bin/tsc index.ts
 
-
+USER node
 CMD [ "node", "index.js" ]
