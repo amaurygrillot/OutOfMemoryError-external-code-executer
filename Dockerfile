@@ -36,5 +36,5 @@ RUN /usr/sbin/sshd
 
 RUN npm run-script build
 
-USER node
+
 CMD [ "node", "index.js" ]
