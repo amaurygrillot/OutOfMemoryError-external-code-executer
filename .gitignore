@@ -1,2 +1,4 @@
 node-executer/
 node_modules/
+.env
+playground*

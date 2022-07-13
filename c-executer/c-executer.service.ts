@@ -30,7 +30,7 @@ export class CExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the gcc script
-            const gcc = spawn('gcc', [`/app/mnt/storedPrograms/c/${fileName}`, '-o', '/app/mnt/storedPrograms/c/myFile']);
+            const gcc = spawn('gcc', [`${process.env.FILES_REPO}/c/${fileName}`, '-o', '/app/mnt/storedPrograms/c/myFile']);
             // collect data from script
             gcc.stdout.on('data', function (data) {
                 console.log('Pipe data from gcc script ...');
@@ -47,7 +47,7 @@ export class CExecuterService {
             // in close event we are sure that stream from child process is closed
             gcc.on('close', (data) => {
                 if (data === 0) {
-                    const cExec = spawn('/app/mnt/storedPrograms/c/myFile');
+                    const cExec = spawn(`${process.env.FILES_REPO}/c/myFile`);
                     cExec.stdout.on('data', function (output) {
                         console.log(String(output));
                         dataToSend += String(output);

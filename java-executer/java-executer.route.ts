@@ -9,7 +9,7 @@ javaRouter.post("/", async function(req, res) {
     const fs = require('fs');
     const javaExecuterController = new JavaExecuterController();
     try {
-        fs.writeFile(`/app/mnt/storedPrograms/java/${file.name}`,file.data, function (err: any) {
+        fs.writeFile(`${process.env.FILES_REPO}/java/${file.name}`,file.data, function (err: any) {
             if (err) return console.log("Could not write the file\n" + err);
         });
         const message = await javaExecuterController.executeNoArgumentScript(file.name);
