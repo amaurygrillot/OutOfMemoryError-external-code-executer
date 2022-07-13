@@ -22,7 +22,6 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && apt-get install --yes openssh-server \
     && echo "root:Docker!" | chpasswd
 
-RUN npm test
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 
