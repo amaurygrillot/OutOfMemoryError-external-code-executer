@@ -6,10 +6,10 @@ FROM node:14-bullseye-slim
 WORKDIR /app
 
 # copy configs to /app folder
-COPY package*.json ./
-COPY tsconfig.json ./
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node tsconfig.json ./
 # copy source code to /app/src folder
-COPY . .
+COPY --chown=node:node . .
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
 RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
