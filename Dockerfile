@@ -34,4 +34,5 @@ RUN chmod +x /tmp/ssh_setup.sh \
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
+USER node
 CMD [ "npm", "start" ]
