@@ -34,5 +34,4 @@ RUN chmod +x /tmp/ssh_setup.sh \
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
-RUN npm test
 CMD [ "npm", "start" ]
