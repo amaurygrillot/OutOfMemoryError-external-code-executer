@@ -8,7 +8,6 @@ export const pythonRouter = express.Router();
 pythonRouter.post("/", async function(req, res) {
     let file = req.files.fileKey;
 
-    console.log("filename : " + file.name);
     const fs = require('fs');
     const pythonExecuterController = new PythonExecuterController();
     try {
@@ -20,7 +19,7 @@ pythonRouter.post("/", async function(req, res) {
     }
     catch (err) {
         console.error(err);
-        res.status(500).json("erreur").end();
+        res.status(500).json("erreur : " + err).end();
     }
 });
 

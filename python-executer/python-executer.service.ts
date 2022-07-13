@@ -1,9 +1,7 @@
 import {PythonExecuterRepository} from "./python-executer.repository";
 
-const express = require('express')
 const {spawn} = require('child_process');
-const app = express()
-const port = 3000
+
 export class PythonExecuterService {
 
 

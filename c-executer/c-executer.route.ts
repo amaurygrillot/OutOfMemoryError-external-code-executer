@@ -17,7 +17,7 @@ cRouter.post("/", async function(req, res) {
     }
     catch (err) {
         console.error(err);
-        res.status(500).json("erreur").end();
+        res.status(500).json("erreur : " + err).end();
     }
 
 });
