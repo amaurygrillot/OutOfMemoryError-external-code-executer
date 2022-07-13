@@ -34,5 +34,6 @@ RUN chmod +x /tmp/ssh_setup.sh \
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
+RUN npm build
 USER node
-CMD [ "npm", "start" ]
+CMD [ "node", "index.js" ]
