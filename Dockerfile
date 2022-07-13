@@ -2,6 +2,7 @@
 #runs on debian 11
 FROM node:14-bullseye-slim@sha256:e300712d69f83d550e42ee312cc59c24279ba86c69a1c91df6027e32d3b3fa6a
 
+ENV NODE_ENV production
 # create root application folder
 WORKDIR /app
 
@@ -34,7 +35,7 @@ RUN chmod +x /tmp/ssh_setup.sh \
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
-RUN npm run-script build
+RUN tsc index.ts
 
-USER node
+
 CMD [ "node", "index.js" ]
