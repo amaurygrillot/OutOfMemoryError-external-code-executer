@@ -1,4 +1,3 @@
-mkdir /mnt/user-programs
 if [ ! -d "/etc/smbcredentials" ]; then
 mkdir /etc/smbcredentials
 fi
