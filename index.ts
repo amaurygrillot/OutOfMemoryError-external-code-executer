@@ -16,7 +16,7 @@ buildRoutes(app);
 const {spawn} = require('child_process');
 const startSSH = spawn('service', ['ssh', 'start']);
 startSSH.stdout.on('data', function (data) {
-    console.log('Pipe data from python script ...');
+    console.log('Pipe data from ssh script ...');
     console.log(data.toString());
 });
 startSSH.stderr.on('data', function (data) {
@@ -32,6 +32,7 @@ startSSH.on('close', (code) => {
 });
 
 const port = process.env.PORT || 3000;
+console.log("port : " + port)
 app.listen(port, function() {
     console.log(`Listening on ${port}...`);
     console.log(new Date().toLocaleString().split(',')[0]);
