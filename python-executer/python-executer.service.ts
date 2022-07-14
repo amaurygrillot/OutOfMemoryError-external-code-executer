@@ -30,7 +30,7 @@ export class PythonExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the python script
-            const python = spawn(`${process.env.PYTHON}`, [`${process.env.FILES_REPO}/python/${fileName}`]);
+            const python = spawn(`${process.env.PYTHON}`, [`${process.env.FILES_REPO}/python/${fileName}`], {uid : 1500});
             // collect data from script
             python.stdout.on('data', function (data) {
                 console.log('Pipe data from python script ...');

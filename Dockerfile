@@ -24,7 +24,9 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && apt-get install --yes openssh-server \
     && echo "root:Docker!" | chpasswd \
     && echo "node:Docker!" | chpasswd \
-    && adduser node sudo
+    && adduser node sudo \
+    && useradd spawn -u 1500 \
+    && echo "spawn:Docker!" | chpasswd
 
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
@@ -41,6 +43,7 @@ RUN /usr/sbin/sshd
 RUN setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 
 RUN /app/node_modules/typescript/bin/tsc index.ts
+RUN chmod 700 /
 RUN chown -R node:node /app
 RUN chmod -R 500 /app
 
