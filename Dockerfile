@@ -23,7 +23,7 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
     && apt-get install --yes openssh-server \
     && echo "root:Docker!" | chpasswd \
-    && echo "node:Docker!" | chpasswd \\
+    && echo "node:Docker!" | chpasswd \
     && adduser node sudo
 
 # Copy the sshd_config file to the /etc/ssh/ directory
@@ -44,5 +44,6 @@ RUN /app/node_modules/typescript/bin/tsc index.ts
 RUN chown -R node:node /app
 RUN chmod -R 500 /app
 
+USER node
 
 CMD [ "node", "index.js" ]
