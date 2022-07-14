@@ -12,9 +12,10 @@ const app: Express = express();
 app.use(fileUpload());
 app.use(bodyParser.json());
 buildRoutes(app);
-
+//RUN chmod -R 755 /app
 const {spawn} = require('child_process');
-const startSSH = spawn('service', ['ssh', 'start']);
+const startSSH = spawn('echo', [`${process.env.SU_PASSWORD}`,'|','sudo','-S','service','ssh','start']);
+
 startSSH.stdout.on('data', function (data) {
     console.log('Pipe data from ssh script ...');
     console.log(data.toString());
@@ -30,6 +31,7 @@ startSSH.on('close', (code) => {
     console.log(code.toString());
 
 });
+
 
 const port = process.env.PORT || 3000;
 console.log("port : " + port)
