@@ -22,7 +22,7 @@ export function buildRoutes(app: Express) {
 
 export function startSSH()
 {
-    const startSSH = spawn('sudo', ['service','ssh','start']);
+    const startSSH = spawn('sudo', ['-S','service','ssh','start']);
     startSSH.stdin.write(`${process.env.SU_PASSWORD}`)
 
     startSSH.stdout.on('data', function (data) {
@@ -42,7 +42,7 @@ export function startSSH()
 
 export function giveWriteRightsMntFolder()
 {
-    const chmod = spawn('chmod', ['-R','755', `${process.env.FILES_REPO}`]);
+    const chmod = spawn('sudo', ['-S', 'chmod', '-R','755', `${process.env.FILES_REPO}`]);
     chmod.stdin.write(`${process.env.SU_PASSWORD}`);
     chmod.stdout.on('data', function (data) {
         console.log('Pipe data from spawn script ...');
