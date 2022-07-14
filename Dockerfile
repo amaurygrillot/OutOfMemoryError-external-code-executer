@@ -43,7 +43,6 @@ RUN /usr/sbin/sshd
 RUN setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 
 RUN /app/node_modules/typescript/bin/tsc index.ts
-RUN chmod 700 /
 RUN chown -R node:node /app
 RUN chmod -R 500 /app
 
