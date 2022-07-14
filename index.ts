@@ -1,5 +1,5 @@
 const bodyParser = require("body-parser");
-import {buildRoutes, startSSH, giveWriteRightsMntFolder} from "./api";
+import {buildRoutes, startSSH, mountFiles, giveWriteRightsMntFolder} from "./api";
 import {Express} from "express";
 const express = require('express')
 import { config } from "dotenv";
@@ -13,6 +13,7 @@ app.use(fileUpload());
 app.use(bodyParser.json());
 buildRoutes(app);
 startSSH();
+mountFiles();
 giveWriteRightsMntFolder();
 
 
