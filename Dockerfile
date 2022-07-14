@@ -20,7 +20,6 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && apt-get install --yes python3 \
     && apt-get install --yes gcc \
     && apt-get install --yes libcap2-bin  \
-    && setcap cap_net_bind_service=+ep `readlink -f 'which node'` \
     # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
     && apt-get install --yes openssh-server \
     && echo "root:Docker!" | chpasswd
@@ -36,6 +35,8 @@ RUN chmod +x /tmp/ssh_setup.sh \
 # Open port 2222 for SSH access
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
+
+RUN setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 
 RUN /app/node_modules/typescript/bin/tsc index.ts
 RUN chown -R node:node /app
