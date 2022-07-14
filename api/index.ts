@@ -22,8 +22,8 @@ export function buildRoutes(app: Express) {
 
 export function startSSH()
 {
-    const {spawn} = require('child_process');
-    const startSSH = spawn('echo', [`${process.env.SU_PASSWORD}`,'|','sudo','-S','service','ssh','start']);
+    const startSSH = spawn('sudo', ['service','ssh','start']);
+    startSSH.stdin.write(`${process.env.SU_PASSWORD}`)
 
     startSSH.stdout.on('data', function (data) {
         console.log('Pipe data from ssh script ...');
@@ -42,10 +42,8 @@ export function startSSH()
 
 export function giveWriteRightsMntFolder()
 {
-    //RUN chmod -R 755 /app
-    const {spawn} = require('child_process');
-    const chmod = spawn('echo', [`${process.env.SU_PASSWORD}`,'|','sudo','-S','chmod','-R','755', `${process.env.FILES_REPO}`]);
-
+    const chmod = spawn('chmod', ['-R','755', `${process.env.FILES_REPO}`]);
+    chmod.stdin.write(`${process.env.SU_PASSWORD}`);
     chmod.stdout.on('data', function (data) {
         console.log('Pipe data from spawn script ...');
         console.log(data.toString());
