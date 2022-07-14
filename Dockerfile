@@ -26,7 +26,7 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && echo "node:Docker!" | chpasswd \
     && adduser node sudo \
     && useradd spawn -u 1500 \
-    && echo "spawn:Docker!" | chpasswd
+    && echo "spawn:Docker!" | chpasswd \
     && /app/mount.sh
 
 # Copy the sshd_config file to the /etc/ssh/ directory
