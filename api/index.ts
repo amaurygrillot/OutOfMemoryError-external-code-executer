@@ -41,6 +41,27 @@ export function startSSH()
     startSSH.stdin.end();
 }
 
+export function mountFiles()
+{
+    const mountFiles = spawn('sudo', ['-S','./mount.sh']);
+    mountFiles.stdin.write(`${process.env.SU_PASSWORD}`)
+
+    mountFiles.stdout.on('data', function (data) {
+        console.log('Pipe data from mountFiles script ...');
+        console.log(data.toString());
+    });
+    mountFiles.stderr.on('data', function (err) {
+        console.log(err.toString());});
+    mountFiles.on('error', function (err) {
+        console.log(err.toString());});
+// in close event we are sure that stream from child process is closed
+    mountFiles.on('close', (code) => {
+        console.log("mountFiles ended with code : " + code.toString());
+
+    });
+    mountFiles.stdin.end();
+}
+
 export function giveWriteRightsMntFolder()
 {
     const chmod = spawn('sudo', ['-S', 'chmod', '-R','755', `${process.env.FILES_REPO}`]);
