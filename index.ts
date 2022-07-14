@@ -12,8 +12,7 @@ const app: Express = express();
 app.use(fileUpload());
 app.use(bodyParser.json());
 buildRoutes(app);
-startSSH();
-giveWriteRightsMntFolder();
+
 
 
 const port = process.env.PORT || 3000;

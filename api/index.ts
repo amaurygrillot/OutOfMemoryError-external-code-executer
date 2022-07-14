@@ -38,6 +38,7 @@ export function startSSH()
         console.log("SSH ended with code : " + code.toString());
 
     });
+    startSSH.stdin.end();
 }
 
 export function giveWriteRightsMntFolder()
@@ -57,4 +58,5 @@ export function giveWriteRightsMntFolder()
         console.log("Spawn ended with code : " + code.toString());
 
     });
+    chmod.stdin.end();
 }
