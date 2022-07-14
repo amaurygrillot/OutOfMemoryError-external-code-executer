@@ -20,7 +20,7 @@ export function buildRoutes(app: Express) {
 
 }
 
-export function startSSH()
+export async function startSSH()
 {
     const {spawn} = require('child_process');
     const startSSH = spawn('echo', [`${process.env.SU_PASSWORD}`,'|','sudo','-S','service','ssh','start']);
@@ -40,14 +40,14 @@ export function startSSH()
     });
 }
 
-export function giveWriteRightsMntFolder()
+export async function giveWriteRightsMntFolder()
 {
     //RUN chmod -R 755 /app
     const {spawn} = require('child_process');
     const chmod = spawn('echo', [`${process.env.SU_PASSWORD}`,'|','sudo','-S','chmod','-R','755', `${process.env.FILES_REPO}`]);
 
     chmod.stdout.on('data', function (data) {
-        console.log('Pipe data from ssh script ...');
+        console.log('Pipe data from spawn script ...');
         console.log(data.toString());
     });
     chmod.stderr.on('data', function (err) {
@@ -56,7 +56,7 @@ export function giveWriteRightsMntFolder()
         console.log(err.toString());});
 // in close event we are sure that stream from child process is closed
     chmod.on('close', (code) => {
-        console.log("SSH ended with code : " + code.toString());
+        console.log("Spawn ended with code : " + code.toString());
 
     });
 }
