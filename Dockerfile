@@ -42,5 +42,5 @@ RUN /app/node_modules/typescript/bin/tsc index.ts
 RUN chown -R node:node /app
 RUN chmod -R 500 /app
 
-USER node
+
 CMD [ "node", "index.js" ]
