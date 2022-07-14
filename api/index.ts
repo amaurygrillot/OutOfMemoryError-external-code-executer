@@ -20,7 +20,7 @@ export function buildRoutes(app: Express) {
 
 }
 
-export async function startSSH()
+export function startSSH()
 {
     const {spawn} = require('child_process');
     const startSSH = spawn('echo', [`${process.env.SU_PASSWORD}`,'|','sudo','-S','service','ssh','start']);
@@ -40,7 +40,7 @@ export async function startSSH()
     });
 }
 
-export async function giveWriteRightsMntFolder()
+export function giveWriteRightsMntFolder()
 {
     //RUN chmod -R 755 /app
     const {spawn} = require('child_process');
