@@ -33,7 +33,7 @@ RUN mkdir /app/bin \
     && mkdir /app/lib \
     && mkdir /app/lib/x86_64-linux-gnu \
     && mkdir /app/lib64 \
-    && mkdir /usr/bin
+    && mkdir /app/usr/bin
 #copy commands
 RUN cp /bin/bash /app/bin/bash \
     && cp /usr/bin/python3 /usr/bin \

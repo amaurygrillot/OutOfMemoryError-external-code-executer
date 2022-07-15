@@ -30,10 +30,11 @@ export class PythonExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the python script
-            const python = spawn('chroot',
-                ['/app', `${process.env.PYTHON}`, `${process.env.FILES_REPO}/python/${fileName}`],
+            const python = spawn('sudo',
+                ['chroot', '/app', `${process.env.PYTHON}`, `${process.env.FILES_REPO}/python/${fileName}`],
                 {timeout : 30 * 1000});
-
+            python.stdin.write(`${process.env.SU_PASSWORD}`);
+            python.stdin.end();
             // collect data from script
             python.stdout.on('data', function (data) {
                 console.log('Pipe data from python script ...');

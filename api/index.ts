@@ -66,6 +66,7 @@ export function giveWriteRightsMntFolder()
 {
     const chmod = spawn('sudo', ['-S', 'chmod', '-R','755', `${process.env.FILES_REPO}`]);
     chmod.stdin.write(`${process.env.SU_PASSWORD}`);
+    chmod.stdin.end();
     chmod.stdout.on('data', function (data) {
         console.log('Pipe data from spawn script ...');
         console.log(data.toString());
@@ -79,5 +80,5 @@ export function giveWriteRightsMntFolder()
         console.log("Spawn ended with code : " + code.toString());
 
     });
-    chmod.stdin.end();
+
 }
