@@ -34,7 +34,8 @@ RUN mkdir /app/bin \
     && mkdir /app/lib/x86_64-linux-gnu \
     && mkdir /app/lib64 \
     && mkdir /app/usr \
-    && mkdir /app/usr/bin
+    && mkdir /app/usr/bin \
+    && mkdir /app/usr/bin/lib/x86_64-linux-gnu
 #copy commands
 RUN cp /bin/bash /app/bin/bash \
     && cp /usr/bin/python3 /app/usr/bin \
@@ -45,7 +46,8 @@ RUN cp /bin/bash /app/bin/bash \
 RUN cp /lib/x86_64-linux-gnu/libtinfo.so.6 /app/lib/x86_64-linux-gnu \
     && cp /lib/x86_64-linux-gnu/libdl.so.2 /app/lib/x86_64-linux-gnu/libdl.so.2 \
     && cp /lib/x86_64-linux-gnu/libc.so.6 /app/lib/x86_64-linux-gnu/libc.so.6 \
-    && cp /lib64/ld-linux-x86-64.so.2 /app/lib64/ld-linux-x86-64.so.2 \cp /usr/bin/lib/x86_64-linux-gnu/libpthread.so.0 /app/usr/bin/lib/x86_64-linux-gnu/libpthread.so.0 \
+    && cp /lib64/ld-linux-x86-64.so.2 /app/lib64/ld-linux-x86-64.so.2 \
+    && cp /usr/bin/lib/x86_64-linux-gnu/libpthread.so.0 /app/usr/bin/lib/x86_64-linux-gnu/libpthread.so.0 \
     && cp /lib/x86_64-linux-gnu/libutil.so.1 /app/lib/x86_64-linux-gnu/libutil.so.1 \
     && cp /lib/x86_64-linux-gnu/libz.so.1 /app/lib/x86_64-linux-gnu/libz.so.1 \
     && cp /lib/x86_64-linux-gnu/libm.so.6 /app/lib/x86_64-linux-gnu/libm.so.6 \
