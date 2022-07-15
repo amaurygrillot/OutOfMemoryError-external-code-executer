@@ -34,9 +34,10 @@ RUN mkdir /app/bin \
     && mkdir /app/lib/x86_64-linux-gnu \
     && mkdir /app/lib64 \
     && mkdir /app/usr \
-    && mkdir /app/usr/bin \
+    && mkdir /app/usr/bin
 #copy commands
-RUN && cp /usr/bin/python3 /app/usr/bin \
+RUN cp /bin/bash /app/bin/bash \
+    && cp /usr/bin/python3 /app/usr/bin \
     && cp /usr/bin/java /app/usr/bin \
     && cp /usr/bin/javac /app/usr/bin \
     && cp /usr/bin/gcc /app/usr/bin
