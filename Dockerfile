@@ -27,9 +27,9 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && adduser node sudo \
     && useradd spawn -u 1500 \
     && echo "spawn:Docker!" | chpasswd \
-    && mkdir /app/bin \
-    && echo "Docker!" | sudo mount --bind /bin /app/bin \
-    && mkdir /app/lib \
+    && mkdir /app/bin
+RUN echo "Docker!" | sudo mount --bind /bin /app/bin
+RUN mkdir /app/lib \
     && echo "Docker!" | sudo mount --bind /lib /app/lib \
     && mkdir /app/lib \
     && echo "Docker!" | sudo mount --bind /lib64 /app/lib64
