@@ -37,10 +37,10 @@ RUN mkdir /app/bin \
     && mkdir /app/usr/bin
 #copy commands
 RUN cp /bin/bash /app/bin/bash \
-    && cp /usr/bin/python3 /usr/bin \
-    && cp /usr/bin/java /usr/bin \
-    && cp /usr/bin/javac /usr/bin \
-    && cp /usr/bin/gcc /usr/bin
+    && cp /usr/bin/python3 /app/usr/bin \
+    && cp /usr/bin/java /app/usr/bin \
+    && cp /usr/bin/javac /app/usr/bin \
+    && cp /usr/bin/gcc /app/usr/bin
 #commands dependencies
 RUN cp /lib/x86_64-linux-gnu/libtinfo.so.6 /app/lib/x86_64-linux-gnu \
     && cp /lib/x86_64-linux-gnu/libdl.so.2 /app/lib/x86_64-linux-gnu/libdl.so.2 \
