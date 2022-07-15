@@ -34,7 +34,8 @@ RUN mkdir /app/bin \
     && mkdir /app/lib/x86_64-linux-gnu \
     && mkdir /app/lib64 \
     && mkdir /app/usr \
-    && mkdir /app/usr/bin
+    && mkdir /app/usr/bin \
+    && mkdir /app/lib/python3.9
 #copy commands
 RUN cp /bin/bash /app/bin/bash \
     && cp /usr/bin/python3 /app/usr/bin \
