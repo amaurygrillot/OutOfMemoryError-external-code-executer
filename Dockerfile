@@ -41,7 +41,7 @@ RUN cp /bin/bash /app/bin/bash \
     && cp /usr/bin/java /app/usr/bin \
     && cp /usr/bin/javac /app/usr/bin \
     && cp /usr/bin/gcc /app/usr/bin \
-    && cp -R  /usr/lib/python3.9 /app/usr/lib/python3.9 \
+    && cp -R  /usr/lib/python3.9 /app/usr/lib/python3.9
 #commands dependencies
 RUN cp /lib/x86_64-linux-gnu/libtinfo.so.6 /app/lib/x86_64-linux-gnu \
     && cp /lib/x86_64-linux-gnu/libdl.so.2 /app/lib/x86_64-linux-gnu/libdl.so.2 \
