@@ -26,13 +26,30 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && echo "node:Docker!" | chpasswd \
     && adduser node sudo \
     && useradd spawn -u 1500 \
-    && echo "spawn:Docker!" | chpasswd \
-    && mkdir /app/bin
-RUN echo "Docker!" | sudo mount --bind /bin /app/bin
-RUN mkdir /app/lib \
-    && echo "Docker!" | sudo mount --bind /lib /app/lib \
+    && echo "spawn:Docker!" | chpasswd
+
+#create chroot environment
+RUN mkdir /app/bin \
     && mkdir /app/lib \
-    && echo "Docker!" | sudo mount --bind /lib64 /app/lib64
+    && mkdir /app/lib/x86_64-linux-gnu \
+    && mkdir /app/lib64 \
+    && mkdir /usr/bin
+#copy commands
+RUN cp /bin/bash /app/bin/bash \
+    && cp /usr/bin/python3 /usr/bin \
+    && cp /usr/bin/java /usr/bin \
+    && cp /usr/bin/javac /usr/bin \
+    && cp /usr/bin/gcc /usr/bin
+#commands dependencies
+RUN cp /lib/x86_64-linux-gnu/libtinfo.so.6 /app/lib/x86_64-linux-gnu \
+    && cp /lib/x86_64-linux-gnu/libdl.so.2 /app/lib/x86_64-linux-gnu/libdl.so.2 \
+    && cp /lib/x86_64-linux-gnu/libc.so.6 /app/lib/x86_64-linux-gnu/libc.so.6 \
+    && cp /lib64/ld-linux-x86-64.so.2 /app/lib64/ld-linux-x86-64.so.2 \cp /usr/bin//lib/x86_64-linux-gnu/libpthread.so.0 /app/usr/bin//lib/x86_64-linux-gnu/libpthread.so.0 \
+    && cp /lib/x86_64-linux-gnu/libutil.so.1 /app/lib/x86_64-linux-gnu/libutil.so.1 \
+    && cp /lib/x86_64-linux-gnu/libz.so.1 /app/lib/x86_64-linux-gnu/libz.so.1 \
+    && cp /lib/x86_64-linux-gnu/libm.so.6 /app/lib/x86_64-linux-gnu/libm.so.6 \
+    && cp /lib64/ld-linux-x86-64.so.2 /app/lib64/ld-linux-x86-64.so.2  \
+    && cp /lib/x86_64-linux-gnu/libexpat.so.1 /app//lib/x86_64-linux-gnu/libexpat.so.1
 
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
@@ -54,4 +71,4 @@ RUN chmod -R 500 /app
 
 USER node
 
-CMD [ "chroot", "/app", "node", "index.js" ]
+CMD ["node", "index.js"]
