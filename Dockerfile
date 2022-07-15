@@ -35,6 +35,7 @@ RUN mkdir /app/bin \
     && mkdir /app/lib64 \
     && mkdir /app/usr \
     && mkdir /app/usr/bin \
+    && mkdir /app/usr/bin/lib \
     && mkdir /app/usr/bin/lib/x86_64-linux-gnu
 #copy commands
 RUN cp /bin/bash /app/bin/bash \
