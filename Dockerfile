@@ -33,6 +33,7 @@ RUN mkdir /app/bin \
     && mkdir /app/lib \
     && mkdir /app/lib/x86_64-linux-gnu \
     && mkdir /app/lib64 \
+    && mkdir /app/usr \
     && mkdir /app/usr/bin
 #copy commands
 RUN cp /bin/bash /app/bin/bash \
