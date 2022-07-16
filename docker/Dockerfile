@@ -8,9 +8,9 @@ WORKDIR /app
 
 # copy configs to /app folder
 COPY package*.json ./
-COPY tsconfig.json ./
+COPY ../tsconfig.json ./
 # copy source code to /app/src folder
-COPY . .
+COPY .. .
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
 RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
@@ -57,11 +57,11 @@ RUN cp /lib/x86_64-linux-gnu/libtinfo.so.6 /app/lib/x86_64-linux-gnu \
     && cp /lib/x86_64-linux-gnu/libexpat.so.1 /app/lib/x86_64-linux-gnu/libexpat.so.1
 
 # Copy the sshd_config file to the /etc/ssh/ directory
-COPY ssh/sshd_config /etc/ssh/
+COPY ../ssh/sshd_config /etc/ssh/
 
 # Copy and configure the ssh_setup file
 RUN mkdir -p /tmp
-COPY ssh/ssh_setup.sh /tmp
+COPY ../ssh/ssh_setup.sh /tmp
 RUN chmod +x /tmp/ssh_setup.sh \
     && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null)
 # Open port 2222 for SSH access
