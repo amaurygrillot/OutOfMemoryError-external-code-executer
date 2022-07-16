@@ -3,7 +3,10 @@ services:
   app:
     build:
       context: .
+
       dockerfile: Dockerfile
     cap_add:
       - ALL
     image: basic
+    environment:
+      - SU_PASSWORD=${SU_PASSWORD}
