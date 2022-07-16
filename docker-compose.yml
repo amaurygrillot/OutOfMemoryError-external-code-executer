@@ -8,5 +8,3 @@ services:
     cap_add:
       - SYS_ADMIN
     image: basic
-    environment:
-      - SU_PASSWORD: $(SU_PASSWORD)
