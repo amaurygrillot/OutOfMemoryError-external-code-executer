@@ -7,3 +7,5 @@ services:
     cap_add:
       - ALL
     image: basic
+    volumes:
+      - .:/app/
