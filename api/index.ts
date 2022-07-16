@@ -77,7 +77,7 @@ export function giveWriteRightsMntFolder()
         console.log(err.toString());});
 // in close event we are sure that stream from child process is closed
     chmod.on('close', (code) => {
-        console.log("Spawn ended with code : " + code.toString());
+        console.log("chmod ended with code : " + code.toString());
 
     });
 

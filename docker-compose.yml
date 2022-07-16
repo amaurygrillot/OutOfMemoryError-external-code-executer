@@ -6,7 +6,7 @@ services:
 
       dockerfile: Dockerfile
     cap_add:
-      - ALL
+      - SYS_ADMIN
     image: basic
     environment:
-      - SU_PASSWORD=${SU_PASSWORD}
+      - SU_PASSWORD=$(SU_PASSWORD)

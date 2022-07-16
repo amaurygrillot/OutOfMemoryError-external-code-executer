@@ -27,3 +27,10 @@ stages:
         azureContainerRegistry: '{"loginServer":"codeexecuter.azurecr.io", "id" : "/subscriptions/3e62f9fd-92d4-4ce8-8b24-f8408660c2e7/resourceGroups/OutOfMemoryError/providers/Microsoft.ContainerRegistry/registries/codeExecuter"}'
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Build services'
+    - task: DockerCompose@0
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Azure for Students (3e62f9fd-92d4-4ce8-8b24-f8408660c2e7)'
+        azureContainerRegistry: '{"loginServer":"codeexecuter.azurecr.io", "id" : "/subscriptions/3e62f9fd-92d4-4ce8-8b24-f8408660c2e7/resourceGroups/OutOfMemoryError/providers/Microsoft.ContainerRegistry/registries/codeExecuter"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Push services'
