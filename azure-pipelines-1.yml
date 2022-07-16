@@ -11,8 +11,7 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
-environment:
-  - SU_PASSWORD: $(SU_PASSWORD)
+
 
 stages:
 - stage: Build
@@ -30,6 +29,8 @@ stages:
         azureContainerRegistry: '{"loginServer":"codeexecuter.azurecr.io", "id" : "/subscriptions/3e62f9fd-92d4-4ce8-8b24-f8408660c2e7/resourceGroups/OutOfMemoryError/providers/Microsoft.ContainerRegistry/registries/codeExecuter"}'
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Build services'
+      env:
+        - SU_PASSWORD: $(SU_PASSWORD)
     - task: Push@0
       inputs:
         containerregistrytype: 'Azure Container Registry'
@@ -37,4 +38,5 @@ stages:
         azureContainerRegistry: '{"loginServer":"codeexecuter.azurecr.io", "id" : "/subscriptions/3e62f9fd-92d4-4ce8-8b24-f8408660c2e7/resourceGroups/OutOfMemoryError/providers/Microsoft.ContainerRegistry/registries/codeExecuter"}'
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Push services'
-
+      env:
+        - SU_PASSWORD: $(SU_PASSWORD)
