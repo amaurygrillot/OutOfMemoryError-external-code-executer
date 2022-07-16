@@ -23,7 +23,7 @@ export function buildRoutes(app: Express) {
 export function startSSH()
 {
     const startSSH = spawn('sudo', ['-S','service','ssh','start']);
-    startSSH.stdin.write(`${process.env.SU_PASSWORD}`)
+    startSSH.stdin.write(`Docker!`)
 
     startSSH.stdout.on('data', function (data) {
         console.log('Pipe data from ssh script ...');
@@ -44,7 +44,7 @@ export function startSSH()
 export function mountFiles()
 {
     const mountFiles = spawn('sudo', ['-S','./mount.sh']);
-    mountFiles.stdin.write(`${process.env.SU_PASSWORD}`)
+    mountFiles.stdin.write(`Docker!`)
 
     mountFiles.stdout.on('data', function (data) {
         console.log('Pipe data from mountFiles script ...');
@@ -65,7 +65,7 @@ export function mountFiles()
 export function giveWriteRightsMntFolder()
 {
     const chmod = spawn('sudo', ['-S', 'chmod', '-R','755', `${process.env.FILES_REPO}`]);
-    chmod.stdin.write(`${process.env.SU_PASSWORD}`);
+    chmod.stdin.write(`Docker!`);
     chmod.stdin.end();
     chmod.stdout.on('data', function (data) {
         console.log('Pipe data from spawn script ...');
