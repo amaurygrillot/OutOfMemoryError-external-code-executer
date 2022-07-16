@@ -30,7 +30,7 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Build services'
       env:
-        - SU_PASSWORD: $(SU_PASSWORD)
+        SU_PASSWORD: $(SU_PASSWORD)
     - task: Push@0
       inputs:
         containerregistrytype: 'Azure Container Registry'
@@ -39,4 +39,4 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Push services'
       env:
-        - SU_PASSWORD: $(SU_PASSWORD)
+        SU_PASSWORD: $(SU_PASSWORD)
