@@ -11,8 +11,6 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
-
-
 stages:
 - stage: Build
   displayName: Build image
@@ -22,7 +20,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: Build@0
+    - task: DockerCompose@0
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'Azure for Students(3e62f9fd-92d4-4ce8-8b24-f8408660c2e7)'
@@ -31,7 +29,7 @@ stages:
         action: 'Build services'
       env:
         SU_PASSWORD: $(SU_PASSWORD)
-    - task: Push@0
+    - task: DockerCompose@0
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'Azure for Students (3e62f9fd-92d4-4ce8-8b24-f8408660c2e7)'
@@ -40,3 +38,4 @@ stages:
         action: 'Push services'
       env:
         SU_PASSWORD: $(SU_PASSWORD)
+
