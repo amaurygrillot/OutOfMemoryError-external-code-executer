@@ -81,5 +81,5 @@ export function giveWriteRightsMntFolder()
 
     });
 
-    
+
 }
