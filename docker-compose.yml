@@ -9,4 +9,4 @@ services:
       - SYS_ADMIN
     image: basic
     environment:
-      - SU_PASSWORD=$(SU_PASSWORD)
+      - SU_PASSWORD: $(SU_PASSWORD)
