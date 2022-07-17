@@ -31,7 +31,11 @@ export class JavaExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the javac script
-            const javac = spawn('javac', [`${process.env.FILES_REPO}/java/${fileName}`]);
+            const javac = spawn('sudo',
+                ['-S', 'chroot', '/app', `javac`, `${process.env.FILES_REPO}/java/${fileName}`],
+                {timeout : 30 * 1000});
+            javac.stdin.write(`${process.env.SU_PASSWORD}`);
+            javac.stdin.end();
             // collect data from script
             javac.stdout.on('data', function (data) {
                 console.log('Pipe data from javac script ...');

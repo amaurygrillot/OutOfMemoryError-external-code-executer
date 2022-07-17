@@ -30,7 +30,11 @@ export class CExecuterService {
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             // spawn new child process to call the gcc script
-            const gcc = spawn('gcc', [`${process.env.FILES_REPO}/c/${fileName}`, '-o', '/app/mnt/storedPrograms/c/myFile']);
+            const gcc = spawn('sudo',
+                ['-S', 'chroot', '/app', `gcc`, `${process.env.FILES_REPO}/c/${fileName}`, '-o', `${process.env.FILES_REPO}/c/myFile`],
+                {timeout : 30 * 1000});
+            gcc.stdin.write(`${process.env.SU_PASSWORD}`);
+            gcc.stdin.end();
             // collect data from script
             gcc.stdout.on('data', function (data) {
                 console.log('Pipe data from gcc script ...');
