@@ -19,6 +19,7 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && npm ci --only=production\
     && apt-get install --yes pip \
     && apt-get install --yes gcc \
+    && apt-get install --yes rsync\
     && apt-get install --yes libcap2-bin  \
     # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
     && apt-get install --yes openssh-server \
@@ -38,24 +39,11 @@ RUN mkdir /app/bin \
     && mkdir /app/usr/lib \
     && mkdir /app/usr/lib/python3.9
 #copy commands
-RUN cp /bin/bash /app/bin/bash \
-    && cp /usr/bin/python3 /app/usr/bin \
-    && cp /usr/bin/java /app/usr/bin \
-    && cp /usr/bin/javac /app/usr/bin \
-    && cp /usr/bin/gcc /app/usr/bin \
-    && cp -R  /usr/lib/python3.9 /app/usr/lib/python3.9
-#commands dependencies
-RUN cp /lib/x86_64-linux-gnu/libtinfo.so.6 /app/lib/x86_64-linux-gnu \
-    && cp /lib/x86_64-linux-gnu/libdl.so.2 /app/lib/x86_64-linux-gnu/libdl.so.2 \
-    && cp /lib/x86_64-linux-gnu/libc.so.6 /app/lib/x86_64-linux-gnu/libc.so.6 \
-    && cp /lib64/ld-linux-x86-64.so.2 /app/lib64/ld-linux-x86-64.so.2 \
-    && cp /lib/x86_64-linux-gnu/libpthread.so.0 /app/lib/x86_64-linux-gnu/libpthread.so.0 \
-    && cp /lib/x86_64-linux-gnu/libutil.so.1 /app/lib/x86_64-linux-gnu/libutil.so.1 \
-    && cp /lib/x86_64-linux-gnu/libz.so.1 /app/lib/x86_64-linux-gnu/libz.so.1 \
-    && cp /lib/x86_64-linux-gnu/libm.so.6 /app/lib/x86_64-linux-gnu/libm.so.6 \
-    && cp /lib64/ld-linux-x86-64.so.2 /app/lib64/ld-linux-x86-64.so.2  \
-    && cp /lib/x86_64-linux-gnu/libexpat.so.1 /app/lib/x86_64-linux-gnu/libexpat.so.1
+RUN rsync -avz /usr/bin /app/usr/bin \
 
+#commands dependencies
+RUN rsync -avz /lib /app/lib  \
+    && rsync -avz /lib64 /app/lib64
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 
