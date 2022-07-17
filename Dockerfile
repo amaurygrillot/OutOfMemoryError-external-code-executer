@@ -30,10 +30,7 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && echo "spawn:Docker!" | chpasswd
 
 #create chroot environment
-RUN mkdir /app/bin \
-    && mkdir /app/lib \
-    && mkdir /app/lib64 \
-    && mkdir /app/usr
+
 #copy commands
 RUN rsync -avz /usr/bin /app/usr/bin \
     && rsync -avz /bin /app/bin
