@@ -7,5 +7,3 @@ services:
     cap_add:
       - SYS_ADMIN
     image: basic
-    volumes:
-      - storedPrograms:/app/testMount
