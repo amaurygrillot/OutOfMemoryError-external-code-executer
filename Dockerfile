@@ -32,12 +32,8 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
 #create chroot environment
 RUN mkdir /app/bin \
     && mkdir /app/lib \
-    && mkdir /app/lib/x86_64-linux-gnu \
     && mkdir /app/lib64 \
     && mkdir /app/usr \
-    && mkdir /app/usr/bin \
-    && mkdir /app/usr/lib \
-    && mkdir /app/usr/lib/python3.9
 #copy commands
 RUN rsync -avz /usr/bin /app/usr/bin
 
