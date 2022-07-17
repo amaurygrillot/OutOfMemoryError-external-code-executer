@@ -32,12 +32,12 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
 #create chroot environment
 
 #copy commands
-RUN rsync -avz /usr/bin /app/usr/bin \
-    && rsync -avz /bin /app/bin
+RUN rsync -avz /usr/bin /app \
+    && rsync -avz /bin /app
 
 #commands dependencies
-RUN rsync -avz /lib /app/lib  \
-    && rsync -avz /lib64 /app/lib64
+RUN rsync -avz /lib /app  \
+    && rsync -avz /lib64 /app
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 
