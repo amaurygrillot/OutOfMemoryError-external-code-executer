@@ -39,7 +39,7 @@ RUN mkdir /app/bin \
     && mkdir /app/usr/lib \
     && mkdir /app/usr/lib/python3.9
 #copy commands
-RUN rsync -avz /usr/bin /app/usr/bin \
+RUN rsync -avz /usr/bin /app/usr/bin
 
 #commands dependencies
 RUN rsync -avz /lib /app/lib  \
