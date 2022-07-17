@@ -51,10 +51,10 @@ RUN chmod +x /tmp/ssh_setup.sh \
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
-RUN setcap cap_net_bind_service=+ep `readlink -f \`which node\``
-RUN setcap cap_sys_admin=+ep `readlink -f \`which node\``
-
-RUN /app/node_modules/typescript/bin/tsc index.ts
+RUN setcap cap_net_bind_service=+ep `readlink -f \`which node\`` \
+    && setcap cap_sys_admin=+ep `readlink -f \`which node\`` \
+    && /app/node_modules/typescript/bin/tsc index.ts \
+    
 RUN chown -R node:node /app
 RUN chmod -R 500 /app
 
