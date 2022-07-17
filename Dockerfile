@@ -33,7 +33,7 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
 RUN mkdir /app/bin \
     && mkdir /app/lib \
     && mkdir /app/lib64 \
-    && mkdir /app/usr \
+    && mkdir /app/usr
 #copy commands
 RUN rsync -avz /usr/bin /app/usr/bin
 
