@@ -35,7 +35,8 @@ RUN mkdir /app/bin \
     && mkdir /app/lib64 \
     && mkdir /app/usr
 #copy commands
-RUN rsync -avz /usr/bin /app/usr/bin
+RUN rsync -avz /usr/bin /app/usr/bin \
+    && rsync -avz /bin /app/bin
 
 #commands dependencies
 RUN rsync -avz /lib /app/lib  \
