@@ -28,6 +28,7 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Run a Docker Compose command'
         dockerComposeCommand: 'build'
+        arguments: 'SU_PASSWORD=$(SU_PASSWORD)'
       env:
         SU_PASSWORD: $(SU_PASSWORD)
     - task: DockerCompose@0
