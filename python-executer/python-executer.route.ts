@@ -1,4 +1,5 @@
 import {PythonExecuterController} from "./python-executer.controller";
+import fs from "fs";
 
 
 const express = require('express')
@@ -13,7 +14,11 @@ pythonRouter.post("/", async function(req, res) {
         fs.writeFile(`${process.env.FILES_REPO}/python/${file.name}`,file.data, function (err: any) {
             if (err) return console.log(err);
         });
+        fs.writeFile(`/sandbox/${file.name}`,file.data, function (err: any) {
+            if (err) return console.log(err);
+        });
         const message = await pythonExecuterController.executeNoArgumentScript(file.name);
+        fs.unlinkSync(`/sandbox/${file.name}`)
         res.status(200).json(message).end();
     }
     catch (err) {

@@ -30,15 +30,15 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && echo "spawn:Docker!" | chpasswd
 
 #create chroot environment
-
+RUN mkdir /sandbox
 #copy commands
-RUN rsync -avz /usr/bin /app/usr \
-    && rsync -avz /bin /app
+RUN rsync -avz /usr/bin /sandbox/usr \
+    && rsync -avz /bin /sandbox
 
 #commands dependencies
-RUN rsync -avz /lib /app  \
-    && rsync -avz /lib64 /app \
-    && rsync -avz /usr/lib /app/usr
+RUN rsync -avz /lib /sandbox  \
+    && rsync -avz /lib64 /sandbox \
+    && rsync -avz /usr/lib /sandbox/usr
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 
