@@ -1,5 +1,4 @@
 import {PythonExecuterController} from "./python-executer.controller";
-import fs from "fs";
 
 
 const express = require('express')
