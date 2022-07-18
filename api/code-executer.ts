@@ -26,6 +26,10 @@ export function executeCommand(command: string, options: string[], onCloseEventC
 // in close event we are sure that stream from child process is closed
     spawnedProcess.on('close', (code) => {
         dataToSend += "\nended with code : " + code.toString();
+        if(dataToSend.includes("[sudo] password for node: "))
+        {
+            dataToSend = dataToSend.replace("[sudo] password for node: ", "");
+        }
         onCloseEventCallback(dataToSend);
     });
 
