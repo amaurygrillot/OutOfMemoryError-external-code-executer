@@ -20,7 +20,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: DockerCompose@0
+    - task: Build@0
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'Azure for Students (3e62f9fd-92d4-4ce8-8b24-f8408660c2e7)'
@@ -30,7 +30,7 @@ stages:
         dockerComposeCommand: 'build'
       env:
         SU_PASSWORD: $(SU_PASSWORD)
-    - task: DockerCompose@0
+    - task: Push@0
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'Azure for Students (3e62f9fd-92d4-4ce8-8b24-f8408660c2e7)'
