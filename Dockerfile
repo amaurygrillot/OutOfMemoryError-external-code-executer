@@ -23,14 +23,13 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && apt-get install --yes libcap2-bin  \
     # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
     && apt-get install --yes openssh-server \
-    && echo "root:Docker!" | chpasswd \
-    && echo "node:Docker!" | chpasswd \
+    && echo "root:$(SU_PASSWORD)" | chpasswd \
+    && echo "node:$(SU_PASSWORD)" | chpasswd \
     && adduser node sudo \
-    && useradd spawn -u 1500 \
-    && echo "spawn:Docker!" | chpasswd
 
 #create chroot environment
-RUN mkdir /sandbox
+RUN mkdir /sandbox \
+    && chown node /sandbox
 #copy commands
 RUN rsync -avz /usr/bin /sandbox/usr \
     && rsync -avz /bin /sandbox
