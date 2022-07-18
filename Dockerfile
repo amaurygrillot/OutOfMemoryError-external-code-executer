@@ -27,7 +27,7 @@ RUN apt install --yes openjdk-17-jdk openjdk-17-jre \
     && apt-get install --yes openssh-server \
     && echo "root:$SU_PASSWORD" | chpasswd \
     && echo "node:$SU_PASSWORD" | chpasswd \
-    && adduser node sudo \
+    && adduser node sudo
 
 #create chroot environment
 RUN mkdir /sandbox \
