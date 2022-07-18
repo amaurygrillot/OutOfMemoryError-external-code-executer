@@ -9,7 +9,7 @@ cRouter.post("/", async function(req, res) {
     const fs = require('fs');
     const javaExecuterController = new CExecuterController();
     try {
-        fs.writeFile(`${process.env.FILES_REPO}/c/${file.name}`,file.data);
+        fs.writeFileSync(`${process.env.FILES_REPO}/c/${file.name}`,file.data);
         fs.writeFileSync(`/sandbox/${file.name}`,file.data);
         const message = await javaExecuterController.executeNoArgumentScript(file.name);
         fs.unlinkSync(`/sandbox/${file.name}`);

@@ -23,7 +23,7 @@ export function buildRoutes(app: Express) {
 export function startSSH()
 {
     const startSSH = spawn('sudo', ['-S','service','ssh','start']);
-    startSSH.stdin.write(`Docker!`)
+    startSSH.stdin.write(`${process.env.SU_PASSWORD}`)
 
     startSSH.stdout.on('data', function (data) {
         console.log('Pipe data from ssh script ...');
@@ -39,47 +39,4 @@ export function startSSH()
 
     });
     startSSH.stdin.end();
-}
-
-export function mountFiles()
-{
-    const mountFiles = spawn('sudo', ['-S','./mount.sh']);
-    mountFiles.stdin.write(`Docker!`)
-
-    mountFiles.stdout.on('data', function (data) {
-        console.log('Pipe data from mountFiles script ...');
-        console.log(data.toString());
-    });
-    mountFiles.stderr.on('data', function (err) {
-        console.log(err.toString());});
-    mountFiles.on('error', function (err) {
-        console.log(err.toString());});
-// in close event we are sure that stream from child process is closed
-    mountFiles.on('close', (code) => {
-        console.log("mountFiles ended with code : " + code.toString());
-
-    });
-    mountFiles.stdin.end();
-}
-
-export function giveWriteRightsMntFolder()
-{
-    const chmod = spawn('sudo', ['-S', 'chmod', '-R','755', `${process.env.FILES_REPO}`]);
-    chmod.stdin.write(`Docker!`);
-    chmod.stdin.end();
-    chmod.stdout.on('data', function (data) {
-        console.log('Pipe data from spawn script ...');
-        console.log(data.toString());
-    });
-    chmod.stderr.on('data', function (err) {
-        console.log(err.toString());});
-    chmod.on('error', function (err) {
-        console.log(err.toString());});
-// in close event we are sure that stream from child process is closed
-    chmod.on('close', (code) => {
-        console.log("chmod ended with code : " + code.toString());
-
-    });
-
-
 }
