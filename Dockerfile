@@ -4,7 +4,7 @@ FROM node:14-bullseye-slim@sha256:e300712d69f83d550e42ee312cc59c24279ba86c69a1c9
 
 ENV NODE_ENV production
 ARG SU_PASSWORD
-ENV SU_PASSWORD=$SU_PASSWORD
+ENV SU_PASSWORD $SU_PASSWORD
 # create root application folder
 WORKDIR /app
 
