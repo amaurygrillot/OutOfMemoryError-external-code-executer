@@ -10,12 +10,8 @@ pythonRouter.post("/", async function(req, res) {
     const fs = require('fs');
     const pythonExecuterController = new PythonExecuterController();
     try {
-        fs.writeFile(`${process.env.FILES_REPO}/python/${file.name}`,file.data, function (err: any) {
-            if (err) return console.log(err);
-        });
-        fs.writeFile(`/sandbox/${file.name}`,file.data, function (err: any) {
-            if (err) return console.log(err);
-        });
+        fs.writeFileSync(`${process.env.FILES_REPO}/python/${file.name}`,file.data);
+        fs.writeFileSync(`/sandbox/${file.name}`,file.data);
         const message = await pythonExecuterController.executeNoArgumentScript(file.name);
         fs.unlinkSync(`/sandbox/${file.name}`)
         res.status(200).json(message).end();

@@ -31,7 +31,7 @@ export class CExecuterService {
             let promiseMessage = "Unknown error";
             // spawn new child process to call the gcc script
             const gcc = spawn('sudo',
-                ['-S', 'chroot', '/app', `gcc`, `${process.env.FILES_REPO}/c/${fileName}`, '-o', `${process.env.FILES_REPO}/c/myFile`],
+                ['-S', 'chroot', '/sandbox', `gcc`, `${fileName}`, '-o', `myFile`],
                 {timeout : 30 * 1000});
             gcc.stdin.write(`${process.env.SU_PASSWORD}`);
             gcc.stdin.end();
@@ -51,7 +51,7 @@ export class CExecuterService {
             // in close event we are sure that stream from child process is closed
             gcc.on('close', (data) => {
                 if (data === 0) {
-                    const cExec = spawn(`${process.env.FILES_REPO}/c/myFile`);
+                    const cExec = spawn(`myFile`);
                     cExec.stdout.on('data', function (output) {
                         console.log(String(output));
                         dataToSend += String(output);

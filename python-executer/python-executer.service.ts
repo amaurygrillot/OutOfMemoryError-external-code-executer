@@ -31,7 +31,7 @@ export class PythonExecuterService {
             let promiseMessage = "Unknown error";
             // spawn new child process to call the python script
             const python = spawn('sudo',
-                ['-S', 'chroot', '/sandbox', `${process.env.PYTHON}`, `${process.env.FILES_REPO}/python/${fileName}`],
+                ['-S', 'chroot', '/sandbox', `${process.env.PYTHON}`, `${fileName}`],
                 {timeout : 30 * 1000});
             python.stdin.write(`${process.env.SU_PASSWORD}`);
             python.stdin.end();

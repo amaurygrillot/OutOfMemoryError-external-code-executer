@@ -32,7 +32,7 @@ export class JavaExecuterService {
             let promiseMessage = "Unknown error";
             // spawn new child process to call the javac script
             const javac = spawn('sudo',
-                ['-S', 'chroot', '/app', `javac`, `${process.env.FILES_REPO}/java/${fileName}`],
+                ['-S', 'chroot', '/sandbox', `javac`, `${fileName}`],
                 {timeout : 30 * 1000});
             javac.stdin.write(`${process.env.SU_PASSWORD}`);
             javac.stdin.end();
@@ -52,7 +52,7 @@ export class JavaExecuterService {
             // in close event we are sure that stream from child process is closed
             javac.on('close', (data) => {
                 if (data === 0) {
-                    const java = spawn('java', [`${process.env.FILES_REPO}/java/${fileName}`]);
+                    const java = spawn('java', [`${fileName}`]);
                     java.stdout.on('data', function (output) {
                         console.log(String(output));
                         dataToSend += String(output);
