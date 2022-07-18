@@ -26,17 +26,13 @@ export class PythonExecuterService {
             setTimeout(() => {
                 reject("timed out");
             }, (20 * 1000));
-            let dataToSend = "";
             let promiseMessage = "Unknown error";
             const command = 'sudo';
             const commandOptions = ['-S', 'chroot', '/sandbox', `${process.env.PYTHON}`, `${fileName}`];
             // spawn new child process to call the python script
-            executeCommand(command, commandOptions, (code) => {
-                promiseMessage = dataToSend;
-                // send data to browser
-                promiseMessage += "\nProcess ended with error code : " + code;
-                console.log(promiseMessage);
-                accept(promiseMessage);
+            executeCommand(command, commandOptions, (dataToSend) => {
+                console.log(dataToSend);
+                accept(dataToSend);
             } )
         });
     }

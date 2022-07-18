@@ -9,19 +9,24 @@ export function executeCommand(command: string, options: string[], onCloseEventC
         spawnedProcess.stdin.write(`${process.env.SU_PASSWORD}`)
         spawnedProcess.stdin.end();
     }
-
+    let dataToSend = "";
     spawnedProcess.stdout.on('data', function (data) {
         console.log('Pipe data from ' + displayName + ' command ...');
         console.log(data.toString());
+        dataToSend += data.toString()
     });
     spawnedProcess.stderr.on('data', function (err) {
-        console.log(err.toString());});
+        console.log(err.toString());
+        dataToSend += err.toString();
+    });
     spawnedProcess.on('error', function (err) {
-        console.log(err.toString());});
+        console.log(err.toString());
+        dataToSend += err.toString()
+    });
 // in close event we are sure that stream from child process is closed
     spawnedProcess.on('close', (code) => {
-        console.log(displayName + " ended with code : " + code.toString());
-        onCloseEventCallback(code);
+        dataToSend += "\nended with code : " + code.toString();
+        onCloseEventCallback(dataToSend);
     });
 
 }
