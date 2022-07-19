@@ -11,9 +11,9 @@ pythonRouter.post("/", async function(req, res) {
     const pythonExecuterController = new PythonExecuterController();
     try {
         fs.writeFileSync(`${process.env.FILES_REPO}/python/${file.name}`,file.data);
-        fs.writeFileSync(`${process.env.CHROOT_FILES_REPO}/${file.name}`,file.data);
+        fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${file.name}`,file.data);
         const message = await pythonExecuterController.executeNoArgumentScript(file.name);
-        fs.unlinkSync(`${process.env.CHROOT_FILES_REPO}/${file.name}`)
+        fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${file.name}`)
         res.status(200).json(message).end();
     }
     catch (err) {
