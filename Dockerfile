@@ -15,12 +15,13 @@ COPY tsconfig.json ./
 COPY . .
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
-RUN apt  apt-get install --yes sudo\
-    #install --yes openjdk-17-jdk openjdk-17-jre \
+RUN apt-get install --yes sudo \
+#apt-get install --yes openjdk-17-jdk openjdk-17-jre \
 #    && apt-get install --yes sudo \
+    && apt-get install --yes python g++ build-essential \
     && npm ci --only=production\
     && apt-get install --yes python3 \
-    # apt-get install --yes gcc \
+#   && apt-get install --yes gcc \
     && apt-get install --yes rsync\
     && apt-get install --yes libcap2-bin  \
     # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
