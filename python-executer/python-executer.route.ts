@@ -1,5 +1,4 @@
 import {PythonExecuterController} from "./python-executer.controller";
-import path from "path";
 
 
 const express = require('express')

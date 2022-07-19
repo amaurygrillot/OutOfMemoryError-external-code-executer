@@ -1,5 +1,4 @@
 import {CExecuterController} from "./c-executer.controller";
-import path from "path";
 
 
 const express = require('express')
