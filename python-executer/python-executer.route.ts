@@ -28,6 +28,20 @@ pythonRouter.post("/file", async(req: any, res: any) => {
 });
 
 pythonRouter.get("/", async function(req, res) {
-    res.status(200).json("working").end();
-
+    const filename = req.body.filename;
+    const fs = require('fs');
+    fs.readFile(`${process.env.FILES_REPO}/python/${filename}`, async (err: Error, data: any) => {
+        if (err) {
+            try {
+                res.write("", 'binary');
+                res.status(404).end(null, 'binary');
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        if (data !== undefined) {//si image pas trouvée, on met l'image par défaut
+            res.write(data, 'binary');
+            res.status(200).end(null, 'binary');
+        }
+    });
 });
