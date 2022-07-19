@@ -17,12 +17,7 @@ RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/ap
 RUN apt-get update
 RUN apt-get install --yes apt-utils
 
-#build chroot env
-RUN apt-get install --yes debootstrap
-RUN apt-get install --yes fakechroot
-RUN apt-get install --yes fakeroot
-RUN fakechroot -s fakeroot debootstrap bullseye /tmp/bullseye \
-    && echo "bullseye has been debootstrapped"
+
 
 
 #enable ssh
