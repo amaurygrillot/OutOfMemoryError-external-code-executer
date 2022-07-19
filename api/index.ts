@@ -20,25 +20,28 @@ export function buildRoutes(app: Express) {
 
 }
 
-export function setFakechroot()
+export async function setFakechroot()
 {
+    let outputData = "";
     const mountFiles = spawn('sudo', ['-S','./set_fakechroot.sh']);
     mountFiles.stdin.write(`${process.env.SU_PASSWORD}`);
-
+    mountFiles.stdin.end();
+    console.log("starting setFakechroot...")
     mountFiles.stdout.on('data', function (data) {
-        console.log('Pipe data from setFakechroot script ...');
-        console.log(data.toString());
+        outputData += data.toString();
     });
     mountFiles.stderr.on('data', function (err) {
-        console.log(err.toString());});
+        outputData += err.toString();
+    });
     mountFiles.on('error', function (err) {
-        console.log(err.toString());});
+        outputData += err.toString();
+    });
 // in close event we are sure that stream from child process is closed
     mountFiles.on('close', (code) => {
+        console.log(outputData);
         console.log("setFakechroot ended with code : " + code.toString());
-
     });
-    mountFiles.stdin.end();
+
 }
 
 export function startSSH()
@@ -51,9 +54,11 @@ export function startSSH()
         console.log(data.toString());
     });
     startSSH.stderr.on('data', function (err) {
-        console.log(err.toString());});
+        console.log(err.toString());
+    });
     startSSH.on('error', function (err) {
-        console.log(err.toString());});
+        console.log(err.toString());}
+    );
 // in close event we are sure that stream from child process is closed
     startSSH.on('close', (code) => {
         console.log("SSH ended with code : " + code.toString());
