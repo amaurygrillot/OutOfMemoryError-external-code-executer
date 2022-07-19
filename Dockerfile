@@ -15,32 +15,19 @@ COPY tsconfig.json ./
 COPY . .
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
-RUN apt-get install --yes sudo \
-#apt-get install --yes openjdk-17-jdk openjdk-17-jre \
-#    && apt-get install --yes sudo \
-    && apt-get install --yes python g++ build-essential \
+RUN apt-get install --yes debootstrap \
+    && apt-get install --yes fakechroot \
+    && fakechroot debootstrap bullseye /bullseye \
+    && fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre \
+    && fakechroot fakeroot chroot /bullseye apt-get install --yes python3 \
+    && fakechroot fakeroot chroot /bullseye apt-get install --yes gcc \
     && npm ci --only=production\
-    && apt-get install --yes python3 \
-#   && apt-get install --yes gcc \
-    && apt-get install --yes rsync\
     && apt-get install --yes libcap2-bin  \
     # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
     && apt-get install --yes openssh-server \
     && echo "root:$SU_PASSWORD" | chpasswd \
     && echo "node:$SU_PASSWORD" | chpasswd \
-    && adduser node sudo
 
-#create chroot environment
-RUN mkdir /sandbox \
-    && chown node /sandbox
-#copy commands
-RUN rsync -avz /usr/bin /sandbox/usr \
-    && rsync -avz /bin /sandbox
-
-#commands dependencies
-RUN rsync -avz /lib /sandbox  \
-    && rsync -avz /lib64 /sandbox \
-    && rsync -avz /usr/lib /sandbox/usr
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 

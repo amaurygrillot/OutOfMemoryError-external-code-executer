@@ -24,11 +24,12 @@ export class PythonExecuterService {
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
-                reject("timed out");
-            }, (20 * 1000));
-            let promiseMessage = "Unknown error";
-            const command = 'sudo';
-            const commandOptions = ['-S', 'chroot', '/sandbox', `${process.env.PYTHON}`, `${fileName}`];
+                    reject("timed out");
+                },
+                (20 * 1000)
+            );
+            const command = `${process.env.PYTHON}`;
+            const commandOptions = [`${process.env.CHROOT_FILES_REPO}/${fileName}`];
             // spawn new child process to call the python script
             executeCommand(command, commandOptions, (dataToSend) => {
                 console.log(dataToSend);

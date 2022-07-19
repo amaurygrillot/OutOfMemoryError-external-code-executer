@@ -10,9 +10,9 @@ javaRouter.post("/", async function(req, res) {
     const javaExecuterController = new JavaExecuterController();
     try {
         fs.writeFileSync(`${process.env.FILES_REPO}/java/${file.name}`,file.data);
-        fs.writeFileSync(`/sandbox/${file.name}`,file.data);
+        fs.writeFileSync(`${process.env.CHROOT_FILES_REPO}/${file.name}`,file.data);
         const message = await javaExecuterController.executeNoArgumentScript(file.name);
-        fs.unlinkSync(`/sandbox/${file.name}`);
+        fs.unlinkSync(`${process.env.CHROOT_FILES_REPO}/${file.name}`);
         res.status(200).json(message).end();
     }
     catch (err) {
