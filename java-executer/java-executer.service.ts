@@ -1,4 +1,5 @@
 import {JavaExecuterRepository} from "./java-executer.repository";
+import {executeCommand} from "../api/code-executer";
 
 const {spawn} = require('child_process');
 
@@ -30,59 +31,21 @@ export class JavaExecuterService {
             }, (15 * 1000));
             let dataToSend = "";
             let promiseMessage = "Unknown error";
-            // spawn new child process to call the javac script
-            const javac = spawn('sudo',
-                ['-S', 'chroot', '/sandbox', `javac`, `${fileName}`],
-                {timeout : 30 * 1000});
-            javac.stdin.write(`${process.env.SU_PASSWORD}`);
-            javac.stdin.end();
-            // collect data from script
-            javac.stdout.on('data', function (data) {
-                console.log('Pipe data from javac script ...');
-                dataToSend += data.toString();
-            });
-            javac.stderr.on('data', function (data) {
-                console.log('There was an error : ' + data);
-                dataToSend += data.toString();
-            });
-            javac.on('error', function (data) {
-                console.log('There was an error : ' + data);
-                dataToSend += data.toString();
-            });
-            // in close event we are sure that stream from child process is closed
-            javac.on('close', (data) => {
-                if (data === 0) {
-                    const java = spawn('java', [`${fileName}`]);
-                    java.stdout.on('data', function (output) {
-                        console.log(String(output));
-                        dataToSend += String(output);
-                    });
-                    java.stderr.on('data', function (output) {
-                        console.log('There was an error : ' + String(output));
-                        dataToSend += String(output);
-                    });
-                    java.on('close', function (output) {
-                        console.log('stdout: ' + output);
-                        promiseMessage = dataToSend;
-                        // send data to browser
-                        promiseMessage += "\nProcess ended with error code : " + output;
-                        console.log("" + promiseMessage);
-                        accept(promiseMessage);
-                    })
-
-                }
-                else
+            executeCommand('javac',
+                [`${process.env.CHROOT_FILES_REPO}/${fileName}`],
+                (javacData) =>
                 {
-                    promiseMessage = dataToSend;
-                    // send data to browser
-                    promiseMessage += "\nProcess ended with error code : " + data;
-                    console.log("" + promiseMessage);
-                    accept(promiseMessage);
-                }
-
-
-
-            });
+                    console.log(javacData);
+                    promiseMessage = javacData.toString();
+                    executeCommand(`java`,
+                        [`${process.env.CHROOT_FILES_REPO}/${fileName}`],
+                        (javaData) =>
+                        {
+                            console.log(javaData);
+                            promiseMessage += javaData;
+                            accept(promiseMessage);
+                        });
+                });
         });
     }
 

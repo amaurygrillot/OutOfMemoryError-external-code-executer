@@ -15,26 +15,25 @@ COPY tsconfig.json ./
 COPY . .
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
+
+#build chroot env
 RUN apt-get install --yes debootstrap
 RUN apt-get install --yes fakechroot
 RUN rm -rf /bullseye
-RUN fakechroot debootstrap bullseye /bullseye
+RUN fakechroot fakeroot debootstrap bullseye /bullseye
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
+RUN mkdir /bullseye/programs
 
+#enable ssh
 RUN apt-get install --yes libcap2-bin  \
     # Install OpenSSH and set the password for root
     && apt-get install --yes openssh-server \
     && echo "root:$SU_PASSWORD" | chpasswd \
     && echo "node:$SU_PASSWORD" | chpasswd
-
-RUN npm ci --only=production
-
-
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
-
 # Copy and configure the ssh_setup file
 RUN mkdir -p /tmp
 COPY ssh/ssh_setup.sh /tmp
@@ -44,12 +43,11 @@ RUN chmod +x /tmp/ssh_setup.sh \
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
+#build node env
+RUN npm ci --only=production
 RUN setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 RUN /app/node_modules/typescript/bin/tsc index.ts
-
 RUN chown -R node:node /app
 RUN chmod -R 500 /app
-
 USER node
-
 CMD ["node", "index.js"]
