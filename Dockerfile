@@ -18,15 +18,7 @@ RUN apt-get update
 RUN apt-get install --yes apt-utils
 RUN apt-get install --yes sudo
 
-#build chroot env
-RUN apt-get install --yes debootstrap
-RUN apt-get install --yes fakechroot
-RUN apt-get install --yes fakeroot
-RUN fakechroot -s fakeroot debootstrap bullseye /bullseye
-RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
-RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
-RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
-RUN mkdir /bullseye/programs
+
 
 #enable ssh
 RUN apt-get install --yes libcap2-bin  \
