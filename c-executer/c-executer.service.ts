@@ -31,7 +31,7 @@ export class CExecuterService {
             let promiseMessage = "Unknown error";
             // spawn new child process to call the gcc script
             executeCommand('gcc',
-                [`${process.env.CHROOT_FILES_REPO}/${fileName}`, '-o', `${process.env.FILES_REPO}/myFile`],
+                [`${process.env.CHROOT_FILES_REPO}/${fileName}`, '-o', `${process.env.CHROOT_FILES_REPO}/myFile`],
                 (gccData) =>
                 {
                     console.log(gccData);
