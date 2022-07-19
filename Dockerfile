@@ -25,7 +25,8 @@ RUN apt-get install --yes libcap2-bin  \
     # Install OpenSSH and set the password for root
     && apt-get install --yes openssh-server \
     && echo "root:$SU_PASSWORD" | chpasswd \
-    && echo "node:$SU_PASSWORD" | chpasswd
+    && echo "node:$SU_PASSWORD" | chpasswd \
+    && adduser node sudo
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 # Copy and configure the ssh_setup file
