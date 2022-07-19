@@ -22,6 +22,7 @@ RUN apt-get install --yes debootstrap
 RUN apt-get install --yes fakechroot
 RUN apt-get install --yes fakeroot
 RUN fakechroot -s fakeroot debootstrap bullseye /tmp/bullseye
+RUN echo "bullseye has been debootstrapped"
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
