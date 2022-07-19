@@ -20,6 +20,27 @@ export function buildRoutes(app: Express) {
 
 }
 
+export function setFakechroot()
+{
+    const mountFiles = spawn('sudo', ['-S','./set_fakechroot.sh']);
+    mountFiles.stdin.write(`${process.env.SU_PASSWORD}`);
+
+    mountFiles.stdout.on('data', function (data) {
+        console.log('Pipe data from setFakechroot script ...');
+        console.log(data.toString());
+    });
+    mountFiles.stderr.on('data', function (err) {
+        console.log(err.toString());});
+    mountFiles.on('error', function (err) {
+        console.log(err.toString());});
+// in close event we are sure that stream from child process is closed
+    mountFiles.on('close', (code) => {
+        console.log("setFakechroot ended with code : " + code.toString());
+
+    });
+    mountFiles.stdin.end();
+}
+
 export function startSSH()
 {
     const startSSH = spawn('sudo', ['-S','service','ssh','start']);

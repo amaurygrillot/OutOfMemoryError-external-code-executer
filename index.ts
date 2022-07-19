@@ -1,5 +1,5 @@
 const bodyParser = require("body-parser");
-import {buildRoutes, startSSH} from "./api";
+import {buildRoutes, setFakechroot, startSSH} from "./api";
 import {Express} from "express";
 const express = require('express')
 import { config } from "dotenv";
@@ -13,6 +13,7 @@ app.use(fileUpload());
 app.use(bodyParser.json());
 buildRoutes(app);
 startSSH();
+setFakechroot();
 
 
 const port = process.env.PORT || 3000;
