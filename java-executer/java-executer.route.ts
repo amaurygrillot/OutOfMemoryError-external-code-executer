@@ -29,20 +29,11 @@ javaRouter.post("/file", async(req: any, res: any) => {
 
 javaRouter.get("/", async function(req, res) {
     const filename = req.body.filename;
-    const fs = require('fs');
-    fs.readFile(`${process.env.FILES_REPO}/java/${filename}`, async (err: Error, data: any) => {
+    const path = require('path');
+    res.sendFile(`${process.env.FILES_REPO}/java/${filename}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
         if (err) {
-            try {
-                res.write("", 'binary');
-                res.status(404).end(null, 'binary');
-            } catch (e) {
-                console.error(e)
-            }
-        }
-        if (data !== undefined) {//si image pas trouvée, on met l'image par défaut
-            res.write(data, 'binary');
-            res.status(200).end(null, 'binary');
+            res.write(err.name + "\n" + err.message);
+            res.status(404).end(null, 'binary');
         }
     });
-
 });

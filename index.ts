@@ -12,8 +12,12 @@ const app: Express = express();
 app.use(fileUpload());
 app.use(bodyParser.json());
 buildRoutes(app);
-startSSH();
-setFakechroot();
+if(process.env.CONTEXT === undefined || process.env.CONTEXT !== "local")
+{
+    startSSH();
+    setFakechroot();
+}
+
 
 
 const port = process.env.PORT || 3000;
