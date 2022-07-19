@@ -18,15 +18,23 @@ RUN apt-get update
 RUN apt-get install --yes apt-utils
 RUN apt-get install --yes sudo
 
-
+#build chroot env
+RUN apt-get install --yes debootstrap
+RUN apt-get install --yes fakechroot
+RUN apt-get install --yes fakeroot
+RUN apt-get --no-install-recommends install systemd
+RUN fakechroot -s fakeroot debootstrap bullseye /bullseye
+RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
+RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
+RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
+RUN mkdir /bullseye/programs
 
 #enable ssh
 RUN apt-get install --yes libcap2-bin  \
     # Install OpenSSH and set the password for root
     && apt-get install --yes openssh-server \
     && echo "root:$SU_PASSWORD" | chpasswd \
-    && echo "node:$SU_PASSWORD" | chpasswd \
-    && adduser node sudo
+    && echo "node:$SU_PASSWORD" | chpasswd
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 # Copy and configure the ssh_setup file
