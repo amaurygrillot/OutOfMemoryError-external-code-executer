@@ -17,6 +17,7 @@ RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/ap
 RUN apt-get update
 RUN apt-get install --yes debootstrap \
     && apt-get install --yes fakechroot \
+    && rm -rf /bullseye \
     && fakechroot debootstrap bullseye /bullseye \
     && fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre \
     && fakechroot fakeroot chroot /bullseye apt-get install --yes python3 \
