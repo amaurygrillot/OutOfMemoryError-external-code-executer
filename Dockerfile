@@ -15,7 +15,7 @@ COPY tsconfig.json ./
 COPY . .
 RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/apt/sources.list.d/stretch-backports.list
 RUN apt-get update
-RUN apt-get install apt-utils
+RUN apt-get install --yes apt-utils
 
 #build chroot env
 RUN apt-get install --yes debootstrap
