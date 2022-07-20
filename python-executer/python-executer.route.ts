@@ -31,9 +31,11 @@ pythonRouter.get("/", async function(req, res) {
     const filename = req.body.filename;
     const path = require('path');
     res.sendFile(`${process.env.FILES_REPO}/python/${filename}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
-        if (err) {
-            res.write(err.name + "\n" + err.message);
-            res.status(404).end(null, 'binary');
-        }
+        res.sendFile(`${process.env.FILES_REPO}/python/main.py`,{ root: path.join(__dirname, '../') }, async(err2: Error, data2: any0 => {
+          if (err2) {
+              res.write(err2.name + "\n" + err2.message);
+              res.status(404).end(null, 'binary');
+          }
+        }))
     });
 });
