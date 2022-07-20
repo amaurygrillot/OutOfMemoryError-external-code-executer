@@ -1,10 +1,10 @@
 import {JavaExecuterController} from "./java-executer.controller";
-
+import { verifyToken } from "../middleware/verify_token";
 
 const express = require('express')
 export const javaRouter = express.Router();
 
-javaRouter.post("/", async function(req, res) {
+javaRouter.post("/", verifyToken, async function(req, res) {
     let file = req.files.fileKey;
     const fs = require('fs');
     const javaExecuterController = new JavaExecuterController();
