@@ -1,5 +1,6 @@
 import {PythonExecuterController} from "./python-executer.controller";
 import { verifyToken } from "../middleware/verify_token";
+import { getFile } from "../libs/code-executer";
 
 const express = require('express')
 export const pythonRouter = express.Router();
@@ -27,15 +28,6 @@ pythonRouter.post("/file", async(req: any, res: any) => {
 
 });
 
-pythonRouter.get("/", async function(req, res) {
-    const filename = req.body.filename;
-    const path = require('path');
-    res.sendFile(`${process.env.FILES_REPO}/python/${filename}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
-        res.sendFile(`${process.env.FILES_REPO}/python/main.py`,{ root: path.join(__dirname, '../') }, async(err2: Error, data2: any0 => {
-          if (err2) {
-              res.write(err2.name + "\n" + err2.message);
-              res.status(404).end(null, 'binary');
-          }
-        }))
-    });
+pythonRouterjavaRouter.get("/", async function(req, res) {
+    getFile(req, res, "python", "main.py")
 });
