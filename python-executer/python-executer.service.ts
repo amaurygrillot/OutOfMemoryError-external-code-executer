@@ -1,5 +1,5 @@
 import {PythonExecuterRepository} from "./python-executer.repository";
-import {executeCommand} from "../api/code-executer";
+import {executeCommand} from "../libs/code-executer";
 
 export class PythonExecuterService {
 
