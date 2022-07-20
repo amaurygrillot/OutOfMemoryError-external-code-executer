@@ -1,10 +1,10 @@
 import {CExecuterController} from "./c-executer.controller";
-
+import { verifyToken } from "../middleware/verify_token";
 
 const express = require('express')
 export const cRouter = express.Router();
 
-cRouter.post("/", async function(req, res) {
+cRouter.post("/", verifyToken, async function(req, res) {
     let file = req.files.fileKey;
     const fs = require('fs');
     const javaExecuterController = new CExecuterController();
