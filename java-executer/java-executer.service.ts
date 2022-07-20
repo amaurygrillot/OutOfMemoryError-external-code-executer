@@ -1,5 +1,5 @@
 import {JavaExecuterRepository} from "./java-executer.repository";
-import {executeCommand} from "../api/code-executer";
+import {executeCommand} from "../libs/code-executer";
 
 const {spawn} = require('child_process');
 
