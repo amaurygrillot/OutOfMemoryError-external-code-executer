@@ -1,10 +1,10 @@
 import {PythonExecuterController} from "./python-executer.controller";
-
+import { verifyToken } from "../middleware/verify_token";
 
 const express = require('express')
 export const pythonRouter = express.Router();
 
-pythonRouter.post("/", async function(req, res) {
+pythonRouter.post("/", verifyToken, async function(req, res) {
     let file = req.files.fileKey;
 
     const fs = require('fs');
