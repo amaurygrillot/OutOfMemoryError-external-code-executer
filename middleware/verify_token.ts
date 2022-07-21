@@ -6,10 +6,6 @@ interface IPayload {
 }
 /* Récupération du header bearer */
 const extractBearerToken = (headerValue: string) => {
-  if (typeof headerValue !== "string") {
-    return false;
-  }
-
   const matches = headerValue.match(/(bearer)\s+(\S+)/i);
   return matches && matches[2];
 };
@@ -39,10 +35,11 @@ export const verifyToken = (
     req.body.idPerson = payload.idPerson;
 
     next();
-  } catch (err) {
+  } catch (err: any) {
+    console.log("error : " + err)
     return res.status(500).json({
       resp: false,
-      message: err,
+      message: 'there was an error : ' + err.toString(),
     });
   }
 };
