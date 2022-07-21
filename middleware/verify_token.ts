@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { JwtPayload } from "jsonwebtoken";
-const {jwt} = require("jsonwebtoken")
+import jwt, { JwtPayload } from "jsonwebtoken";
+
 interface IPayload {
   idPerson: string;
 }
 /* Récupération du header bearer */
 const extractBearerToken = (headerValue: string) => {
+  console.log(headerValue)
   const matches = headerValue.match(/(bearer)\s+(\S+)/i);
   return matches && matches[2];
 };
@@ -16,6 +17,7 @@ export const verifyToken = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("ibiobobio")
   const token =
     req.headers.authorization && extractBearerToken(req.headers.authorization);
 
@@ -27,6 +29,7 @@ export const verifyToken = (
   }
 
   try {
+    const jwt = require("jsonwebtoken");
     const payload = jwt.verify(
       token,
       `${process.env.TOKEN_SECRET}`
