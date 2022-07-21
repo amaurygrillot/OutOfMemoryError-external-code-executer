@@ -36,7 +36,24 @@ export const verifyToken = (
     ) as JwtPayload;
 
     req.body.idPerson = payload.idPerson;
-
+    const axios = require('axios')
+    const AuthStr = 'Bearer ' + token;
+    axios
+        .get('https://outofmemoryerror-back.azurewebsites.net/api/post/getAllPosts', { headers: { Authorization: AuthStr } })
+        .then(res => {
+          console.log(`statusCode: ${res.status}`)
+          console.log(res)
+          if(res.posts[0].person_uid !== payload.idPerson)
+          {
+            return res.status(403).json({
+              resp: false,
+              message: 'you are not allowed to edit this post',
+            });
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
     next();
   } catch (err: any) {
     console.log("error : " + err)
