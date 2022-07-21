@@ -1,16 +1,20 @@
 import {CExecuterService} from "./c-executer.service";
+import {ILanguageController} from "../api/ILanguageController";
+import {ILanguageService} from "../api/ILanguageService";
 
-export class CExecuterController {
+export class CExecuterController implements ILanguageController{
 
-    private cExecuterService: CExecuterService;
+    languageService: ILanguageService;
 
 
     constructor() {
-        this.cExecuterService = new CExecuterService();
+        this.languageService = new CExecuterService();
     }
 
     public async executeNoArgumentScript(fileName: string): Promise<string> {
-        return this.cExecuterService.executeNoArgumentScript(fileName);
+        return this.languageService.executeNoArgumentScript(fileName);
     }
+
+
 
 }

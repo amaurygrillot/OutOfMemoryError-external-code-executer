@@ -1,16 +1,18 @@
 import {JavaExecuterService} from "./java-executer.service";
+import {ILanguageController} from "../api/ILanguageController";
+import {ILanguageService} from "../api/ILanguageService";
 
-export class JavaExecuterController {
+export class JavaExecuterController implements ILanguageController{
 
-    private javaExecuterService: JavaExecuterService;
+    languageService: ILanguageService;
 
 
     constructor() {
-        this.javaExecuterService = new JavaExecuterService();
+        this.languageService = new JavaExecuterService();
     }
 
     public async executeNoArgumentScript(fileName: string): Promise<string> {
-        return this.javaExecuterService.executeNoArgumentScript(fileName);
+        return this.languageService.executeNoArgumentScript(fileName);
     }
 
 }

@@ -1,7 +1,8 @@
 import {PythonExecuterRepository} from "./python-executer.repository";
 import {executeCommand} from "../libs/code-executer";
+import {ILanguageService} from "../api/ILanguageService";
 
-export class PythonExecuterService {
+export class PythonExecuterService implements ILanguageService{
 
 
     private pythonExecuterRepository: PythonExecuterRepository;

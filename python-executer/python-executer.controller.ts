@@ -1,16 +1,18 @@
 import {PythonExecuterService} from "./python-executer.service";
+import {ILanguageService} from "../api/ILanguageService";
+import {ILanguageController} from "../api/ILanguageController";
 
-export class PythonExecuterController {
+export class PythonExecuterController implements ILanguageController{
 
-    private pythonExecuterService: PythonExecuterService;
+    languageService: ILanguageService;
 
 
     constructor() {
-        this.pythonExecuterService = new PythonExecuterService();
+        this.languageService = new PythonExecuterService();
     }
 
     public async executeNoArgumentScript(fileName: string): Promise<string> {
-        return this.pythonExecuterService.executeNoArgumentScript(fileName);
+        return this.languageService.executeNoArgumentScript(fileName);
     }
 
 }

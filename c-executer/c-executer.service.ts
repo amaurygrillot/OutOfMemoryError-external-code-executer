@@ -1,9 +1,10 @@
 import {CExecuterRepository} from "./c-executer.repository";
 import {executeCommand} from "../libs/code-executer";
+import {ILanguageService} from "../api/ILanguageService";
 
 const {spawn} = require('child_process');
 
-export class CExecuterService {
+export class CExecuterService implements ILanguageService{
 
 
     private cExecuterRepository: CExecuterRepository;
