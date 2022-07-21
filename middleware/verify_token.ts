@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
-
+import { JwtPayload } from "jsonwebtoken";
+const {jwt} = require("jsonwebtoken")
 interface IPayload {
   idPerson: string;
 }
@@ -22,7 +22,7 @@ export const verifyToken = (
   if (!token) {
     return res.status(401).json({
       resp: false,
-      message: "Access non authoriser",
+      message: "Access non autorisé",
     });
   }
 
