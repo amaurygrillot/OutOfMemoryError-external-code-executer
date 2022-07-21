@@ -1,4 +1,6 @@
 import {spawn} from "child_process";
+import {JavaExecuterController} from "../java-executer/java-executer.controller";
+import {ILanguageController} from "../api/ILanguageController";
 
 export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
@@ -29,6 +31,23 @@ export function executeCommand(command: string, options: string[] | undefined, o
 
 }
 
+export async function postFile(req, res, languageName, fileExtension, controller: ILanguageController) {
+    const file = req.files.fileKey;
+    const fileName = `${req.body.idPerson}.${fileExtension}`;
+    const fs = require('fs');
+    try
+    {
+        fs.writeFileSync(`${process.env.FILES_REPO}/${languageName}/${fileName}`, file.data);
+        fs.writeFileSync(`${process.env.CHROOT_FILES_REPO}/${fileName}`, file.data);
+        const message = await controller.executeNoArgumentScript(fileName);
+        fs.unlinkSync(`${process.env.CHROOT_FILES_REPO}/${fileName}`);
+        res.status(200).json(message).end();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json("erreur : " + err).end();
+    }
+}
+
 export function getFile(req, res, languageName, defaultFile)
 {
     const filename = req.body.filename;
@@ -41,5 +60,6 @@ export function getFile(req, res, languageName, defaultFile)
           }
         });
     });
-
 }
+
+
