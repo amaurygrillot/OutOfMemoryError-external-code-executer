@@ -28,17 +28,17 @@ export async function setFakechroot()
     mountFiles.stdin.end();
     console.log("starting setFakechroot...")
     mountFiles.stdout.on('data', function (data) {
-        outputData += data.toString();
+        console.log(data.toString());
     });
     mountFiles.stderr.on('data', function (err) {
-        outputData += err.toString();
+        console.log(err.toString());
     });
     mountFiles.on('error', function (err) {
-        outputData += err.toString();
+        console.log(err.toString());
     });
 // in close event we are sure that stream from child process is closed
     mountFiles.on('close', (code) => {
-        console.log(outputData);
+        //console.log(outputData);
         console.log("setFakechroot ended with code : " + code.toString());
     });
 
