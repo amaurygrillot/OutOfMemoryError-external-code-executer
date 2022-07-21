@@ -1,74 +1,44 @@
-import { Express } from "express";
-import { pythonRouter } from "../python-executer/python-executer.route";
-//import { nodeRouter} from "../node-executer/node-executer.route";
-import {javaRouter} from "../java-executer/java-executer.route";
-import {cRouter} from "../c-executer/c-executer.route";
 import {spawn} from "child_process";
 
-export function buildRoutes(app: Express) {
-    app.get("/", async function(req, res) {
-        res.send("OutOfMemoryError API");
-    });
-
-    app.use("/python", pythonRouter);
-
-   // app.use("/node", nodeRouter);
-
-    app.use("/c", cRouter);
-
-    app.use("/java", javaRouter);
-
-}
-
-export async function setFakechroot()
+export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
-  const fs = require('fs');
-  if (fs.existsSync("/bullseye")) 
-  {
-      let outputData = "";
-      const mountFiles = spawn('sudo', ['-S','./set_fakechroot.sh']);
-      mountFiles.stdin.write(`${process.env.SU_PASSWORD}`);
-      mountFiles.stdin.end();
-      console.log("starting setFakechroot...");
-      mountFiles.stdout.on('data', function (data) {
-          outputData += data.toString();
-      });
-      mountFiles.stderr.on('data', function (err) {
-          outputData += err.toString();
-      });
-      mountFiles.on('error', function (err) {
-          outputData += err.toString();
-      });
-  // in close event we are sure that stream from child process is closed
-      mountFiles.on('close', (code) => {
-          console.log(outputData);
-          console.log("setFakechroot ended with code : " + code.toString());
-      });
-  } 
-  else 
-  {
-      console.log('/bullseye dir already exists');
-  }
-}
-
-export function startSSH()
-{
-    const startSSH = spawn('sudo', ['-S','service','ssh','start']);
-    startSSH.stdin.write(`${process.env.SU_PASSWORD}`)
-    startSSH.stdin.end();
-    startSSH.stdout.on('data', function (data) {
-        console.log('Pipe data from ssh script ...');
+    let fakechrootOptions = ['fakeroot', 'chroot', '/bullseye'];
+    fakechrootOptions.push(command);
+    const allOptions = fakechrootOptions.concat(options || []);
+    const displayName = 'fakechroot' + " " + options?.join(" ");
+    const spawnedProcess = spawn('fakechroot', allOptions, { timeout: 20 * 1000});
+    let dataToSend = "";
+    spawnedProcess.stdout.on('data', function (data) {
+        console.log('Pipe data from ' + displayName + ' command ...');
         console.log(data.toString());
+        dataToSend += data.toString()
     });
-    startSSH.stderr.on('data', function (err) {
+    spawnedProcess.stderr.on('data', function (err) {
         console.log(err.toString());
+        dataToSend += err.toString();
     });
-    startSSH.on('error', function (err) {
-        console.log(err.toString());}
-    );
+    spawnedProcess.on('error', function (err) {
+        console.log(err.toString());
+        dataToSend += err.toString()
+    });
 // in close event we are sure that stream from child process is closed
-    startSSH.on('close', (code) => {
-        console.log("SSH ended with code : " + code.toString());
+    spawnedProcess.on('close', (code) => {
+        dataToSend += "\nended with code : " + code.toString();
+        onCloseEventCallback(dataToSend);
     });
 
+}
+
+export function getFile(req, res, languageName, defaultFile)
+{
+    const filename = req.body.filename;
+    const path = require('path');
+    res.sendFile(`${process.env.FILES_REPO}/${languageName}/${filename}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
+        res.sendFile(`${process.env.FILES_REPO}/${languageName}/${defaultFile}`,{ root: path.join(__dirname, '../') }, async(err2: Error, data2: any0 => {
+          if (err2) {
+              res.write(err2.name + "\n" + err2.message);
+              res.status(404).end(null, 'binary');
+          }
+        }))
+    });
 }
