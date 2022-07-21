@@ -36,7 +36,7 @@ export const verifyToken = (
       `${process.env.TOKEN_SECRET}`
     ) as JwtPayload;
 
-    req.idPerson = payload.idPerson;
+    req.body.idPerson = payload.idPerson;
 
     next();
   } catch (err) {

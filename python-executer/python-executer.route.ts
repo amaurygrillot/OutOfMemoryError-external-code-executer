@@ -28,6 +28,6 @@ pythonRouter.post("/file", async(req: any, res: any) => {
 
 });
 
-pythonRouterjavaRouter.get("/", async function(req, res) {
+pythonRouter.get("/", async function(req, res) {
     getFile(req, res, "python", "main.py")
 });
