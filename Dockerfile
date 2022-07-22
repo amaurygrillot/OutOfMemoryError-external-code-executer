@@ -38,7 +38,7 @@ COPY ssh/sshd_config /etc/ssh/
 RUN mkdir -p /tmp
 COPY ssh/ssh_setup.sh /tmp
 RUN chmod +x /tmp/ssh_setup.sh \
-    && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null) \
+    && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null)
 # Open port 2222 for SSH access
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
