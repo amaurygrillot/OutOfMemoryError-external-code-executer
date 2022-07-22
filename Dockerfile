@@ -23,7 +23,7 @@ RUN apt-get install --yes debootstrap
 RUN apt-get install --yes fakechroot
 RUN apt-get install --yes fakeroot
 RUN apt-get --no-install-recommends install --yes systemd
-RUN fakechroot fakeroot debootstrap bullseye /bullseye
+
 
 #enable ssh
 RUN apt-get install --yes libcap2-bin  \
@@ -39,10 +39,17 @@ RUN mkdir -p /tmp
 COPY ssh/ssh_setup.sh /tmp
 RUN chmod +x /tmp/ssh_setup.sh \
     && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null) \
-    && service ssh start
 # Open port 2222 for SSH access
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
+RUN service ssh start
+
+RUN fakechroot fakeroot debootstrap bullseye /bullseye
+RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
+RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
+RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
+RUN mkdir /bullseye/programs
+RUN chown -R node /bullseye
 
 #build node env
 RUN npm ci --only=production
