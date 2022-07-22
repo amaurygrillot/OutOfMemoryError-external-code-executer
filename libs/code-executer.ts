@@ -4,11 +4,19 @@ import {ILanguageController} from "../api/ILanguageController";
 
 export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
-    let fakechrootOptions = ['fakeroot', 'chroot', '/bullseye'];
-    fakechrootOptions.push(command);
+    let fakechrootOptions: string[] = [];
+    let commandToExecute = command;
+    if(process.env.CONTEXT === undefined || process.env.CONTEXT !== "local")
+    {
+        fakechrootOptions = ['fakeroot', 'chroot', '/bullseye'];
+        fakechrootOptions.push(command);
+        commandToExecute = 'fakechroot';
+    }
+
     const allOptions = fakechrootOptions.concat(options || []);
     const displayName = 'fakechroot' + " " + options?.join(" ");
-    const spawnedProcess = spawn('fakechroot', allOptions, { timeout: 20 * 1000});
+
+    const spawnedProcess = spawn(commandToExecute, allOptions, { timeout: 20 * 1000});
     let dataToSend = "";
     spawnedProcess.stdout.on('data', function (data) {
         console.log('Pipe data from ' + displayName + ' command ...');
