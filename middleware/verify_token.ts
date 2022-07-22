@@ -49,6 +49,10 @@ export const  verifyToken = async (
               message: 'you are not allowed to edit this post',
             }).end();
           }
+          else
+          {
+            req.body.idPerson = idPerson;
+          }
         })
         .catch(error => {
           console.error(error)
