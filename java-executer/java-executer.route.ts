@@ -7,7 +7,9 @@ const express = require('express')
 export const javaRouter = express.Router();
 
 javaRouter.post("/", verifyToken, async function(req, res) {
-    await postFile(req, res, 'java', '.java', new JavaExecuterController());
+    const javaController = new JavaExecuterController();
+    req.files.fileKey.data = javaController.getFormattedFileData(req.files.fileKey.data, req.body.idPerson,);
+    await postFile(req, res, 'java', '.java', javaController);
 });
 
 javaRouter.post("/file", async(req: any, res: any) => {

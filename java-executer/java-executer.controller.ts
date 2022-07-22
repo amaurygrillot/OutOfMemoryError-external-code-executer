@@ -4,7 +4,7 @@ import {ILanguageService} from "../api/ILanguageService";
 
 export class JavaExecuterController implements ILanguageController{
 
-    languageService: ILanguageService;
+    languageService: JavaExecuterService;
 
 
     constructor() {
@@ -13,6 +13,10 @@ export class JavaExecuterController implements ILanguageController{
 
     public async executeNoArgumentScript(fileName: string): Promise<string> {
         return this.languageService.executeNoArgumentScript(fileName);
+    }
+
+    public getFormattedFileData(fileData: string, className: string): string {
+        return this.languageService.getFormattedFileData(fileData, className);
     }
 
 }

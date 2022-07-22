@@ -50,6 +50,18 @@ export class JavaExecuterService implements ILanguageService{
         });
     }
 
+    public getFormattedFileData(fileData: string, className: string): string
+    {
+        if(fileData.includes("public class Main"))
+        {
+            return fileData.replace("public class Main", "public class " + className);
+        }
+        else
+        {
+            return fileData;
+        }
+    }
+
 
 
 }
