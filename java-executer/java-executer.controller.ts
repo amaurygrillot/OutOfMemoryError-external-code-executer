@@ -11,12 +11,8 @@ export class JavaExecuterController implements ILanguageController{
         this.languageService = new JavaExecuterService();
     }
 
-    public async executeNoArgumentScript(fileName: string): Promise<string> {
-        return this.languageService.executeNoArgumentScript(fileName);
-    }
-
-    public getFormattedFileData(fileData: string, className: string): string {
-        return this.languageService.getFormattedFileData(fileData, className);
+    public async executeNoArgumentScript(filePath: string): Promise<string> {
+        return this.languageService.executeNoArgumentScript(filePath);
     }
 
 }

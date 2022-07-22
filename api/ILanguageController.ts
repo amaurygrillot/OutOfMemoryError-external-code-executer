@@ -4,5 +4,5 @@ export interface ILanguageController
 {
     languageService: ILanguageService;
 
-    executeNoArgumentScript(fileName: string): Promise<string>;
+    executeNoArgumentScript(filePath: string): Promise<string>;
 }

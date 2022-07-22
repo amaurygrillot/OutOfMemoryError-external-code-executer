@@ -18,12 +18,12 @@ export class CExecuterService implements ILanguageService{
         this.cExecuterRepository = await CExecuterRepository.getInstance();
     }
 
-    public async executeNoArgumentScript(fileName: string): Promise<string> {
-        return this.executeScript(fileName);
+    public async executeNoArgumentScript(filePath: string): Promise<string> {
+        return this.executeScript(filePath);
     }
 
 
-    private async executeScript(fileName: string): Promise<string>
+    private async executeScript(filePath: string): Promise<string>
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
@@ -32,11 +32,11 @@ export class CExecuterService implements ILanguageService{
             let promiseMessage = "Unknown error";
             // spawn new child process to call the gcc script
             executeCommand('gcc',
-                [`${process.env.CHROOT_FILES_REPO}/${fileName}`, '-o', `${process.env.CHROOT_FILES_REPO}/myFile`],
+                [`${filePath}/${process.env.DEFAULT_C_FILE}`, '-o', `${filePath}/executable`],
                 (gccData) =>
                 {
                     console.log(gccData);
-                    executeCommand(`${process.env.CHROOT_FILES_REPO}/myFile`,
+                    executeCommand(`${filePath}/executable`,
                 undefined,
                 (myFileData) =>
                     {

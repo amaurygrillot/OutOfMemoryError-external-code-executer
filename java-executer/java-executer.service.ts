@@ -19,12 +19,12 @@ export class JavaExecuterService implements ILanguageService{
         this.javaExecuterRepository = await JavaExecuterRepository.getInstance();
     }
 
-    public async executeNoArgumentScript(fileName: string): Promise<string> {
-        return this.executeScript(fileName);
+    public async executeNoArgumentScript(filePath: string): Promise<string> {
+        return this.executeScript(filePath);
     }
 
 
-    private async executeScript(fileName: string): Promise<string>
+    private async executeScript(filePath: string): Promise<string>
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
@@ -33,12 +33,12 @@ export class JavaExecuterService implements ILanguageService{
             let dataToSend = "";
             let promiseMessage = "Unknown error";
             executeCommand('javac',
-                [`${process.env.CHROOT_FILES_REPO}/${fileName}`],
+                [`${filePath}/${process.env.DEFAULT_JAVA_FILE}`],
                 (javacData) =>
                 {
                     console.log(javacData);
                     executeCommand(`java`,
-                        [`${process.env.CHROOT_FILES_REPO}/${fileName}`],
+                        [`${filePath}/${process.env.DEFAULT_JAVA_FILE}`],
                         (javaData) =>
                         {
                             console.log(javaData);

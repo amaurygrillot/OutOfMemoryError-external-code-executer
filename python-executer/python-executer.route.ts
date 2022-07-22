@@ -7,7 +7,7 @@ const express = require('express')
 export const pythonRouter = express.Router();
 
 pythonRouter.post("/", verifyToken, async function(req, res) {
-    postFile(req, res, 'python', '.py', new PythonExecuterController());
+    postFile(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController());
 });
 
 pythonRouter.post("/file", async(req: any, res: any) => {

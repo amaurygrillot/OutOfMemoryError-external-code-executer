@@ -6,7 +6,7 @@ const express = require('express')
 export const cRouter = express.Router();
 
 cRouter.post("/", verifyToken, async function(req, res) {
-    await postFile(req, res, 'c', '.c', new CExecuterController());
+    await postFile(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController());
 });
 
 cRouter.post("/file", async(req: any, res: any) => {

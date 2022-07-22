@@ -16,12 +16,12 @@ export class PythonExecuterService implements ILanguageService{
         this.pythonExecuterRepository = await PythonExecuterRepository.getInstance();
     }
 
-    public async executeNoArgumentScript(fileName: string): Promise<string> {
-        return this.executeScript(fileName);
+    public async executeNoArgumentScript(filePath: string): Promise<string> {
+        return this.executeScript(filePath);
     }
 
 
-    private async executeScript(fileName: string): Promise<string>
+    private async executeScript(filePath: string): Promise<string>
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
@@ -30,7 +30,7 @@ export class PythonExecuterService implements ILanguageService{
                 (20 * 1000)
             );
             const command = `${process.env.PYTHON}`;
-            const commandOptions = [`${process.env.CHROOT_FILES_REPO}/${fileName}`];
+            const commandOptions = [`${filePath}/${process.env.DEFAULT_PYTHON_FILE}`];
             // spawn new child process to call the python script
             executeCommand(command, commandOptions, (dataToSend) => {
                 console.log(dataToSend);

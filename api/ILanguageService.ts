@@ -1,4 +1,4 @@
 export interface ILanguageService
 {
-    executeNoArgumentScript(fileName: string): Promise<string>;
+    executeNoArgumentScript(filePath: string): Promise<string>;
 }

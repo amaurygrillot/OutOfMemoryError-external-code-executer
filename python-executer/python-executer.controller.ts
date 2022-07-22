@@ -11,8 +11,8 @@ export class PythonExecuterController implements ILanguageController{
         this.languageService = new PythonExecuterService();
     }
 
-    public async executeNoArgumentScript(fileName: string): Promise<string> {
-        return this.languageService.executeNoArgumentScript(fileName);
+    public async executeNoArgumentScript(filePath: string): Promise<string> {
+        return this.languageService.executeNoArgumentScript(filePath);
     }
 
 }

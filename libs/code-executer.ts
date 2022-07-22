@@ -39,16 +39,22 @@ export function executeCommand(command: string, options: string[] | undefined, o
 
 }
 
-export async function postFile(req, res, languageName, fileExtension, controller: ILanguageController) {
+export async function postFile(req, res, languageName, fileName, controller: ILanguageController) {
     const file = req.files.fileKey;
-    const fileName = `${req.body.idPerson}${fileExtension}`;
+    const dirPath = `${languageName}/${req.body.commentId}/${req.body.idPerson}`;
     const fs = require('fs');
     try
     {
-        fs.writeFileSync(`${process.env.FILES_REPO}/${languageName}/${fileName}`, file.data);
-        fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${fileName}`, file.data);
-        const message = await controller.executeNoArgumentScript(fileName);
-        fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${fileName}`);
+        if (!fs.existsSync(`${process.env.FILES_REPO}/${dirPath}`)){
+            fs.mkdirSync(`${process.env.FILES_REPO}/${dirPath}`, { recursive: true });
+        }
+        if (!fs.existsSync(`${process.env.CHROOT_FILES_REPO}/${dirPath}`)){
+            fs.mkdirSync(`${process.env.CHROOT_FILES_REPO}/${dirPath}`, { recursive: true });
+        }
+        fs.writeFileSync(`${process.env.FILES_REPO}/${dirPath}/${fileName}`, file.data);
+        fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`, file.data);
+        const message = await controller.executeNoArgumentScript(`${process.env.CHROOT_FILES_REPO}/${dirPath}`);
+        fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`);
         res.status(200).json(message).end();
     } catch (err) {
         console.error(err);
