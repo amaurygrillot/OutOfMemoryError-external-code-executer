@@ -12,7 +12,7 @@ const extractBearerToken = (headerValue: string) => {
 };
 
 // Verify token to Routes
-export const verifyToken = (
+export const  verifyToken = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -34,21 +34,21 @@ export const verifyToken = (
       token,
       `${process.env.TOKEN_SECRET}`
     ) as JwtPayload;
-
-    req.body.idPerson = payload.idPerson;
+    payload
+    const idPerson = payload.idPerson;
     const axios = require('axios')
     const AuthStr = 'Bearer ' + token;
-    axios
-        .get('https://outofmemoryerror-back.azurewebsites.net/api/post/getAllPosts', { headers: { Authorization: AuthStr } })
-        .then(res => {
-          console.log(`statusCode: ${res.status}`)
-          console.log(res)
-          if(res.posts[0].person_uid !== payload.idPerson)
+    await axios
+        .get('https://outofmemoryerror-back.azurewebsites.net/api/post/getPostByIdPerson', { headers: { Authorization: AuthStr } })
+        .then(result => {
+          console.log("data : " + result.data.posts[0].person_uid)
+          console.log("id : " + idPerson);
+          if(result.data.posts[4].person_uid !== idPerson)
           {
             return res.status(403).json({
               resp: false,
               message: 'you are not allowed to edit this post',
-            });
+            }).end();
           }
         })
         .catch(error => {

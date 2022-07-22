@@ -41,7 +41,7 @@ export function executeCommand(command: string, options: string[] | undefined, o
 
 export async function postFile(req, res, languageName, fileExtension, controller: ILanguageController) {
     const file = req.files.fileKey;
-    const fileName = `${req.body.idPerson}.${fileExtension}`;
+    const fileName = `${req.body.idPerson}${fileExtension}`;
     const fs = require('fs');
     try
     {
