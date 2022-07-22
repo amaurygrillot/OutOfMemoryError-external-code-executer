@@ -37,13 +37,12 @@ export class JavaExecuterService implements ILanguageService{
                 (javacData) =>
                 {
                     console.log(javacData);
-                    promiseMessage = javacData.toString();
                     executeCommand(`java`,
                         [`${process.env.CHROOT_FILES_REPO}/${fileName}`],
                         (javaData) =>
                         {
                             console.log(javaData);
-                            promiseMessage += javaData;
+                            promiseMessage = javaData;
                             accept(promiseMessage);
                         });
                 });

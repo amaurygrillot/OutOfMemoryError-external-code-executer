@@ -8,7 +8,8 @@ export const javaRouter = express.Router();
 
 javaRouter.post("/", verifyToken, async function(req, res) {
     const javaController = new JavaExecuterController();
-    req.files.fileKey.data = javaController.getFormattedFileData(req.files.fileKey.data, req.body.idPerson,);
+    const data: Buffer = req.files.fileKey.data;
+    req.files.fileKey.data = javaController.getFormattedFileData(data.toString(), req.body.idPerson);
     await postFile(req, res, 'java', '.java', javaController);
 });
 

@@ -36,13 +36,12 @@ export class CExecuterService implements ILanguageService{
                 (gccData) =>
                 {
                     console.log(gccData);
-                    promiseMessage = gccData.toString();
                     executeCommand(`${process.env.CHROOT_FILES_REPO}/myFile`,
                 undefined,
                 (myFileData) =>
                     {
                         console.log(myFileData);
-                        promiseMessage += myFileData;
+                        promiseMessage = myFileData;
                         accept(promiseMessage);
                     });
                 });
