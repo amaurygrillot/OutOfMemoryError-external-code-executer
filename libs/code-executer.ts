@@ -1,6 +1,7 @@
 import {spawn} from "child_process";
 import {JavaExecuterController} from "../java-executer/java-executer.controller";
 import {ILanguageController} from "../api/ILanguageController";
+import fs from "fs";
 
 export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
@@ -47,12 +48,12 @@ export async function postFile(req, res, languageName, fileName, controller: ILa
     {
         if (!fs.existsSync(`${process.env.FILES_REPO}/${dirPath}`)){
             fs.mkdirSync(`${process.env.FILES_REPO}/${dirPath}`, { recursive: true });
+            fs.writeFileSync(`${process.env.FILES_REPO}/${dirPath}/${fileName}`, file.data);
         }
-        if (!fs.existsSync(`${process.env.CHROOT_FILES_REPO}/${dirPath}`)){
-            fs.mkdirSync(`${process.env.CHROOT_FILES_REPO}/${dirPath}`, { recursive: true });
+        if (!fs.existsSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`)){
+            fs.mkdirSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`, { recursive: true });
+            fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`, file.data);
         }
-        fs.writeFileSync(`${process.env.FILES_REPO}/${dirPath}/${fileName}`, file.data);
-        fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`, file.data);
         const message = await controller.executeNoArgumentScript(`${process.env.CHROOT_FILES_REPO}/${dirPath}`);
         fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`);
         res.status(200).json(message).end();
