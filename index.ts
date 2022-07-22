@@ -12,11 +12,6 @@ const app: Express = express();
 app.use(fileUpload());
 app.use(bodyParser.json());
 buildRoutes(app);
-if(process.env.CONTEXT === undefined || process.env.CONTEXT !== "local")
-{
-    startSSH();
-    setFakechroot();
-}
 
 
 
