@@ -46,9 +46,9 @@ export async function postFile(req, res, languageName, fileExtension, controller
     try
     {
         fs.writeFileSync(`${process.env.FILES_REPO}/${languageName}/${fileName}`, file.data);
-        fs.writeFileSync(`/${process.env.CHROOT_FILES_REPO}/${fileName}`, file.data);
+        fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${fileName}`, file.data);
         const message = await controller.executeNoArgumentScript(fileName);
-        fs.unlinkSync(`/${process.env.CHROOT_FILES_REPO}/${fileName}`);
+        fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${fileName}`);
         res.status(200).json(message).end();
     } catch (err) {
         console.error(err);
