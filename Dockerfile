@@ -23,6 +23,7 @@ RUN apt-get install --yes debootstrap
 RUN apt-get install --yes fakechroot
 RUN apt-get install --yes fakeroot
 RUN apt-get --no-install-recommends install --yes systemd
+RUN fakechroot fakeroot debootstrap bullseye /bullseye
 
 #enable ssh
 RUN apt-get install --yes libcap2-bin  \
