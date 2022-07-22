@@ -42,7 +42,6 @@ RUN chmod +x /tmp/ssh_setup.sh \
 # Open port 2222 for SSH access
 EXPOSE 80 2222
 RUN /usr/sbin/sshd
-RUN service ssh start
 
 RUN fakechroot fakeroot debootstrap bullseye /bullseye
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
