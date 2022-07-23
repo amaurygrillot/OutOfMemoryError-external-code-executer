@@ -1,7 +1,6 @@
 import {spawn} from "child_process";
 import {JavaExecuterController} from "../java-executer/java-executer.controller";
 import {ILanguageController} from "../api/ILanguageController";
-import fs from "fs";
 
 export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
@@ -66,13 +65,11 @@ export async function postFile(req, res, languageName, fileName, controller: ILa
 export function getFile(req, res, languageName, defaultFile)
 {
     const filePath = `${req.params.post_uid}/${req.params.user_uid}`;
-    const path = require('path');
     const fs = require('fs')
     if(fs.existsSync(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`))
     {
         const data = fs.readFileSync(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`, 'utf8');
         res.status(200).json(data).end();
-
     }
     else
     {
