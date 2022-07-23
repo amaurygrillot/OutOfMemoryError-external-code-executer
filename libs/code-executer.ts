@@ -1,6 +1,7 @@
 import {spawn} from "child_process";
 import {JavaExecuterController} from "../java-executer/java-executer.controller";
 import {ILanguageController} from "../api/ILanguageController";
+import fs from "fs";
 
 export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
@@ -69,27 +70,14 @@ export function getFile(req, res, languageName, defaultFile)
     const fs = require('fs')
     if(fs.existsSync(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`))
     {
-        res.sendFile(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
-            if(err)
-            {
-                console.log(`filename : ${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`)
-                console.log("there was an error : " + err.name + "\n" + err.message)
-                return res.status(500).end()
-            }
-            console.log("data : " + data.toString())
-        });
+        const data = fs.readFileSync(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`, 'utf8');
+        res.status(200).json(data).end();
+
     }
     else
     {
-        res.sendFile(`${process.env.FILES_REPO}/${languageName}/${defaultFile}`,{ root: path.join(__dirname, '../') }, async(err: Error, data: any) => {
-            if(err)
-            {
-                console.log(`filename : ${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`)
-                console.log("there was an error : " + err.name + "\n" + err.message)
-                return res.status(500).end()
-            }
-            console.log("data : " + data.toString())
-        });
+        const data = fs.readFileSync(`${process.env.FILES_REPO}/${languageName}/${defaultFile}`, 'utf8');
+        res.status(201).json(data).end();
     }
 
 }
