@@ -71,15 +71,24 @@ export function getFile(req, res, languageName, defaultFile)
     {
         res.sendFile(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
             if(err)
+            {
+                console.log("there was an error : " + err.name + "\n" + err.message)
                 return res.status(500).end()
+            }
+            console.log("data : " + data.toString())
         });
+
         res.status(200).end();
     }
     else
     {
         res.sendFile(`${process.env.FILES_REPO}/${languageName}/${defaultFile}`,{ root: path.join(__dirname, '../') }, async(err: Error, data: any) => {
             if(err)
+            {
+                console.log("there was an error : " + err.name + "\n" + err.message)
                 return res.status(500).end()
+            }
+            console.log("data : " + data.toString())
         });
         res.status(201).end();
     }
