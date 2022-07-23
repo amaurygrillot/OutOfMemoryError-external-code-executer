@@ -66,14 +66,22 @@ export function getFile(req, res, languageName, defaultFile)
 {
     const filePath = `${req.params.post_uid}/${req.params.user_uid}`;
     const path = require('path');
-    res.sendFile(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
-        res.sendFile(`${process.env.FILES_REPO}/${languageName}/${defaultFile}`,{ root: path.join(__dirname, '../') }, async(err2: Error, data2: any) => {
-          if (err2) {
-              res.write(err2.name + "\n" + err2.message);
-              res.status(404).end(null, 'binary');
-          }
+    const fs = require('fs')
+    if(fs.existsSync(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`))
+    {
+        res.sendFile(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
+            return res.status(500).end()
         });
-    });
+        res.status(200).end();
+    }
+    else
+    {
+        res.sendFile(`${process.env.FILES_REPO}/${languageName}/${defaultFile}`,{ root: path.join(__dirname, '../') }, async(err2: Error, data2: any) => {
+            return res.status(500).end()
+        });
+        res.status(201)
+    }
+
 }
 
 
