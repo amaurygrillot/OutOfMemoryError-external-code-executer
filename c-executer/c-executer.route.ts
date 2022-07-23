@@ -14,6 +14,6 @@ cRouter.post("/file", async(req: any, res: any) => {
 
 });
 
-cRouter.get("/", async function(req, res) {
+cRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "c", "main.c")
 });

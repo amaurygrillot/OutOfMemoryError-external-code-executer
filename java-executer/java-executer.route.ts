@@ -15,6 +15,6 @@ javaRouter.post("/file", async(req: any, res: any) => {
 
 });
 
-javaRouter.get("/", async function(req, res) {
+javaRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "java", "Main.java")
 });

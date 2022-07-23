@@ -64,9 +64,9 @@ export async function postFile(req, res, languageName, fileName, controller: ILa
 
 export function getFile(req, res, languageName, defaultFile)
 {
-    const filename = req.body.filename;
+    const filePath = `${req.params.post_uid}/${req.params.user_uid}`;
     const path = require('path');
-    res.sendFile(`${process.env.FILES_REPO}/${languageName}/${filename}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
+    res.sendFile(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
         res.sendFile(`${process.env.FILES_REPO}/${languageName}/${defaultFile}`,{ root: path.join(__dirname, '../') }, async(err2: Error, data2: any) => {
           if (err2) {
               res.write(err2.name + "\n" + err2.message);

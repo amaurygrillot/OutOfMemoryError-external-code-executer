@@ -15,6 +15,6 @@ pythonRouter.post("/file", async(req: any, res: any) => {
 
 });
 
-pythonRouter.get("/", async function(req, res) {
+pythonRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "python", "main.py")
 });
