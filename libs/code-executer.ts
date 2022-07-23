@@ -70,16 +70,18 @@ export function getFile(req, res, languageName, defaultFile)
     if(fs.existsSync(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`))
     {
         res.sendFile(`${process.env.FILES_REPO}/${languageName}/${filePath}/${defaultFile}`, { root: path.join(__dirname, '../') }, async (err: Error, data: any) => {
-            return res.status(500).end()
+            if(err)
+                return res.status(500).end()
         });
         res.status(200).end();
     }
     else
     {
-        res.sendFile(`${process.env.FILES_REPO}/${languageName}/${defaultFile}`,{ root: path.join(__dirname, '../') }, async(err2: Error, data2: any) => {
-            return res.status(500).end()
+        res.sendFile(`${process.env.FILES_REPO}/${languageName}/${defaultFile}`,{ root: path.join(__dirname, '../') }, async(err: Error, data: any) => {
+            if(err)
+                return res.status(500).end()
         });
-        res.status(201)
+        res.status(201).end();
     }
 
 }
