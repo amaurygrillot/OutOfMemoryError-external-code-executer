@@ -27,7 +27,7 @@ export class CExecuterService implements ILanguageService{
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
-                reject("timed out");
+                reject("Request timed out");
             }, (15 * 1000));
             let promiseMessage = "Unknown error";
             // spawn new child process to call the gcc script
@@ -36,12 +36,22 @@ export class CExecuterService implements ILanguageService{
                 (gccData) =>
                 {
                     console.log(gccData);
+                    if(gccData.search('ended with code : 0') === -1)
+                    {
+                        reject(gccData);
+                        return;
+                    }
                     executeCommand(`${filePath}/executable`,
                 undefined,
                 (myFileData) =>
                     {
                         console.log(myFileData);
                         promiseMessage = myFileData;
+                        if(myFileData.search('ended with code : 0') === -1)
+                        {
+                            reject(myFileData);
+                            return;
+                        }
                         accept(promiseMessage);
                     });
                 });

@@ -25,15 +25,20 @@ export class PythonExecuterService implements ILanguageService{
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
-                    reject("timed out");
+                    reject("Request timed out");
                 },
-                (20 * 1000)
+                (15 * 1000)
             );
             const command = `${process.env.PYTHON}`;
             const commandOptions = [`${filePath}/${process.env.DEFAULT_PYTHON_FILE}`];
             // spawn new child process to call the python script
             executeCommand(command, commandOptions, (dataToSend) => {
                 console.log(dataToSend);
+                if(dataToSend.search('ended with code : 0') === -1)
+                {
+                    reject(dataToSend);
+                    return;
+                }
                 accept(dataToSend);
             } )
         });

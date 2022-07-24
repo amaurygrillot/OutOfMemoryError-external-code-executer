@@ -28,7 +28,7 @@ export class JavaExecuterService implements ILanguageService{
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
-                reject("timed out");
+                reject("Request timed out");
             }, (15 * 1000));
             let dataToSend = "";
             let promiseMessage = "Unknown error";
@@ -37,12 +37,22 @@ export class JavaExecuterService implements ILanguageService{
                 (javacData) =>
                 {
                     console.log(javacData);
+                    if(javacData.search('ended with code : 0') === -1)
+                    {
+                        reject(javacData);
+                        return;
+                    }
                     executeCommand(`java`,
                         [`${filePath}/${process.env.DEFAULT_JAVA_FILE}`],
                         (javaData) =>
                         {
                             console.log(javaData);
-                            promiseMessage = javaData;
+                            promiseMessage += javaData;
+                            if(javaData.search('ended with code : 0') === -1)
+                            {
+                                reject(promiseMessage);
+                                return;
+                            }
                             accept(promiseMessage);
                         });
                 });

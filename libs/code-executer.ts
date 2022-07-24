@@ -52,12 +52,25 @@ export async function postFile(req, res, languageName, fileName, controller: ILa
         }
         fs.writeFileSync(`${process.env.FILES_REPO}/${dirPath}/${fileName}`, file.data);
         fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`, file.data);
-        const message = await controller.executeNoArgumentScript(`${process.env.CHROOT_FILES_REPO}/${dirPath}`);
-        fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`);
-        res.status(200).json(message).end();
+        controller.executeNoArgumentScript(`${process.env.CHROOT_FILES_REPO}/${dirPath}`)
+            .then((message) =>
+            {
+                res.status(200).json(message).end();
+            })
+            .catch((message) =>
+            {
+                const finalMessage = message.substring(message.indexOf(dirPath) + dirPath.length);
+                res.status(500).json(finalMessage).end();
+            })
+            .finally(() =>
+            {
+                fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`);
+            });
+
+
     } catch (err) {
         console.error(err);
-        res.status(500).json("erreur : " + err).end();
+        res.status(500).json(err).end();
     }
 }
 
