@@ -35,12 +35,13 @@ export const  verifyToken = async (
     ) as JwtPayload;
     payload
     const idPerson = payload.idPerson;
+    req.body.idPerson = idPerson;
     const axios = require('axios')
     const AuthStr = 'Bearer ' + token;
     await axios
-        .get(`https://outofmemoryerror-back.azurewebsites.net/api/post/getPostById/${req.params.post_uid}`, { headers: { Authorization: AuthStr } })
+        .get(`https://outofmemoryerror-back.azurewebsites.net/api/post/getPostById/${req.body.commentId}`, { headers: { Authorization: AuthStr } })
         .then(result => {
-          console.log("data : " + result.data.posts[0].person_uid)
+          console.log("data : " + result.data.posts)
           console.log("id : " + idPerson);
           if(result.data.posts[0].person_uid !== idPerson)
           {
