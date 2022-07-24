@@ -13,7 +13,7 @@ export function executeCommand(command: string, options: string[] | undefined, o
     }
 
     const allOptions = fakechrootOptions.concat(options || []);
-    const displayName = 'fakechroot' + " " + options?.join(" ");
+    const displayName = commandToExecute + " " + options?.join(" ");
 
     const spawnedProcess = spawn(commandToExecute, allOptions, { timeout: 20 * 1000});
     let dataToSend = "";
@@ -59,6 +59,7 @@ export async function postFile(req, res, languageName, fileName, controller: ILa
             })
             .catch((message) =>
             {
+                console.log("promise refuses : " + message);
                 const finalMessage = message.substring(message.indexOf(dirPath) + dirPath.length);
                 res.status(500).json(finalMessage).end();
             })
@@ -70,7 +71,7 @@ export async function postFile(req, res, languageName, fileName, controller: ILa
 
     } catch (err) {
         console.error(err);
-        res.status(500).json(err).end();
+        res.status(500).json("error : " + err).end();
     }
 }
 
