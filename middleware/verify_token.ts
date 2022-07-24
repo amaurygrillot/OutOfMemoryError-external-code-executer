@@ -42,7 +42,7 @@ export const  verifyToken = async (
         .then(result => {
           console.log("data : " + result.data.posts[0].person_uid)
           console.log("id : " + idPerson);
-          if(result.data.posts[0].person_uid !== idPerson && idPerson !== req.params.user_uid)
+          if(result.data.posts[0].person_uid !== idPerson)
           {
             return res.status(403).json({
               resp: false,
