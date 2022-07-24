@@ -31,7 +31,7 @@ export class JavaExecuterService implements ILanguageService{
                 reject("Request timed out");
             }, (15 * 1000));
             let dataToSend = "";
-            let promiseMessage = "Unknown error";
+            let promiseMessage = "";
             executeCommand('javac',
                 [`${filePath}/${process.env.DEFAULT_JAVA_FILE}`],
                 (javacData) =>

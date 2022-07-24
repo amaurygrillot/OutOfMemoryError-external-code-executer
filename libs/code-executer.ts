@@ -59,8 +59,8 @@ export async function postFile(req, res, languageName, fileName, controller: ILa
             })
             .catch((message) =>
             {
-                console.log("promise refuses : " + message);
-                const finalMessage = message.substring(message.indexOf(dirPath) + dirPath.length);
+                console.log("promise refusée : " + message);
+                const finalMessage = message.substring(message.indexOf(`${dirPath}/`) + dirPath.length);
                 res.status(500).json(finalMessage).end();
             })
             .finally(() =>
