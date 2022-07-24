@@ -38,31 +38,31 @@ export const  verifyToken = async (
     const axios = require('axios')
     const AuthStr = 'Bearer ' + token;
     await axios
-        .get('https://outofmemoryerror-back.azurewebsites.net/api/post/getAllPosts', { headers: { Authorization: AuthStr } })
+        .get(`https://outofmemoryerror-back.azurewebsites.net/api/post/getPostById/${req.params.post_uid}`, { headers: { Authorization: AuthStr } })
         .then(result => {
           console.log("data : " + result.data.posts[0].person_uid)
           console.log("id : " + idPerson);
-          if(result.data.posts[0].person_uid !== idPerson)
+          if(result.data.posts[0].person_uid !== idPerson && idPerson !== req.params.user_uid)
           {
             return res.status(403).json({
               resp: false,
-              message: 'you are not allowed to edit this post',
+              message: 'Vous ne pouvez pas éditer ce post',
             }).end();
-          }
-          else
-          {
-            req.body.idPerson = idPerson;
           }
         })
         .catch(error => {
           console.error(error)
+          return res.status(500).json({
+            resp: false,
+            message: error.toString(),
+          }).end();
         })
     next();
   } catch (err: any) {
     console.log("error : " + err)
     return res.status(500).json({
       resp: false,
-      message: 'there was an error : ' + err.toString(),
+      message: err.toString(),
     });
   }
 };
