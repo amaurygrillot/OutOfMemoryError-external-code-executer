@@ -60,7 +60,7 @@ export async function postFile(req, res, languageName, fileName, controller: ILa
             .catch((message) =>
             {
                 console.log("promise refusée : " + message);
-                const finalMessage = message.replace(message.indexOf(`${dirPath}/`) + dirPath.length, '')
+                const finalMessage = message.replace(`${dirPath}/`, '')
 
                 res.status(500).json(finalMessage).end();
             })
