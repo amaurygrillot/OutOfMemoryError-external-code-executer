@@ -10,9 +10,17 @@ pythonRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
 });
 
 pythonRouter.post("/saveFile", verifyToken, async(req: any, res: any) => {
-    const file = req.files.fileKey;
-    const dirPath = `python/${req.body.commentId}/${req.body.idPerson}`;
-    saveFile(dirPath, process.env.DEFAULT_PYTHON_FILE, file.data);
+    try {
+        const file = req.files.fileKey;
+        const dirPath = `python/${req.body.commentId}/${req.body.idPerson}`;
+        saveFile(dirPath, process.env.DEFAULT_PYTHON_FILE, file.data);
+        res.status(200).end();
+    }
+    catch (err)
+    {
+        res.write(err);
+        res.status(500).end()
+    }
 });
 
 pythonRouter.get("/:post_uid/:user_uid", async function(req, res) {
