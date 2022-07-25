@@ -36,28 +36,6 @@ export const  verifyToken = async (
     payload
     const idPerson = payload.idPerson;
     req.body.idPerson = idPerson;
-    const axios = require('axios')
-    const AuthStr = 'Bearer ' + token;
-    await axios
-        .get(`https://outofmemoryerror-back.azurewebsites.net/api/post/getPostById/${req.body.commentId}`, { headers: { Authorization: AuthStr } })
-        .then(result => {
-          console.log("data : " + result.data.posts)
-          console.log("id : " + idPerson);
-          if(result.data.posts[0].person_uid !== idPerson)
-          {
-            return res.status(403).json({
-              resp: false,
-              message: 'Vous ne pouvez pas éditer ce post',
-            }).end();
-          }
-        })
-        .catch(error => {
-          console.error(error)
-          return res.status(500).json({
-            resp: false,
-            message: error.toString(),
-          }).end();
-        })
     next();
   } catch (err: any) {
     console.log("error : " + err)
@@ -69,15 +47,35 @@ export const  verifyToken = async (
 };
 
 // Verify token to Socket
-export const verifyTokenSocket = (token: string): [boolean, string] => {
-  try {
-    const payload = jwt.verify(
-      token,
-      `${process.env.TOKEN_SECRET}`
-    ) as IPayload;
-
-    return [true, payload.idPerson];
-  } catch (err) {
-    return [false, ""];
-  }
+export const verifySameIdPost = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+  const token =
+      req.headers.authorization && extractBearerToken(req.headers.authorization);
+  const AuthStr = 'Bearer ' + token;
+  const axios = require('axios')
+  const idPerson = req.body.idPerson;
+  await axios
+      .get(`https://outofmemoryerror-back.azurewebsites.net/api/post/getPostById/${req.body.commentId}`, { headers: { Authorization: AuthStr } })
+      .then(result => {
+        console.log("data : " + result.data.posts)
+        console.log("id : " + idPerson);
+        if(result.data.posts[0].person_uid !== idPerson)
+        {
+          return res.status(401).json({
+            resp: false,
+            message: 'Vous ne pouvez pas éditer ce post',
+          }).end();
+        }
+        next();
+      })
+      .catch(error => {
+        console.error(error)
+        return res.status(500).json({
+          resp: false,
+          message: error.toString(),
+        }).end();
+      })
 };
