@@ -94,6 +94,7 @@ export function getFile(req, res, languageName, defaultFile)
 
 export function saveFile(dirPath: string, fileName: any, data: Buffer)
 {
+    const fs = require('fs')
     if (!fs.existsSync(`${process.env.FILES_REPO}/${dirPath}`)){
         fs.mkdirSync(`${process.env.FILES_REPO}/${dirPath}`, { recursive: true });
     }
