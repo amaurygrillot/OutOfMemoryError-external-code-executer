@@ -28,7 +28,6 @@ export const  verifyToken = async (
   }
 
   try {
-    const jwt = require("jsonwebtoken");
     const payload = jwt.verify(
       token,
       `${process.env.TOKEN_SECRET}`
