@@ -1,6 +1,7 @@
 import {spawn} from "child_process";
 import {JavaExecuterController} from "../java-executer/java-executer.controller";
 import {ILanguageController} from "../api/ILanguageController";
+import fs from "fs";
 export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
     let fakechrootOptions: string[] = [];
@@ -44,14 +45,7 @@ export async function postFile(req, res, languageName, fileName, controller: ILa
     const fs = require('fs');
     try
     {
-        if (!fs.existsSync(`${process.env.FILES_REPO}/${dirPath}`)){
-            fs.mkdirSync(`${process.env.FILES_REPO}/${dirPath}`, { recursive: true });
-        }
-        if (!fs.existsSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`)){
-            fs.mkdirSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`, { recursive: true });
-        }
-        fs.writeFileSync(`${process.env.FILES_REPO}/${dirPath}/${fileName}`, file.data);
-        fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`, file.data);
+        saveFile(dirPath, fileName, file.data);
         controller.executeNoArgumentScript(`${process.env.CHROOT_FILES_REPO}/${dirPath}`)
             .then((message) =>
             {
@@ -97,6 +91,19 @@ export function getFile(req, res, languageName, defaultFile)
         console.error(err);
         res.status(500).end()
     }
+
+}
+
+export function saveFile(dirPath: string, fileName: any, data: Buffer)
+{
+    if (!fs.existsSync(`${process.env.FILES_REPO}/${dirPath}`)){
+        fs.mkdirSync(`${process.env.FILES_REPO}/${dirPath}`, { recursive: true });
+    }
+    if (!fs.existsSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`)){
+        fs.mkdirSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`, { recursive: true });
+    }
+    fs.writeFileSync(`${process.env.FILES_REPO}/${dirPath}/${fileName}`, data);
+    fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`, data);
 
 }
 
