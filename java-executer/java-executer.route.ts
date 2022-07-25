@@ -1,7 +1,6 @@
 import {JavaExecuterController} from "./java-executer.controller";
 import { verifyToken } from "../middleware/verify_token";
 import {getFile, postFile, saveFile} from "../libs/code-executer";
-import {CExecuterController} from "../c-executer/c-executer.controller";
 
 const express = require('express')
 export const javaRouter = express.Router();
