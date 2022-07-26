@@ -16,6 +16,7 @@ export function executeCommand(command: string, options: string[] | undefined, o
 
     const spawnedProcess = spawn(commandToExecute, allOptions, { timeout: 20 * 1000});
     let dataToSend = "";
+    const startDate = Date.now();
     spawnedProcess.stdout.on('data', function (data) {
         console.log('Pipe data from ' + displayName + ' command ...');
         console.log(data.toString());
@@ -31,7 +32,10 @@ export function executeCommand(command: string, options: string[] | undefined, o
     });
 // in close event we are sure that stream from child process is closed
     spawnedProcess.on('close', (code) => {
-        dataToSend += "\nended with code : " + code.toString();
+        const endDate = Date.now()
+        const timeElapsed = (endDate - startDate) / 1000;
+        dataToSend += "\nTemps d'exécution : " + timeElapsed + " secondes"
+                   + "\nLe programme s'est arrêté avec le code : " + code.toString();
         onCloseEventCallback(dataToSend);
     });
 
