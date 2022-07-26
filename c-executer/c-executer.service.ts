@@ -36,7 +36,7 @@ export class CExecuterService implements ILanguageService{
                 (gccData) =>
                 {
                     console.log(gccData);
-                    if(gccData.search('ended with code : 0') === -1)
+                    if(gccData.search('Le programme s\'est arrêté avec le code : 0') === -1)
                     {
                         reject(gccData);
                         return;
@@ -47,7 +47,7 @@ export class CExecuterService implements ILanguageService{
                     {
                         console.log(myFileData);
                         promiseMessage = myFileData;
-                        if(myFileData.search('ended with code : 0') === -1)
+                        if(myFileData.search('Le programme s\'est arrêté avec le code : 0') === -1)
                         {
                             reject(myFileData);
                             return;

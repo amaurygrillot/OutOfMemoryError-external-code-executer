@@ -34,7 +34,7 @@ export class PythonExecuterService implements ILanguageService{
             // spawn new child process to call the python script
             executeCommand(command, commandOptions, (dataToSend) => {
                 console.log(dataToSend);
-                if(dataToSend.search('ended with code : 0') === -1)
+                if(dataToSend.search('Le programme s\'est arrêté avec le code : 0') === -1)
                 {
                     reject(dataToSend);
                     return;

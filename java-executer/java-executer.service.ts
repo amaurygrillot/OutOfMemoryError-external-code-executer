@@ -37,7 +37,7 @@ export class JavaExecuterService implements ILanguageService{
                 (javacData) =>
                 {
                     console.log(javacData);
-                    if(javacData.search('ended with code : 0') === -1)
+                    if(javacData.search('Le programme s\'est arrêté avec le code : 0') === -1)
                     {
                         reject(javacData);
                         return;
@@ -48,7 +48,7 @@ export class JavaExecuterService implements ILanguageService{
                         {
                             console.log(javaData);
                             promiseMessage += javaData;
-                            if(javaData.search('ended with code : 0') === -1)
+                            if(javaData.search('Le programme s\'est arrêté avec le code : 0') === -1)
                             {
                                 reject(promiseMessage);
                                 return;
