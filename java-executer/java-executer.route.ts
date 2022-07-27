@@ -9,7 +9,7 @@ javaRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
 });
 
-javaRouter.post("/executeNoSave", verifyToken, verifySameIdPost, async function(req, res) {
+javaRouter.post("/executeNoSave", verifyToken, async function(req, res) {
     await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), false);
 });
 

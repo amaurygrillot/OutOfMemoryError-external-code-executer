@@ -9,7 +9,7 @@ pythonRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
 });
 
-pythonRouter.post("/executeNoSave", verifyToken, verifySameIdPost, async function(req, res) {
+pythonRouter.post("/executeNoSave", verifyToken, async function(req, res) {
     executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), false);
 });
 

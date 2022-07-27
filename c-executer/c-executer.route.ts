@@ -9,7 +9,7 @@ cRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     await executeFileWithSave(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController(), true);
 });
 
-cRouter.post("/executeNoSave", verifyToken, verifySameIdPost, async function(req, res) {
+cRouter.post("/executeNoSave", verifyToken, async function(req, res) {
     await executeFileWithSave(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController(), false);
 });
 
