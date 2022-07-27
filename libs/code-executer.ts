@@ -42,12 +42,16 @@ export function executeCommand(command: string, options: string[] | undefined, o
 
 export async function executeFileWithSave(req, res, languageName, fileName, controller: ILanguageController, persistent : boolean) {
     const file = req.files.fileKey;
-    const dirPath = `${languageName}/${req.body.commentId}/${req.body.idPerson}`;
+    let dirPath = `${languageName}/${req.body.commentId}/${req.body.idPerson}`;
     try
     {
         if(persistent)
         {
             saveFile(`${process.env.FILES_REPO}/${dirPath}`, fileName, file.data);
+        }
+        else
+        {
+            dirPath = '';
         }
         saveFile(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`, fileName, file.data);
         controller.executeNoArgumentScript(`${process.env.CHROOT_FILES_REPO}/${dirPath}`)
