@@ -1,5 +1,6 @@
 import {spawn} from "child_process";
 import {ILanguageController} from "../api/ILanguageController";
+import fs from "fs";
 export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
     let fakechrootOptions: string[] = [];
@@ -13,10 +14,9 @@ export function executeCommand(command: string, options: string[] | undefined, o
 
     const allOptions = fakechrootOptions.concat(options || []);
     const displayName = commandToExecute + " " + options?.join(" ");
-
+    const startDate = Date.now();
     const spawnedProcess = spawn(commandToExecute, allOptions, { timeout: 20 * 1000});
     let dataToSend = "";
-    const startDate = Date.now();
     spawnedProcess.stdout.on('data', function (data) {
         console.log('Pipe data from ' + displayName + ' command ...');
         console.log(data.toString());
@@ -35,19 +35,22 @@ export function executeCommand(command: string, options: string[] | undefined, o
         const endDate = Date.now()
         const timeElapsed = (endDate - startDate) / 1000;
         dataToSend += "\nTemps d'exécution : " + timeElapsed + " secondes"
-                   + "\nLe programme s'est arrêté avec le code : " + code.toString();
+            + "\nLe programme s'est arrêté avec le code : " + code.toString();
         onCloseEventCallback(dataToSend);
     });
 
 }
 
-export async function postFile(req, res, languageName, fileName, controller: ILanguageController) {
+export async function executeFileWithSave(req, res, languageName, fileName, controller: ILanguageController, persistent : boolean) {
     const file = req.files.fileKey;
     const dirPath = `${languageName}/${req.body.commentId}/${req.body.idPerson}`;
-    const fs = require('fs');
     try
     {
-        saveFile(dirPath, fileName, file.data);
+        if(persistent)
+        {
+            saveFile(`${process.env.FILES_REPO}/${dirPath}`, fileName, file.data);
+        }
+        saveFile(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`, fileName, file.data);
         controller.executeNoArgumentScript(`${process.env.CHROOT_FILES_REPO}/${dirPath}`)
             .then((message) =>
             {
@@ -96,18 +99,14 @@ export function getFile(req, res, languageName, defaultFile)
 
 }
 
-export function saveFile(dirPath: string, fileName: any, data: Buffer)
+
+export function saveFile(fullPath: string, fileName: any, data: Buffer)
 {
     const fs = require('fs')
-    if (!fs.existsSync(`${process.env.FILES_REPO}/${dirPath}`)){
-        fs.mkdirSync(`${process.env.FILES_REPO}/${dirPath}`, { recursive: true });
+    if (!fs.existsSync(`${fullPath}`)){
+        fs.mkdirSync(`${fullPath}`, { recursive: true });
     }
-    if (!fs.existsSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`)){
-        fs.mkdirSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`, { recursive: true });
-    }
-    fs.writeFileSync(`${process.env.FILES_REPO}/${dirPath}/${fileName}`, data);
-    fs.writeFileSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`, data);
-
+    fs.writeFileSync(`${fullPath}/${fileName}`, data);
 }
 
 
