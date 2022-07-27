@@ -1,6 +1,5 @@
 import {spawn} from "child_process";
 import {ILanguageController} from "../api/ILanguageController";
-import fs from "fs";
 export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
     let fakechrootOptions: string[] = [];
