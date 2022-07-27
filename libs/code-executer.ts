@@ -64,6 +64,7 @@ export async function executeFileWithSave(req, res, languageName, fileName, cont
             })
             .finally(() =>
             {
+                const fs = require('fs')
                 fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`);
             });
 
