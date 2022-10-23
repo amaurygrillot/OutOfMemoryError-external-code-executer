@@ -35,6 +35,6 @@ pythonRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "python", "main.py")
 });
 
-pythonRouter.get("/challenge/:post_uid/:user_uid", async function(req, res) {
+pythonRouter.get("/challenge/:challengeResultId/:user_uid", async function(req, res) {
     getFile(req, res, "challenge/python", "main.py")
 });

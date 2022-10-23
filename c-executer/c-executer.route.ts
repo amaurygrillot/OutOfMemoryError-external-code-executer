@@ -37,6 +37,6 @@ cRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "c", "main.c")
 });
 
-cRouter.get("/challenge/:post_uid/:user_uid", async function(req, res) {
+cRouter.get("/challenge/:challengeResultId/:user_uid", async function(req, res) {
     getFile(req, res, "challenge/c", "main.c")
 });

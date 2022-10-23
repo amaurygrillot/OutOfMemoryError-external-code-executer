@@ -92,11 +92,11 @@ export const verifySameIdChallengeResult = async (
   const axios = require('axios')
   const idPerson = req.body.idPerson;
   await axios
-      .get(`https://outofmemoryerror-back.azurewebsites.net/api/challenge/getChallengeResultByChallengeAndUserId/${req.body.commentId}`, { headers: { Authorization: AuthStr } })
+      .get(`https://outofmemoryerror-back.azurewebsites.net/api/challenge/getChallengeByIdChallengeResult/${req.body.challengeResultId}`, { headers: { Authorization: AuthStr } })
       .then(result => {
         console.log("data : " + result.data.posts)
         console.log("id : " + idPerson);
-        if(result.data.ChallengeResults[0].user_id !== idPerson)
+        if(result.data.Challenge.user_id !== idPerson)
         {
           return res.status(401).json({
             resp: false,

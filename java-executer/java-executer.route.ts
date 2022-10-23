@@ -38,6 +38,6 @@ javaRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "java", "Main.java")
 });
 
-javaRouter.get("/challenge/:post_uid/:user_uid", async function(req, res) {
+javaRouter.get("/challenge/:challengeResultId/:user_uid", async function(req, res) {
     getFile(req, res, "challenge/java", "Main.java")
 });
