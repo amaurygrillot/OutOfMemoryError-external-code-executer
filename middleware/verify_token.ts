@@ -94,8 +94,10 @@ export const verifySameIdChallengeResult = async (
   await axios
       .get(`https://outofmemoryerror-back.azurewebsites.net/api/challenge/getChallengeByIdChallengeResult/${req.body.challengeResultId}`, { headers: { Authorization: AuthStr } })
       .then(result => {
-        console.log("result : " + result)
-        if(result.Challenge.user_id !== idPerson)
+          console.log("result")
+        console.dir(result)
+          JSON.stringify(result)
+        if(result.data.Challenge.user_id !== idPerson)
         {
           return res.status(401).json({
             resp: false,
