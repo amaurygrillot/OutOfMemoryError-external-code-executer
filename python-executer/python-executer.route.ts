@@ -1,5 +1,5 @@
 import {PythonExecuterController} from "./python-executer.controller";
-import {verifySameIdPost, verifyToken} from "../middleware/verify_token";
+import {verifySameIdChallengeResult, verifySameIdPost, verifyToken} from "../middleware/verify_token";
 import {executeFileWithSave, getFile, saveFile} from "../libs/code-executer";
 
 const express = require('express')
@@ -9,7 +9,7 @@ pythonRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
 });
 
-pythonRouter.post("/challenge/", verifyToken, verifySameIdPost, async function(req, res) {
+pythonRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async function(req, res) {
     executeFileWithSave(req, res, 'challenge/python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
 });
 

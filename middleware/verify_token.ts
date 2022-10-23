@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import axios from "axios";
 
 interface IPayload {
   idPerson: string;
@@ -23,7 +24,7 @@ export const  verifyToken = async (
   if (!token) {
     return res.status(401).json({
       resp: false,
-      message: "Access non autorisé",
+      message: "Accès non autorisé",
     });
   }
 
@@ -63,6 +64,39 @@ export const verifySameIdPost = async (
         console.log("data : " + result.data.posts)
         console.log("id : " + idPerson);
         if(result.data.posts[0].person_uid !== idPerson)
+        {
+          return res.status(401).json({
+            resp: false,
+            message: 'Vous ne pouvez pas éditer ce post',
+          }).end();
+        }
+        next();
+      })
+      .catch(error => {
+        console.error(error)
+        return res.status(500).json({
+          resp: false,
+          message: error.toString(),
+        }).end();
+      })
+};
+
+export const verifySameIdChallengeResult = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+  const token =
+      req.headers.authorization && extractBearerToken(req.headers.authorization);
+  const AuthStr = 'Bearer ' + token;
+  const axios = require('axios')
+  const idPerson = req.body.idPerson;
+  await axios
+      .get(`https://outofmemoryerror-back.azurewebsites.net/api/challenge/getChallengeResultByChallengeAndUserId/${req.body.commentId}`, { headers: { Authorization: AuthStr } })
+      .then(result => {
+        console.log("data : " + result.data.posts)
+        console.log("id : " + idPerson);
+        if(result.data.ChallengeResults[0].user_id !== idPerson)
         {
           return res.status(401).json({
             resp: false,

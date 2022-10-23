@@ -1,5 +1,5 @@
 import {CExecuterController} from "./c-executer.controller";
-import {verifySameIdPost, verifyToken} from "../middleware/verify_token";
+import {verifySameIdPost, verifyToken, verifySameIdChallengeResult} from "../middleware/verify_token";
 import {getFile, executeFileWithSave, saveFile} from "../libs/code-executer";
 
 const express = require('express')
@@ -9,7 +9,7 @@ cRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     await executeFileWithSave(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController(), true);
 });
 
-cRouter.post("/challenge/", verifyToken, verifySameIdPost, async function(req, res) {
+cRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async function(req, res) {
     await executeFileWithSave(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController(), true);
 });
 

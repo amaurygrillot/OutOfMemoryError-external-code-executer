@@ -1,5 +1,5 @@
 import {JavaExecuterController} from "./java-executer.controller";
-import {verifySameIdPost, verifyToken} from "../middleware/verify_token";
+import {verifySameIdChallengeResult, verifySameIdPost, verifyToken} from "../middleware/verify_token";
 import {getFile, executeFileWithSave, saveFile} from "../libs/code-executer";
 
 const express = require('express')
@@ -9,7 +9,7 @@ javaRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
 });
 
-javaRouter.post("/challenge/", verifyToken, verifySameIdPost, async function(req, res) {
+javaRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async function(req, res) {
     await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
 });
 
