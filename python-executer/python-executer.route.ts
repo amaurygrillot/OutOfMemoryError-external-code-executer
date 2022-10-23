@@ -9,7 +9,7 @@ pythonRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
 });
 
-pythonRouter.post("challenge/", verifyToken, verifySameIdPost, async function(req, res) {
+pythonRouter.post("/challenge/", verifyToken, verifySameIdPost, async function(req, res) {
     executeFileWithSave(req, res, 'challenge/python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
 });
 
@@ -35,6 +35,6 @@ pythonRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "python", "main.py")
 });
 
-pythonRouter.get("challenge/:post_uid/:user_uid", async function(req, res) {
+pythonRouter.get("/challenge/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "challenge/python", "main.py")
 });

@@ -9,7 +9,7 @@ javaRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
 });
 
-javaRouter.post("challenge/", verifyToken, verifySameIdPost, async function(req, res) {
+javaRouter.post("/challenge/", verifyToken, verifySameIdPost, async function(req, res) {
     await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
 });
 
@@ -38,6 +38,6 @@ javaRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "java", "Main.java")
 });
 
-javaRouter.get("challenge/:post_uid/:user_uid", async function(req, res) {
+javaRouter.get("/challenge/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "challenge/java", "Main.java")
 });

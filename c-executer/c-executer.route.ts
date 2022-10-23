@@ -9,7 +9,7 @@ cRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     await executeFileWithSave(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController(), true);
 });
 
-cRouter.post("challenge/", verifyToken, verifySameIdPost, async function(req, res) {
+cRouter.post("/challenge/", verifyToken, verifySameIdPost, async function(req, res) {
     await executeFileWithSave(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController(), true);
 });
 
@@ -37,6 +37,6 @@ cRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "c", "main.c")
 });
 
-cRouter.get("challenge/:post_uid/:user_uid", async function(req, res) {
+cRouter.get("/challenge/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "challenge/c", "main.c")
 });
