@@ -98,7 +98,7 @@ export function getFile(req, res, languageName, defaultFile)
     catch (err)
     {
         console.error(err);
-        res.status(500).end()
+        res.status(500).json(err).end()
     }
 
 }
