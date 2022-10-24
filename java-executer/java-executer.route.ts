@@ -33,7 +33,7 @@ javaRouter.post("/saveFile", verifyToken, async(req: any, res: any) => {
     }
 });
 
-javaRouter.post("/challenge/saveFile", verifyToken, async(req: any, res: any) => {
+javaRouter.post("/challenge/saveFile", verifyToken, verifySameIdChallengeResult, async(req: any, res: any) => {
     try {
         const file = req.files.fileKey;
         const dirPath = `${process.env.FILES_REPO}/challenge/java/${req.body.challengeId}/${req.body.idPerson}`;

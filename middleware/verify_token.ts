@@ -1,6 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import axios from "axios";
+import {NextFunction, Request, Response} from "express";
+import {JwtPayload} from "jsonwebtoken";
 
 interface IPayload {
   idPerson: string;
@@ -35,8 +34,7 @@ export const  verifyToken = async (
       `${process.env.TOKEN_SECRET}`
     ) as JwtPayload;
     payload
-    const idPerson = payload.idPerson;
-    req.body.idPerson = idPerson;
+    req.body.idPerson = payload.idPerson;
     next();
   } catch (err: any) {
     console.log("error : " + err)

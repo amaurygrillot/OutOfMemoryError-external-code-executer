@@ -6,15 +6,15 @@ const express = require('express')
 export const pythonRouter = express.Router();
 
 pythonRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
-    executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
+    await executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
 });
 
 pythonRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async function(req, res) {
-    executeFileWithSave(req, res, 'challenge/python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
+    await executeFileWithSave(req, res, 'challenge/python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
 });
 
 pythonRouter.post("/executeNoSave", verifyToken, async function(req, res) {
-    executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), false);
+    await executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), false);
 });
 
 pythonRouter.post("/saveFile", verifyToken, async(req: any, res: any) => {
@@ -31,7 +31,7 @@ pythonRouter.post("/saveFile", verifyToken, async(req: any, res: any) => {
     }
 });
 
-pythonRouter.post("/challenge/saveFile", verifyToken, async(req: any, res: any) => {
+pythonRouter.post("/challenge/saveFile", verifyToken, verifySameIdChallengeResult, async(req: any, res: any) => {
     try {
         const file = req.files.fileKey;
         const fullPath = `${process.env.FILES_REPO}/challenge/python/${req.body.challengeId}/${req.body.idPerson}`;

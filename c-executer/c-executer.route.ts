@@ -34,7 +34,7 @@ cRouter.post("/saveFile", verifyToken, async(req: any, res: any) => {
     }
 });
 
-cRouter.post("/challenge/saveFile", verifyToken, async(req: any, res: any) => {
+cRouter.post("/challenge/saveFile", verifyToken, verifySameIdChallengeResult, async(req: any, res: any) => {
     try {
         const file = req.files.fileKey;
         const fullPath = `${process.env.FILES_REPO}/challenge/c/${req.body.challengeId}/${req.body.idPerson}`;
