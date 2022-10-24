@@ -31,10 +31,24 @@ pythonRouter.post("/saveFile", verifyToken, async(req: any, res: any) => {
     }
 });
 
+pythonRouter.post("/challenge/saveFile", verifyToken, async(req: any, res: any) => {
+    try {
+        const file = req.files.fileKey;
+        const fullPath = `${process.env.FILES_REPO}/challenge/python/${req.body.challengeId}/${req.body.idPerson}`;
+        saveFile(fullPath, process.env.DEFAULT_PYTHON_FILE, file.data);
+        res.status(200).end();
+    }
+    catch (err)
+    {
+        res.write(err);
+        res.status(500).end()
+    }
+});
+
 pythonRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "python", "main.py")
 });
 
-pythonRouter.get("/challenge/:challengeResultId/:user_uid", async function(req, res) {
+pythonRouter.get("/challenge/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "challenge/python", "main.py")
 });

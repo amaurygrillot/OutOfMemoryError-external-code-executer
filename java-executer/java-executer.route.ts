@@ -10,7 +10,7 @@ javaRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
 });
 
 javaRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async function(req, res) {
-    await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
+    await executeFileWithSave(req, res, 'challenge/java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
 });
 
 javaRouter.post("/executeNoSave", verifyToken, async function(req, res) {
@@ -31,13 +31,26 @@ javaRouter.post("/saveFile", verifyToken, async(req: any, res: any) => {
         res.write(err);
         res.status(500).end()
     }
+});
 
+javaRouter.post("/challenge/saveFile", verifyToken, async(req: any, res: any) => {
+    try {
+        const file = req.files.fileKey;
+        const dirPath = `${process.env.FILES_REPO}/challenge/java/${req.body.challengeId}/${req.body.idPerson}`;
+        saveFile(dirPath, process.env.DEFAULT_JAVA_FILE, file.data);
+        res.status(200).end();
+    }
+    catch (err)
+    {
+        res.write(err);
+        res.status(500).end()
+    }
 });
 
 javaRouter.get("/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "java", "Main.java")
 });
 
-javaRouter.get("/challenge/:challengeResultId/:user_uid", async function(req, res) {
+javaRouter.get("/challenge/:post_uid/:user_uid", async function(req, res) {
     getFile(req, res, "challenge/java", "Main.java")
 });
