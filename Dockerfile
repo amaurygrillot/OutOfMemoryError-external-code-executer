@@ -44,6 +44,8 @@ RUN /usr/sbin/sshd
 
 RUN fakechroot fakeroot debootstrap bullseye /bullseye
 COPY execution_time.sh /bullseye/usr/bin
+RUN fakechroot fakeroot chroot /bullseye apt-get install --yes bc
+RUN fakechroot fakeroot chroot /bullseye /bullseye/usr/bin/execution_time.sh ls -ltr
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
