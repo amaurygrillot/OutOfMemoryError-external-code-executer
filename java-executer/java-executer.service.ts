@@ -43,7 +43,7 @@ export class JavaExecuterService implements ILanguageService{
                         return;
                     }
                     executeCommand(`java`,
-                        [`${filePath}/${process.env.DEFAULT_JAVA_FILE}`],
+                        ['-Xlog:exit*:stdout:uptime',`${filePath}/${process.env.DEFAULT_JAVA_FILE}`],
                         (javaData) =>
                         {
                             console.log(javaData);
