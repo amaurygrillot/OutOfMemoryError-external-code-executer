@@ -1,5 +1,5 @@
 #!/bin/bash
 ts=$(date +%s%N);
 $@ ;
-tt=$((($(date +%s%N) - $ts)/1000000)) | bc -l;
-echo "Temps d'exécution : $tt secondes";
+tt=$($(date +%s%N) - $ts);
+ echo 'scale  = 15; $tt / 1000000 ' | bc -l;
