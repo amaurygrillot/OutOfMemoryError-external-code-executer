@@ -32,7 +32,7 @@ export function executeCommand(command: string, options: string[] | undefined, o
 // in close event we are sure that stream from child process is closed
     spawnedProcess.on('close', (code) => {
         const endDate = Date.now()
-        const timeElapsed = (endDate - startDate) / 1000;
+        const timeElapsed = (endDate - startDate);
         dataToSend += "\nTemps d'exécution : " + timeElapsed + " secondes"
             + "\nLe programme s'est arrêté avec le code : " + code.toString();
         onCloseEventCallback(dataToSend);
