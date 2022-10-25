@@ -6,7 +6,7 @@ export function executeCommand(command: string, options: string[] | undefined, o
     let commandToExecute = command;
     if(process.env.CONTEXT === undefined || process.env.CONTEXT !== "local")
     {
-        fakechrootOptions = ['fakeroot', 'chroot', '/bullseye'];
+        fakechrootOptions = ['fakeroot', 'chroot', '/bullseye', 'time'];
         fakechrootOptions.push(command);
         commandToExecute = 'fakechroot';
     }
