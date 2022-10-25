@@ -18,7 +18,6 @@ RUN apt-get update
 RUN apt-get install --yes apt-utils
 RUN apt-get install --yes sudo
 RUN apt-get install --yes time
-RUN time ls
 #build chroot env
 RUN apt-get install --yes debootstrap
 RUN apt-get install --yes fakechroot
@@ -46,8 +45,7 @@ EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
 RUN fakechroot fakeroot debootstrap bullseye /bullseye
-RUN fakechroot fakechroot chroot /bullseye apt-get install time
-RUN fakechroot fakechroot chroot /bullseye /usr/bin/time help
+RUN fakechroot fakechroot chroot /bullseye apt-get install --yes time
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
