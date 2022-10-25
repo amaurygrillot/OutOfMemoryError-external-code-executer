@@ -23,7 +23,7 @@ RUN apt-get install --yes debootstrap
 RUN apt-get install --yes fakechroot
 RUN apt-get install --yes fakeroot
 RUN apt-get --no-install-recommends install --yes systemd
-
+RUN apt-get install time
 
 #enable ssh
 RUN apt-get install --yes libcap2-bin  \
@@ -45,6 +45,7 @@ EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
 RUN fakechroot fakeroot debootstrap bullseye /bullseye
+RUN fakechroot fakechroot chroot /bullseye apt-get install time
 RUN fakechroot fakechroot chroot /bullseye /usr/bin/time help
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
