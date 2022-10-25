@@ -13,7 +13,8 @@ cRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async func
     await executeFileWithSave(req, res, 'challenge/c', process.env.DEFAULT_C_FILE, new CExecuterController(), true);
 });
 
-cRouter.post("/executeNoSave", verifyToken, async function(req, res) {
+cRouter.post("/executeNoSave", async function(req, res) {
+    req.body.idPerson = 'tmp'
     await executeFileWithSave(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController(), false);
 });
 

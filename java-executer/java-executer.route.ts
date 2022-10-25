@@ -13,7 +13,8 @@ javaRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async f
     await executeFileWithSave(req, res, 'challenge/java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
 });
 
-javaRouter.post("/executeNoSave", verifyToken, async function(req, res) {
+javaRouter.post("/executeNoSave", async function(req, res) {
+    req.body.idPerson = 'tmp';
     await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), false);
 });
 

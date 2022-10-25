@@ -13,7 +13,8 @@ pythonRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async
     await executeFileWithSave(req, res, 'challenge/python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
 });
 
-pythonRouter.post("/executeNoSave", verifyToken, async function(req, res) {
+pythonRouter.post("/executeNoSave", async function(req, res) {
+    req.body.idPerson = 'tmp'
     await executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), false);
 });
 
