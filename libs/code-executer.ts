@@ -6,7 +6,7 @@ export function executeCommand(command: string, options: string[] | undefined, o
     let commandToExecute = command;
     if(process.env.CONTEXT === undefined || process.env.CONTEXT !== "local")
     {
-        fakechrootOptions = ['fakeroot', 'chroot', '/bullseye'];
+        fakechrootOptions = ['fakeroot', 'chroot', '/bullseye', '/usr/local/bin/execution_time.sh'];
         fakechrootOptions.push(command);
         commandToExecute = 'fakechroot';
     }
@@ -33,8 +33,7 @@ export function executeCommand(command: string, options: string[] | undefined, o
     spawnedProcess.on('close', (code) => {
         const endDate = Date.now()
         const timeElapsed = (endDate - startDate);
-        dataToSend += "\nTemps d'exécution : " + timeElapsed + " secondes"
-            + "\nLe programme s'est arrêté avec le code : " + code.toString();
+        dataToSend += "\nLe programme s'est arrêté avec le code : " + code.toString();
         onCloseEventCallback(dataToSend);
     });
 

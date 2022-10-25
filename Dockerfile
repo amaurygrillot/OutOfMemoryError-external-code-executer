@@ -48,7 +48,6 @@ RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk op
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
 RUN fakechroot fakeroot chroot /bullseye ls -ltr
-RUN fakechroot fakeroot chroot /bullseye /usr/local/bin/execution_time.sh ls -ltr
 RUN mkdir /bullseye/programs
 RUN chown -R node /bullseye
 
