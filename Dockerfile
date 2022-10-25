@@ -18,7 +18,7 @@ RUN apt-get update
 RUN apt-get install --yes apt-utils
 RUN apt-get install --yes sudo
 RUN apt-get install --yes time
-RUN time help
+RUN time ls
 #build chroot env
 RUN apt-get install --yes debootstrap
 RUN apt-get install --yes fakechroot
@@ -33,7 +33,7 @@ RUN apt-get install --yes libcap2-bin  \
     && echo "root:$SU_PASSWORD" | chpasswd \
     && echo "node:$SU_PASSWORD" | chpasswd \
     && adduser node sudo
-RUN /usr/bin/time help
+RUN /usr/bin/time ls
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 # Copy and configure the ssh_setup file
