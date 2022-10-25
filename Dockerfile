@@ -31,7 +31,8 @@ RUN apt-get install --yes libcap2-bin  \
     && apt-get install --yes openssh-server \
     && echo "root:$SU_PASSWORD" | chpasswd \
     && echo "node:$SU_PASSWORD" | chpasswd \
-    && adduser node sudo
+    && adduser node sudo \
+RUN time help
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
 # Copy and configure the ssh_setup file
@@ -44,6 +45,7 @@ EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
 RUN fakechroot fakeroot debootstrap bullseye /bullseye
+RUN fakechroot fakechroot chroot /bullseye time help
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
