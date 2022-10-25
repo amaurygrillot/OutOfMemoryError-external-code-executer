@@ -2,4 +2,6 @@
 ts=$(date +%s%N);
 $@;
 tt=$(($(date +%s%N) - $ts));
-echo "scale  = 4; $tt / 1000000000" | bc -l;
+echo "Temps d'exécution : "
+echo "scale  = 6; $tt / 1000000000" | bc -l;
+echo " secondes"
