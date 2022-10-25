@@ -17,13 +17,14 @@ RUN echo 'deb http://ftp.debian.org/debian stretch-backports main' | tee /etc/ap
 RUN apt-get update
 RUN apt-get install --yes apt-utils
 RUN apt-get install --yes sudo
-
+RUN apt-get install --yes time
+RUN time help
 #build chroot env
 RUN apt-get install --yes debootstrap
 RUN apt-get install --yes fakechroot
 RUN apt-get install --yes fakeroot
 RUN apt-get --no-install-recommends install --yes systemd
-RUN apt-get install --yes time
+
 
 #enable ssh
 RUN apt-get install --yes libcap2-bin  \
