@@ -46,7 +46,10 @@ RUN fakechroot fakeroot debootstrap bullseye /bullseye
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
-RUN fakechroot fakeroot chroot /bullseye ts=$(date +%s%N) ; java ; tt=$((($(date +%s%N) - $ts)/1000000)) ; echo "Time taken: $tt milliseconds"
+RUN fakechroot fakeroot chroot /bullseye ts=$(date +%s%N) \
+    && fakechroot fakeroot chroot /bullseye java\
+    && fakechroot fakeroot chroot /bullseye tt=$((($(date +%s%N) - $ts)/1000000)) \
+    && fakechroot fakeroot chroot /bullseye echo "Time taken: $tt milliseconds"
 RUN mkdir /bullseye/programs
 RUN chown -R node /bullseye
 
