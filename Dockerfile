@@ -31,7 +31,7 @@ RUN apt-get install --yes libcap2-bin  \
     && apt-get install --yes openssh-server \
     && echo "root:$SU_PASSWORD" | chpasswd \
     && echo "node:$SU_PASSWORD" | chpasswd \
-    && adduser node sudo \
+    && adduser node sudo
 RUN time help
 # Copy the sshd_config file to the /etc/ssh/ directory
 COPY ssh/sshd_config /etc/ssh/
