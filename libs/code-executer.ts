@@ -6,14 +6,13 @@ export function executeCommand(command: string, options: string[] | undefined, o
     let commandToExecute = command;
     if(process.env.CONTEXT === undefined || process.env.CONTEXT !== "local")
     {
-        fakechrootOptions = ['fakeroot', 'chroot', '/bullseye', '/usr/local/bin/execution_time.sh'];
+        fakechrootOptions = ['fakeroot', 'chroot', '/bullseye', '/usr/bin/execution_time'];
         fakechrootOptions.push(command);
         commandToExecute = 'fakechroot';
     }
 
     const allOptions = fakechrootOptions.concat(options || []);
     const displayName = commandToExecute + " " + options?.join(" ");
-    const startDate = Date.now();
     const spawnedProcess = spawn(commandToExecute, allOptions, { timeout: 20 * 1000});
     let dataToSend = "";
     spawnedProcess.stdout.on('data', function (data) {
@@ -31,8 +30,6 @@ export function executeCommand(command: string, options: string[] | undefined, o
     });
 // in close event we are sure that stream from child process is closed
     spawnedProcess.on('close', (code) => {
-        const endDate = Date.now()
-        const timeElapsed = (endDate - startDate);
         dataToSend += "\nLe programme s'est arrêté avec le code : " + code.toString();
         onCloseEventCallback(dataToSend);
     });

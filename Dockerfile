@@ -43,11 +43,11 @@ EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
 RUN fakechroot fakeroot debootstrap bullseye /bullseye
-COPY execution_time.sh /bullseye/usr/local/bin
+COPY execution_time.sh /bullseye/usr/bin
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
-RUN fakechroot fakeroot chroot /bullseye ls -ltr
+RUN fakechroot fakeroot chroot /bullseye execution_time ls -ltr
 RUN mkdir /bullseye/programs
 RUN chown -R node /bullseye
 
