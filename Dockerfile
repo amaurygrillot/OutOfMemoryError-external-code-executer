@@ -43,7 +43,6 @@ EXPOSE 80 2222
 RUN /usr/sbin/sshd
 
 RUN fakechroot fakeroot debootstrap bullseye /bullseye
-RUN fakechroot fakeroot chroot /bullseye apt-get install --yes date
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes openjdk-17-jdk openjdk-17-jre
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes python3
 RUN fakechroot fakeroot chroot /bullseye apt-get install --yes gcc
