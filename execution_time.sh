@@ -2,4 +2,4 @@
 ts=$(date +%s%N);
 $@;
 tt=$($(date +%s%N) - $ts);
-echo "scale  = 15; $tt / 1000000";
+echo "$tt";
