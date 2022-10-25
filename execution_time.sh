@@ -1,3 +1,7 @@
 #!/bin/bash
-ts=$(date +%s%N) ; $@ ; tt=$($(date +%s%N) - $ts) ; echo "Temps d'exécution : "; echo "$tt /1000000000" | bc -l; echo " secondes"
-
+ts=$(date +%s%N);
+$@ ;
+bc;
+tt=$((($(date +%s%N) - $ts)/1000000));
+echo "Temps d'exécution : $tt secondes";
+quit;
