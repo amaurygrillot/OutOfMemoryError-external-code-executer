@@ -117,11 +117,12 @@ export function saveFile(fullPath: string, fileName: any, data: Buffer)
 
 export async function checkResulsts(req, res, controller: ILanguageController)
 {
-    saveFile(`/bullseye/${process.env.CHROOT_FILES_REPO}/${req.body.idPerson}`, controller.languageService.defaultFileName, req.files.fileKey.data);
-    const filePath = `${req.body.challenge_uid}/tests.json`;
-    const fs = require('fs')
     try
     {
+        saveFile(`/bullseye/${process.env.CHROOT_FILES_REPO}/${req.body.idPerson}`, controller.languageService.defaultFileName, req.files.fileKey.data);
+        const filePath = `${req.body.challenge_uid}/tests.json`;
+        const fs = require('fs')
+
         const file = fs.readFileSync(`${process.env.FILES_REPO}/challenge/${filePath}`, 'utf8');
         const fileJSON = JSON.parse(file);
         let testsPassed = 0;
