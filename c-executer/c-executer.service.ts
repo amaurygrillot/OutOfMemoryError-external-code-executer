@@ -14,7 +14,7 @@ export class CExecuterService implements ILanguageService{
     constructor() {
         this.cExecuterRepository = new CExecuterRepository();
         this.defaultFileName = process.env.DEFAULT_C_FILE || '';
-        this.languageName = "java";
+        this.languageName = "c";
     }
 
     private async getAllInstance(): Promise<void> {

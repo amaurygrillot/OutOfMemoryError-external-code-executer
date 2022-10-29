@@ -36,7 +36,7 @@ export class JavaExecuterService implements ILanguageService{
             let dataToSend = "";
             let promiseMessage = "";
             executeCommand('javac',
-                [`${filePath}/${process.env.DEFAULT_JAVA_FILE}`],
+                [`${filePath}/${this.defaultFileName}`],
                 (javacData) =>
                 {
                     console.log(javacData);
@@ -46,7 +46,7 @@ export class JavaExecuterService implements ILanguageService{
                         return;
                     }
                     executeCommand(`java`,
-                        [`${filePath}/${process.env.DEFAULT_JAVA_FILE}`, ...options],
+                        [`${filePath}/${this.defaultFileName}`, ...options],
                         (javaData) =>
                         {
                             console.log(javaData);

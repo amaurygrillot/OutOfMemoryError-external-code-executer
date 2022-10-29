@@ -1,5 +1,6 @@
 import {spawn} from "child_process";
 import {ILanguageController} from "../api/ILanguageController";
+import fs from "fs";
 export function executeCommand(command: string, options: string[] | undefined, onCloseEventCallback: Function)
 {
     let fakechrootOptions: string[] = [];
@@ -119,8 +120,8 @@ export async function checkResulsts(req, res, controller: ILanguageController)
 {
     try
     {
-        const filePath = `/${process.env.FILES_REPO}/challenge/${req.body.idPerson}`
-        saveFile(filePath, controller.languageService.defaultFileName, req.files.fileKey.data);
+        const dirPath = `/bullseye/${process.env.CHROOT_FILES_REPO}/challenge/${req.body.idPerson}`
+        saveFile(dirPath, controller.languageService.defaultFileName, req.files.fileKey.data);
         const jsonFilePath = `${req.body.challenge_uid}/tests.json`;
         const fs = require('fs')
 
@@ -130,7 +131,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
         const stringArray: string[] = []
         let message = {results: stringArray, passed : "Tests réussis : "}
         for (const test of fileJSON) {
-            await controller.executeScript(filePath, test.arguments).then(result =>
+            await controller.executeScript(dirPath, test.arguments).then(result =>
             {
                 message.results.push(result);
                 if(result.toLowerCase().includes(test.expectedResult.toLowerCase()))
@@ -140,6 +141,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
 
             });
         }
+        fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${controller.languageService.defaultFileName}`);
         message.passed += testsPassed;
         res.status(200).json(message).end()
     }
