@@ -119,7 +119,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
 {
     try
     {
-        const filePath = `/bullseye/${process.env.CHROOT_FILES_REPO}/${req.body.idPerson}`
+        const filePath = `${process.env.FILES_REPO}/challenge/${req.body.idPerson}`
         saveFile(filePath, controller.languageService.defaultFileName, req.files.fileKey.data);
         const jsonFilePath = `${req.body.challenge_uid}/tests.json`;
         const fs = require('fs')
@@ -130,7 +130,6 @@ export async function checkResulsts(req, res, controller: ILanguageController)
         const stringArray: string[] = []
         let message = {results: stringArray, passed : "Tests réussis : "}
         for (const test of fileJSON) {
-            console.log(test)
             await controller.executeScript(filePath, test.arguments).then(result =>
             {
                 message.results.push(result);
