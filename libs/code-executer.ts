@@ -125,19 +125,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
 
         const file = fs.readFileSync(`${process.env.FILES_REPO}/challenge/${filePath}`, 'utf8');
         const fileJSON = JSON.parse(file);
-        let testsPassed = 0;
-        fileJSON.forEach((test) =>
-        {
-            controller.executeScript('', test.arguments).then(result =>
-            {
-                if(result.includes(test.expectedResult))
-                {
-                    testsPassed += 1;
-                }
-
-            });
-        })
-        res.status(200).json("Tests réussis : " + testsPassed).end()
+        res.status(200).json(fileJSON).end()
     }
     catch (err)
     {
