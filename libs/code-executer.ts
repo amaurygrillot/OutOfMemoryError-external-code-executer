@@ -119,7 +119,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
 {
     try
     {
-        const filePath = `${process.env.FILES_REPO}/challenge/${req.body.idPerson}`
+        const filePath = `/${process.env.FILES_REPO}/challenge/${req.body.idPerson}`
         saveFile(filePath, controller.languageService.defaultFileName, req.files.fileKey.data);
         const jsonFilePath = `${req.body.challenge_uid}/tests.json`;
         const fs = require('fs')
