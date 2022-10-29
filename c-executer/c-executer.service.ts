@@ -8,10 +8,13 @@ export class CExecuterService implements ILanguageService{
 
 
     private cExecuterRepository: CExecuterRepository;
+    defaultFileName: string;
+    languageName: string;
 
     constructor() {
         this.cExecuterRepository = new CExecuterRepository();
-
+        this.defaultFileName = process.env.DEFAULT_C_FILE || '';
+        this.languageName = "java";
     }
 
     private async getAllInstance(): Promise<void> {
@@ -19,11 +22,11 @@ export class CExecuterService implements ILanguageService{
     }
 
     public async executeNoArgumentScript(filePath: string): Promise<string> {
-        return this.executeScript(filePath);
+        return this.executeScript(filePath, []);
     }
 
 
-    private async executeScript(filePath: string): Promise<string>
+    public async executeScript(filePath: string, options: string[]): Promise<string>
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
@@ -42,7 +45,7 @@ export class CExecuterService implements ILanguageService{
                         return;
                     }
                     executeCommand(`${filePath}/executable`,
-                undefined,
+                options,
                 (myFileData) =>
                     {
                         console.log(myFileData);
@@ -58,7 +61,5 @@ export class CExecuterService implements ILanguageService{
         });
 
     }
-
-
 
 }

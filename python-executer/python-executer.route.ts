@@ -1,21 +1,26 @@
 import {PythonExecuterController} from "./python-executer.controller";
 import {verifySameIdChallengeResult, verifySameIdPost, verifyToken} from "../middleware/verify_token";
-import {executeFileWithSave, getFile, saveFile} from "../libs/code-executer";
+import {checkResulsts, executeFileWithSave, getFile, saveFile} from "../libs/code-executer";
+
 
 const express = require('express')
 export const pythonRouter = express.Router();
 
 pythonRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
-    await executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
+    await executeFileWithSave(req, res,  new PythonExecuterController(), true, false);
 });
 
 pythonRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async function(req, res) {
-    await executeFileWithSave(req, res, 'challenge/python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), true);
+    await executeFileWithSave(req, res, new PythonExecuterController(), true, true);
 });
 
 pythonRouter.post("/executeNoSave", async function(req, res) {
     req.body.idPerson = 'tmp'
-    await executeFileWithSave(req, res, 'python', process.env.DEFAULT_PYTHON_FILE, new PythonExecuterController(), false);
+    await executeFileWithSave(req, res, new PythonExecuterController(), false, false);
+});
+
+pythonRouter.post("/challenge/checkResults", verifyToken, verifySameIdChallengeResult, async function(req, res) {
+    await checkResulsts(req, res, new PythonExecuterController())
 });
 
 pythonRouter.post("/saveFile", verifyToken, async(req: any, res: any) => {

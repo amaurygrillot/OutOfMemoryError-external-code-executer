@@ -1,23 +1,26 @@
 import {JavaExecuterController} from "./java-executer.controller";
 import {verifySameIdChallengeResult, verifySameIdPost, verifyToken} from "../middleware/verify_token";
-import {getFile, executeFileWithSave, saveFile} from "../libs/code-executer";
+import {getFile, executeFileWithSave, saveFile, checkResulsts} from "../libs/code-executer";
 
 const express = require('express')
 export const javaRouter = express.Router();
 
 javaRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
-    await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
+    await executeFileWithSave(req, res,  new JavaExecuterController(), true, false);
 });
 
 javaRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async function(req, res) {
-    await executeFileWithSave(req, res, 'challenge/java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), true);
+    await executeFileWithSave(req, res,  new JavaExecuterController(), true, true);
 });
 
 javaRouter.post("/executeNoSave", async function(req, res) {
     req.body.idPerson = 'tmp';
-    await executeFileWithSave(req, res, 'java', process.env.DEFAULT_JAVA_FILE,  new JavaExecuterController(), false);
+    await executeFileWithSave(req, res, new JavaExecuterController(), false, false);
 });
 
+javaRouter.post("/challenge/checkResults", verifyToken, verifySameIdChallengeResult, async function(req, res) {
+    await checkResulsts(req, res, new JavaExecuterController())
+});
 
 
 javaRouter.post("/saveFile", verifyToken, async(req: any, res: any) => {

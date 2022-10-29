@@ -15,6 +15,10 @@ export class CExecuterController implements ILanguageController{
         return this.languageService.executeNoArgumentScript(filePath);
     }
 
+    executeScript(filePath: string, options: string[]): Promise<string> {
+        return this.languageService.executeScript(filePath, options);
+    }
+
 
 
 }

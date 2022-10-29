@@ -1,21 +1,25 @@
 import {CExecuterController} from "./c-executer.controller";
 import {verifySameIdPost, verifyToken, verifySameIdChallengeResult} from "../middleware/verify_token";
-import {getFile, executeFileWithSave, saveFile} from "../libs/code-executer";
+import {getFile, executeFileWithSave, saveFile, checkResulsts} from "../libs/code-executer";
 
 const express = require('express')
 export const cRouter = express.Router();
 
 cRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
-    await executeFileWithSave(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController(), true);
+    await executeFileWithSave(req, res, new CExecuterController(), true, false);
 });
 
 cRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async function(req, res) {
-    await executeFileWithSave(req, res, 'challenge/c', process.env.DEFAULT_C_FILE, new CExecuterController(), true);
+    await executeFileWithSave(req, res, new CExecuterController(), true, true);
 });
 
 cRouter.post("/executeNoSave", async function(req, res) {
     req.body.idPerson = 'tmp'
-    await executeFileWithSave(req, res, 'c', process.env.DEFAULT_C_FILE, new CExecuterController(), false);
+    await executeFileWithSave(req, res, new CExecuterController(), false, false);
+});
+
+cRouter.post("/challenge/checkResults", verifyToken, verifySameIdChallengeResult, async function(req, res) {
+    await checkResulsts(req, res, new CExecuterController())
 });
 
 

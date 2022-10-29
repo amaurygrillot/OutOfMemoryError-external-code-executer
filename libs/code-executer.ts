@@ -36,20 +36,25 @@ export function executeCommand(command: string, options: string[] | undefined, o
 
 }
 
-export async function executeFileWithSave(req, res, languageName, fileName, controller: ILanguageController, persistent : boolean) {
+export async function executeFileWithSave(req, res, controller: ILanguageController, persistent : boolean, isChallenge: boolean) {
     const file = req.files.fileKey;
-    let dirPath = `${languageName}/${req.body.commentId}/${req.body.idPerson}`;
+    let dirPath = '';
+    if(isChallenge)
+    {
+        dirPath += 'challenge/'
+    }
+    dirPath += `${controller.languageService.languageName}/${req.body.commentId}/${req.body.idPerson}`;
     try
     {
         if(persistent)
         {
-            saveFile(`${process.env.FILES_REPO}/${dirPath}`, fileName, file.data);
+            saveFile(`${process.env.FILES_REPO}/${dirPath}`, controller.languageService.defaultFileName, file.data);
         }
         else
         {
             dirPath = '';
         }
-        saveFile(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`, fileName, file.data);
+        saveFile(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}`, controller.languageService.defaultFileName, file.data);
         controller.executeNoArgumentScript(`${process.env.CHROOT_FILES_REPO}/${dirPath}`)
             .then((message) =>
             {
@@ -65,7 +70,7 @@ export async function executeFileWithSave(req, res, languageName, fileName, cont
             .finally(() =>
             {
                 const fs = require('fs')
-                fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${fileName}`);
+                fs.unlinkSync(`/bullseye/${process.env.CHROOT_FILES_REPO}/${dirPath}/${controller.languageService.defaultFileName}`);
             });
 
 
@@ -109,4 +114,39 @@ export function saveFile(fullPath: string, fileName: any, data: Buffer)
     fs.writeFileSync(`${fullPath}/${fileName}`, data);
 }
 
+
+export function checkResulsts(req, res, controller: ILanguageController)
+{
+    saveFile(`/bullseye/${process.env.CHROOT_FILES_REPO}/${req.body.idPerson}`, controller.languageService.defaultFileName, req.files.fileKey.data);
+    const filePath = `${req.body.challenge_uid}/tests.json`;
+    const fs = require('fs')
+    try
+    {
+        const file = fs.readFileSync(`${process.env.FILES_REPO}/challenge/${filePath}`, 'utf8');
+        const fileJSON = JSON.parse(file);
+        let testsPassed = 0;
+        fileJSON.forEach(async (test) =>
+        {
+            await controller.executeScript('', test.arguments).then(result =>
+            {
+                if(result.includes(test.expectedResult))
+                {
+                    testsPassed += 1;
+                }
+
+            }).catch(err =>
+            {
+                console.error(err);
+                res.status(500).json(err).end()
+                return;
+            });
+        })
+        res.status(200).message("Tests réussis : " + testsPassed + " sur " + fileJSON.length)
+    }
+    catch (err)
+    {
+        console.error(err);
+        res.status(500).json(err).end()
+    }
+}
 

@@ -1,15 +1,19 @@
 import {PythonExecuterRepository} from "./python-executer.repository";
 import {executeCommand} from "../libs/code-executer";
 import {ILanguageService} from "../api/ILanguageService";
+import process from "process";
 
 export class PythonExecuterService implements ILanguageService{
 
 
     private pythonExecuterRepository: PythonExecuterRepository;
+    defaultFileName: string;
+    languageName: string;
 
     constructor() {
         this.pythonExecuterRepository = new PythonExecuterRepository();
-
+        this.defaultFileName = process.env.DEFAULT_PYTHON_FILE || '';
+        this.languageName = 'python';
     }
 
     private async getAllInstance(): Promise<void> {
@@ -17,11 +21,11 @@ export class PythonExecuterService implements ILanguageService{
     }
 
     public async executeNoArgumentScript(filePath: string): Promise<string> {
-        return this.executeScript(filePath);
+        return this.executeScript(filePath, []);
     }
 
 
-    private async executeScript(filePath: string): Promise<string>
+    public async executeScript(filePath: string, options: string[]): Promise<string>
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
@@ -30,7 +34,7 @@ export class PythonExecuterService implements ILanguageService{
                 (15 * 1000)
             );
             const command = `${process.env.PYTHON}`;
-            const commandOptions = [`${filePath}/${process.env.DEFAULT_PYTHON_FILE}`];
+            const commandOptions = [`${filePath}/${this.defaultFileName}`, ...options];
             // spawn new child process to call the python script
             executeCommand(command, commandOptions, (dataToSend) => {
                 console.log(dataToSend);

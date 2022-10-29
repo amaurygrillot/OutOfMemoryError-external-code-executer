@@ -9,9 +9,12 @@ export class JavaExecuterService implements ILanguageService{
 
 
     private javaExecuterRepository: JavaExecuterRepository;
-
+    defaultFileName: string;
+    languageName: string;
     constructor() {
         this.javaExecuterRepository = new JavaExecuterRepository();
+        this.defaultFileName = process.env.DEFAULT_JAVA_FILE || '';
+        this.languageName = "java";
 
     }
 
@@ -20,11 +23,11 @@ export class JavaExecuterService implements ILanguageService{
     }
 
     public async executeNoArgumentScript(filePath: string): Promise<string> {
-        return this.executeScript(filePath);
+        return this.executeScript(filePath, []);
     }
 
 
-    private async executeScript(filePath: string): Promise<string>
+    public async executeScript(filePath: string, options: string[]): Promise<string>
     {
         return await new Promise<string>((accept, reject) => {
             setTimeout(() => {
@@ -43,7 +46,7 @@ export class JavaExecuterService implements ILanguageService{
                         return;
                     }
                     executeCommand(`java`,
-                        [`${filePath}/${process.env.DEFAULT_JAVA_FILE}`],
+                        [`${filePath}/${process.env.DEFAULT_JAVA_FILE}`, ...options],
                         (javaData) =>
                         {
                             console.log(javaData);
@@ -70,6 +73,8 @@ export class JavaExecuterService implements ILanguageService{
             return fileData;
         }
     }
+
+
 
 
 
