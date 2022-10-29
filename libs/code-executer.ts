@@ -138,16 +138,16 @@ export async function checkResulsts(req, res, controller: ILanguageController)
             }).catch(err =>
             {
                 console.error(err);
-                res.status(501).message("erreur : " + err).end()
+                res.status(501).message(err).end()
                 return;
             });
         })
-        res.status(200).message("Tests réussis : " + testsPassed)
+        res.status(200).message("Tests réussis : " + testsPassed).end()
     }
     catch (err)
     {
         console.error(err);
-        res.status(502).message("erreur : " + err).end()
+        res.status(520).message(err).end()
     }
 }
 
