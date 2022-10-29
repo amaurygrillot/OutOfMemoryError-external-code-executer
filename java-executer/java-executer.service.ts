@@ -2,8 +2,6 @@ import {JavaExecuterRepository} from "./java-executer.repository";
 import {executeCommand} from "../libs/code-executer";
 import {ILanguageService} from "../api/ILanguageService";
 
-const {spawn} = require('child_process');
-
 
 export class JavaExecuterService implements ILanguageService{
 
