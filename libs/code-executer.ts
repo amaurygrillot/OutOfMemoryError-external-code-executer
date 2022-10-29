@@ -115,7 +115,7 @@ export function saveFile(fullPath: string, fileName: any, data: Buffer)
 }
 
 
-export function checkResulsts(req, res, controller: ILanguageController)
+export async function checkResulsts(req, res, controller: ILanguageController)
 {
     saveFile(`/bullseye/${process.env.CHROOT_FILES_REPO}/${req.body.idPerson}`, controller.languageService.defaultFileName, req.files.fileKey.data);
     const filePath = `${req.body.challenge_uid}/tests.json`;
@@ -125,9 +125,9 @@ export function checkResulsts(req, res, controller: ILanguageController)
         const file = fs.readFileSync(`${process.env.FILES_REPO}/challenge/${filePath}`, 'utf8');
         const fileJSON = JSON.parse(file);
         let testsPassed = 0;
-        fileJSON.forEach(async (test) =>
+        fileJSON.forEach((test) =>
         {
-            await controller.executeScript('', test.arguments).then(result =>
+            controller.executeScript('', test.arguments).then(result =>
             {
                 if(result.includes(test.expectedResult))
                 {
@@ -137,16 +137,16 @@ export function checkResulsts(req, res, controller: ILanguageController)
             }).catch(err =>
             {
                 console.error(err);
-                res.status(500).json(err).end()
+                res.status(501).message("erreur : " + err).end()
                 return;
             });
         })
-        res.status(200).message("Tests réussis : " + testsPassed + " sur " + fileJSON.length)
+        res.status(200).message("Tests réussis : " + testsPassed)
     }
     catch (err)
     {
         console.error(err);
-        res.status(500).json(err).end()
+        res.status(502).message("erreur : " + err).end()
     }
 }
 
