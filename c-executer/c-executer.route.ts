@@ -19,7 +19,7 @@ cRouter.post("/executeNoSave", async function(req, res) {
 });
 
 cRouter.post("/challenge/checkResults", verifyToken, verifySameIdChallengeResult, async function(req, res) {
-    res.status(200).end()
+    await checkResulsts(req, res, new CExecuterController())
 });
 
 
