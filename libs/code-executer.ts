@@ -119,13 +119,26 @@ export async function checkResulsts(req, res, controller: ILanguageController)
 {
     try
     {
-        saveFile(`/bullseye/${process.env.CHROOT_FILES_REPO}/${req.body.idPerson}`, controller.languageService.defaultFileName, req.files.fileKey.data);
-        const filePath = `${req.body.challenge_uid}/tests.json`;
+        const filePath = `/bullseye/${process.env.CHROOT_FILES_REPO}/${req.body.idPerson}`
+        saveFile(filePath, controller.languageService.defaultFileName, req.files.fileKey.data);
+        const jsonFilePath = `${req.body.challenge_uid}/tests.json`;
         const fs = require('fs')
 
-        const file = fs.readFileSync(`${process.env.FILES_REPO}/challenge/${filePath}`, 'utf8');
+        const file = fs.readFileSync(`${process.env.FILES_REPO}/challenge/${jsonFilePath}`, 'utf8');
         const fileJSON = JSON.parse(file);
-        res.status(200).json(fileJSON).end()
+        let testsPassed = 0;
+        for (const test of fileJSON) {
+            console.log(test)
+            await controller.executeScript(filePath, test.arguments).then(result =>
+            {
+                if(result.includes(test.expectedResult))
+                {
+                    testsPassed += 1;
+                }
+
+            });
+        }
+        res.status(200).json("Tests réussis : " + testsPassed).end()
     }
     catch (err)
     {
