@@ -140,7 +140,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
 
             });
         }
-        fs.unlinkSync(`${dirPath}/${controller.languageService.defaultFileName}`);
+        fs.unlinkSync(`/bullseye/${dirPath}/${controller.languageService.defaultFileName}`);
         message.passed += testsPassed;
         res.status(200).json(message).end()
     }
