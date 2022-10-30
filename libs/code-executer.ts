@@ -128,7 +128,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
         const fileJSON = JSON.parse(file);
         let testsPassed = 0;
         const stringArray: string[] = []
-        let message = {results: stringArray, passed : "Tests réussis : "}
+        let message = {results: stringArray, passed : 0, totalTests : fileJSON.length}
         for (const test of fileJSON) {
             await controller.executeScript(dirPath, test.arguments).then(result =>
             {
@@ -141,7 +141,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
             });
         }
         fs.unlinkSync(`/bullseye/${dirPath}/${controller.languageService.defaultFileName}`);
-        message.passed += testsPassed;
+        message.passed = testsPassed;
         res.status(200).json(message).end()
     }
     catch (err)
