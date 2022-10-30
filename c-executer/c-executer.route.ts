@@ -18,7 +18,7 @@ cRouter.post("/executeNoSave", async function(req, res) {
     await executeFileWithSave(req, res, new CExecuterController(), false, false);
 });
 
-cRouter.post("/challenge/checkResults", verifyToken, verifySameIdChallengeResult, async function(req, res) {
+cRouter.post("/challenge/checkResults", verifyToken, async function(req, res) {
     await checkResulsts(req, res, new CExecuterController())
 });
 

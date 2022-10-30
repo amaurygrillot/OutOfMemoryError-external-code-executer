@@ -10,7 +10,7 @@ pythonRouter.post("/", verifyToken, verifySameIdPost, async function(req, res) {
     await executeFileWithSave(req, res,  new PythonExecuterController(), true, false);
 });
 
-pythonRouter.post("/challenge/", verifyToken, verifySameIdChallengeResult, async function(req, res) {
+pythonRouter.post("/challenge/", verifyToken, async function(req, res) {
     await executeFileWithSave(req, res, new PythonExecuterController(), true, true);
 });
 
