@@ -132,7 +132,8 @@ export async function checkResulsts(req, res, controller: ILanguageController)
         for (const test of fileJSON) {
             await controller.executeScript(dirPath, test.arguments).then(result =>
             {
-                message.results.push(result);
+                message.results.push("Exécution avec les arguments : " +
+                    test.arguments.join(" ") + "\n" + result);
                 if(result.toLowerCase().includes(test.expectedResult.toLowerCase()))
                 {
                     testsPassed += 1;
