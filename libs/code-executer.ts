@@ -119,8 +119,8 @@ export async function checkResulsts(req, res, controller: ILanguageController)
 {
     try
     {
-        const dirPath = `/bullseye/${process.env.CHROOT_FILES_REPO}/challenge/${req.body.idPerson}`
-        saveFile(dirPath, controller.languageService.defaultFileName, req.files.fileKey.data);
+        const dirPath = `${process.env.CHROOT_FILES_REPO}/challenge/${req.body.idPerson}`
+        saveFile(`/bullseye/${dirPath}`, controller.languageService.defaultFileName, req.files.fileKey.data);
         const jsonFilePath = `${req.body.challenge_uid}/tests.json`;
         const fs = require('fs')
 
