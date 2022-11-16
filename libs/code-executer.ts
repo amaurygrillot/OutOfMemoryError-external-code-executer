@@ -134,9 +134,15 @@ export async function checkResulsts(req, res, controller: ILanguageController)
             {
                 message.results.push("Exécution avec les arguments : " +
                     test.arguments.join(" ") + "\n" + result);
-                if(result.toLowerCase().includes(test.expectedResult.toLowerCase()))
+                if(typeof test.expectedResult === 'string'
+                    && result.toLowerCase().includes(test.expectedResult.toLowerCase()))
                 {
                     testsPassed += 1;
+                }
+                else if(typeof test.expectedResult === 'number'
+                    && result === test.expectedResult)
+                {
+
                 }
 
             });
