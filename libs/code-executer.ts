@@ -128,12 +128,14 @@ export async function checkResulsts(req, res, controller: ILanguageController)
         const fileJSON = JSON.parse(file);
         let testsPassed = 0;
         const stringArray: string[] = []
-        let message = {results: stringArray, passed : 0, totalTests : fileJSON.length}
+        let message = {results: stringArray, passed : 0, totalTests : fileJSON.length, totalTime : 0.0}
         for (const test of fileJSON) {
             await controller.executeScript(dirPath, test.arguments).then(result =>
             {
                 message.results.push("Exécution avec les arguments : " +
                     test.arguments.join(" ") + "\n" + result);
+                const timeString = result.substring(result.indexOf('Temps d\'exécution : ') + 'Temps d\'exécution'.length, result.indexOf(' secondes'))
+                message.totalTime += parseFloat(timeString);
                 if(typeof test.expectedResult === 'string'
                     && result.toLowerCase().includes(test.expectedResult.toLowerCase()))
                 {
@@ -142,7 +144,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
                 else if(typeof test.expectedResult === 'number'
                     && result === test.expectedResult)
                 {
-
+                    testsPassed += 1;
                 }
 
             });
