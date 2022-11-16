@@ -134,7 +134,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
             {
                 message.results.push("Exécution avec les arguments : " +
                     test.arguments.join(" ") + "\n" + result);
-                const timeString = result.substring(result.indexOf('Temps d\'exécution : ') + 'Temps d\'exécution'.length, result.indexOf(' secondes'))
+                const timeString = result.substring(result.indexOf('Temps d\'exécution : ') + 'Temps d\'exécution : '.length, result.indexOf(' secondes'))
                 message.totalTime += parseFloat(timeString);
                 if(typeof test.expectedResult === 'string'
                     && result.toLowerCase().includes(test.expectedResult.toLowerCase()))
