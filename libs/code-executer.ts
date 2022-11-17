@@ -145,7 +145,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
                 testResult.arguments = "Arguments utilisés : " + test.arguments.join(" ");
                 testResult.expectedResult = test.expectedResult;
                 console.log(result)
-                testResult.actualResult = result.substring(0, result.indexOf('Temps'));
+                testResult.actualResult = result;
                 const timeString = result.substring(result.indexOf('Temps d\'exécution : ') + 'Temps d\'exécution : '.length, result.indexOf(' secondes'))
                 message.totalTime += parseFloat(timeString);
                 testResult.timeTaken = timeString;
