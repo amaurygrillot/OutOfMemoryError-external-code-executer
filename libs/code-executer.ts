@@ -142,8 +142,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
                     passed: false
                 }
                 testResult.testName = test.testName;
-                testResult.arguments = "Arguments utilisés : " +
-                    test.arguments.join(" ") + "\n" + result;
+                testResult.arguments = "Arguments utilisés : " + test.arguments.join(" ");
                 testResult.expectedResult = test.expectedResult;
                 testResult.actualResult = result.substring(result.indexOf('\n'), result.indexOf('Temps d\'exécution'));
                 const timeString = result.substring(result.indexOf('Temps d\'exécution : ') + 'Temps d\'exécution : '.length, result.indexOf(' secondes'))
