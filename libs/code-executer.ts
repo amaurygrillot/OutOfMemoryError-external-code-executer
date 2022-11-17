@@ -145,7 +145,9 @@ export async function checkResulsts(req, res, controller: ILanguageController)
                 testResult.arguments = "Arguments utilisés : " + test.arguments.join(" ");
                 testResult.expectedResult = test.expectedResult;
                 console.log("test 1")
-                console.log(result.toString())
+                console.log(result)
+                console.log("subs")
+                console.log(result.substring(0, 2).toString())
                 console.log('index temps')
                 console.log(result.indexOf('Temps'))
                 console.log("test 2")
