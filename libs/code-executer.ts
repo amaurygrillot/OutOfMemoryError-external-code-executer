@@ -127,25 +127,39 @@ export async function checkResulsts(req, res, controller: ILanguageController)
         const file = fs.readFileSync(`${process.env.FILES_REPO}/challenge/${jsonFilePath}`, 'utf8');
         const fileJSON = JSON.parse(file);
         let testsPassed = 0;
+        let testResults: TestResult[] = [];
         const stringArray: string[] = []
-        let message = {results: stringArray, passed : 0, totalTests : fileJSON.length, totalTime : 0.0}
+        let message = {results: testResults, passed : 0, totalTests : fileJSON.length, totalTime : 0.0}
         for (const test of fileJSON) {
             await controller.executeScript(dirPath, test.arguments).then(result =>
             {
-                message.results.push("Exécution avec les arguments : " +
-                    test.arguments.join(" ") + "\n" + result);
+                let testResult = {
+                    testName: "",
+                    arguments: "",
+                    expectedResult: "",
+                    actualResult: "",
+                    passed: false
+                }
+                testResult.testName = test.testName;
+                testResult.arguments = "Arguments utilisés : " +
+                    test.arguments.join(" ") + "\n" + result;
+                testResult.expectedResult = test.expectedResult;
+                testResult.actualResult = result.substring(result.indexOf('\n'), result.indexOf('Temps d\'exécution'));
                 const timeString = result.substring(result.indexOf('Temps d\'exécution : ') + 'Temps d\'exécution : '.length, result.indexOf(' secondes'))
                 message.totalTime += parseFloat(timeString);
                 if(typeof test.expectedResult === 'string'
                     && result.toLowerCase().includes(test.expectedResult.toLowerCase()))
                 {
                     testsPassed += 1;
+                    testResult.passed = true;
                 }
                 else if(typeof test.expectedResult === 'number'
                     && result === test.expectedResult)
                 {
                     testsPassed += 1;
+                    testResult.passed = true;
                 }
+                message.results.push(testResult);
 
             });
         }
@@ -158,5 +172,13 @@ export async function checkResulsts(req, res, controller: ILanguageController)
         console.error(err);
         res.status(500).json(err).end()
     }
+}
+
+export type TestResult = {
+    testName: string;
+    arguments: string;
+    expectedResult: string;
+    actualResult: string;
+    passed: boolean;
 }
 
