@@ -138,6 +138,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
                     arguments: "",
                     expectedResult: "",
                     actualResult: "",
+                    timeTaken: "999999999999.999",
                     passed: false
                 }
                 testResult.testName = test.testName;
@@ -147,6 +148,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
                 testResult.actualResult = result.substring(result.indexOf('\n'), result.indexOf('Temps d\'exécution'));
                 const timeString = result.substring(result.indexOf('Temps d\'exécution : ') + 'Temps d\'exécution : '.length, result.indexOf(' secondes'))
                 message.totalTime += parseFloat(timeString);
+                testResult.timeTaken = timeString;
                 if(typeof test.expectedResult === 'string'
                     && result.toLowerCase().includes(test.expectedResult.toLowerCase()))
                 {
@@ -179,6 +181,7 @@ export type TestResult = {
     arguments: string;
     expectedResult: string;
     actualResult: string;
+    timeTaken: string;
     passed: boolean;
 }
 
