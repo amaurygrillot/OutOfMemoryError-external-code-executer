@@ -30,7 +30,14 @@ export function executeCommand(command: string, options: string[] | undefined, o
     });
 // in close event we are sure that stream from child process is closed
     spawnedProcess.on('close', (code) => {
-        dataToSend += "\nLe programme s'est arrêté avec le code : " + code.toString();
+        if(code !== null)
+        {
+            dataToSend += "\nLe programme s'est arrêté avec le code : " + code.toString();
+        }
+        else
+        {
+            dataToSend += "Il y a eu une erreur"
+        }
         onCloseEventCallback(dataToSend);
     });
 
@@ -147,7 +154,7 @@ export async function checkResulsts(req, res, controller: ILanguageController)
                 console.log("test 1")
                 console.log(result)
                 console.log("subs")
-                console.log(result.substring(0, result.indexOf('\n') + 1).toString())
+                console.log(result.substring(0, result.indexOf('Temps') + 1))
                 console.log('index n')
                 console.log(result.indexOf('\n'))
                 console.log("test 2")
